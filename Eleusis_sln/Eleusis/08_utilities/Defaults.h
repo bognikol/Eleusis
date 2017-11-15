@@ -1,0 +1,39 @@
+#pragma once
+
+#define ELEUSIS_SPAN_TEXT_SIZE 10.0
+#define ELEUSIS_SPAN_FONT_FAMILY std::string("segoe ui")
+#define ELEUSIS_SPAN_FONT_STYLE FontStyle::Normal
+#define ELEUSIS_SPAN_FONT_VARIANT FontVariant::Normal
+#define ELEUSIS_SPAN_FONT_STRETCH FontStretch::s500_Normal
+#define ELEUSIS_SPAN_FONT_WEIGHT FontWeight::w400_Normal
+#define ELEUSIS_SPAN_FONT_FALLBACK true
+#define ELEUSIS_SPAN_FOREGROUND_COLOR Colors::Black
+#define ELEUSIS_SPAN_BACKGROUND_COLOR Colors::Transparent
+#define ELEUSIS_SPAN_STRIKETHROUGH false
+#define ELEUSIS_SPAN_STRIKETHROUGH_COLOR Colors::Transparent
+#define ELEUSIS_SPAN_UNDERLINE UnderlineType::None
+#define ELEUSIS_SPAN_UNDERLINE_COLOR Colors::Transparent
+#define ELEUSIS_SPAN_CHARACTER_RISE 0
+#define ELEUSIS_SPAN_CHARACTER_SPACING 0
+#define ELEUSIS_SPAN_GRAVITY CharacterGravity::West
+#define ELEUSIS_SPAN_GRAVITY_HINT CharacterGravityHint::Natural
+
+
+#define ELEUSIS_PARAGRAPH_FILL_BRUSH std::shared_ptr<Brush>(new SolidColorBrush(0, 0, 0));
+#define ELEUSIS_PARAGRAPH_LINE_BRUSH nullptr
+#define ELEUSIS_PARAGRAPH_STROKE_THICKNESS 2
+#define ELEUSIS_PARAGRAPH_STROKE_CAP StrokeCapStyle::Butt
+#define ELEUSIS_PARAGRAPH_STROKE_JOIN StrokeJoinStyle::Mitter
+#define ELEUSIS_PARAGRAPH_ALIGMENT ParagraphAlignment::Left
+#define ELEUSIS_PARAGRAPH_FIRST_LINE_INDENT 0
+#define ELEUSIS_PARAGRAPH_LEFT_INDENT 0
+#define ELEUSIS_PARAGRAPH_RIGHT_INDENT 0
+#define ELEUSIS_PARAGRAPH_SPACE_BEFORE 0
+#define ELEUSIS_PARAGRAPH_SPACE_AFTER 10
+#define ELEUSIS_PARAGRAPH_LINE_SPACING 0
+
+
+#define ELEUSIS_TEXT_BLOCK_WIDTH Eleusis::Length(-1)
+#define ELEUSIS_TEXT_BLOCK_HEIGHT Eleusis::Length(-1)
+#define ELEUSIS_TEXT_BLOCK_ELLIPSIZE EllipsizeType::End
+#define ELEUSIS_TEXT_BLOCK_TAB "    "

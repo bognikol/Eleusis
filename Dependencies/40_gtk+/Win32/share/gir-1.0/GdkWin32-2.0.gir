@@ -1,0 +1,355 @@
+<?xml version="1.0"?>
+<!-- This file was automatically generated from C sources - DO NOT EDIT!
+To affect the contents of this file, edit the original C definitions,
+and/or use gtk-doc annotations.  -->
+<repository version="1.2"
+            xmlns="http://www.gtk.org/introspection/core/1.0"
+            xmlns:c="http://www.gtk.org/introspection/c/1.0"
+            xmlns:glib="http://www.gtk.org/introspection/glib/1.0">
+  <include name="Gdk" version="2.0"/>
+  <include name="GdkPixbuf" version="2.0"/>
+  <include name="Gio" version="2.0"/>
+  <include name="Pango" version="1.0"/>
+  <include name="win32" version="1.0"/>
+  <package name="gdk-win32-2.0"/>
+  <c:include name="gdk/gdkwin32.h"/>
+  <namespace name="GdkWin32"
+             version="2.0"
+             shared-library="gdk-win32-2.0.dll"
+             c:identifier-prefixes="GdkWin32"
+             c:symbol-prefixes="gdk_win32">
+    <enumeration name="DndState" c:type="GdkWin32DndState">
+      <member name="none" value="0" c:identifier="GDK_WIN32_DND_NONE">
+      </member>
+      <member name="pending" value="1" c:identifier="GDK_WIN32_DND_PENDING">
+      </member>
+      <member name="dropped" value="2" c:identifier="GDK_WIN32_DND_DROPPED">
+      </member>
+      <member name="failed" value="3" c:identifier="GDK_WIN32_DND_FAILED">
+      </member>
+      <member name="dragging" value="4" c:identifier="GDK_WIN32_DND_DRAGGING">
+      </member>
+    </enumeration>
+    <record name="Monitor" c:type="GdkWin32Monitor">
+      <field name="name" writable="1">
+        <type name="utf8" c:type="gchar*"/>
+      </field>
+      <field name="width_mm" writable="1">
+        <type name="gint" c:type="gint"/>
+      </field>
+      <field name="height_mm" writable="1">
+        <type name="gint" c:type="gint"/>
+      </field>
+      <field name="rect" writable="1">
+        <type name="Gdk.Rectangle" c:type="GdkRectangle"/>
+      </field>
+    </record>
+    <enumeration name="PalEntryState" c:type="GdkWin32PalEntryState">
+      <member name="static" value="0" c:identifier="GDK_WIN32_PE_STATIC">
+      </member>
+      <member name="available" value="1" c:identifier="GDK_WIN32_PE_AVAILABLE">
+      </member>
+      <member name="inuse" value="2" c:identifier="GDK_WIN32_PE_INUSE">
+      </member>
+    </enumeration>
+    <record name="PositionInfo" c:type="GdkWin32PositionInfo" disguised="1">
+    </record>
+    <record name="SingleFont" c:type="GdkWin32SingleFont">
+      <field name="hfont" introspectable="0" writable="1">
+        <type c:type="HFONT"/>
+      </field>
+      <field name="charset" introspectable="0" writable="1">
+        <type c:type="UINT"/>
+      </field>
+      <field name="codepage" introspectable="0" writable="1">
+        <type c:type="UINT"/>
+      </field>
+      <field name="fs" introspectable="0" writable="1">
+        <type c:type="FONTSIGNATURE"/>
+      </field>
+    </record>
+    <function name="begin_direct_draw_libgtk_only"
+              c:identifier="gdk_win32_begin_direct_draw_libgtk_only"
+              introspectable="0">
+      <return-value>
+        <type name="Gdk.Drawable" c:type="GdkDrawable*"/>
+      </return-value>
+      <parameters>
+        <parameter name="drawable" transfer-ownership="none">
+          <type name="Gdk.Drawable" c:type="GdkDrawable*"/>
+        </parameter>
+        <parameter name="gc" transfer-ownership="none">
+          <type name="Gdk.GC" c:type="GdkGC*"/>
+        </parameter>
+        <parameter name="priv_data"
+                   transfer-ownership="none"
+                   nullable="1"
+                   allow-none="1">
+          <type name="gpointer" c:type="gpointer*"/>
+        </parameter>
+        <parameter name="x_offset_out" transfer-ownership="none">
+          <type name="gint" c:type="gint*"/>
+        </parameter>
+        <parameter name="y_offset_out" transfer-ownership="none">
+          <type name="gint" c:type="gint*"/>
+        </parameter>
+      </parameters>
+    </function>
+    <function name="drawable_get_handle"
+              c:identifier="gdk_win32_drawable_get_handle">
+      <return-value transfer-ownership="none">
+        <type name="win32.HGDIOBJ" c:type="HGDIOBJ"/>
+      </return-value>
+      <parameters>
+        <parameter name="drawable" transfer-ownership="none">
+          <type name="Gdk.Drawable" c:type="GdkDrawable*"/>
+        </parameter>
+      </parameters>
+    </function>
+    <function name="end_direct_draw_libgtk_only"
+              c:identifier="gdk_win32_end_direct_draw_libgtk_only">
+      <return-value transfer-ownership="none">
+        <type name="none" c:type="void"/>
+      </return-value>
+      <parameters>
+        <parameter name="priv_data"
+                   transfer-ownership="none"
+                   nullable="1"
+                   allow-none="1">
+          <type name="gpointer" c:type="gpointer"/>
+        </parameter>
+      </parameters>
+    </function>
+    <function name="handle_table_insert"
+              c:identifier="gdk_win32_handle_table_insert"
+              introspectable="0">
+      <return-value transfer-ownership="none">
+        <type name="none" c:type="void"/>
+      </return-value>
+      <parameters>
+        <parameter name="handle" transfer-ownership="none">
+          <type c:type="HANDLE*"/>
+        </parameter>
+        <parameter name="data"
+                   transfer-ownership="none"
+                   nullable="1"
+                   allow-none="1">
+          <type name="gpointer" c:type="gpointer"/>
+        </parameter>
+      </parameters>
+    </function>
+    <function name="handle_table_lookup"
+              c:identifier="gdk_win32_handle_table_lookup">
+      <return-value transfer-ownership="none" nullable="1">
+        <type name="gpointer" c:type="gpointer"/>
+      </return-value>
+      <parameters>
+        <parameter name="handle" transfer-ownership="none">
+          <type name="Gdk.NativeWindow" c:type="GdkNativeWindow"/>
+        </parameter>
+      </parameters>
+    </function>
+    <function name="handle_table_remove"
+              c:identifier="gdk_win32_handle_table_remove"
+              introspectable="0">
+      <return-value transfer-ownership="none">
+        <type name="none" c:type="void"/>
+      </return-value>
+      <parameters>
+        <parameter name="handle" transfer-ownership="none">
+          <type c:type="HANDLE"/>
+        </parameter>
+      </parameters>
+    </function>
+    <function name="hdc_get"
+              c:identifier="gdk_win32_hdc_get"
+              introspectable="0">
+      <doc xml:space="preserve">Allocates a Windows device context handle (HDC) for drawing into
+@drawable, and sets it up appropriately according to @usage.
+
+Each #GdkGC can at one time have only one HDC associated with it.
+
+The following flags in @mask are handled:
+
+If %GDK_GC_FOREGROUND is set in @mask, a solid brush of the
+foreground color in @gc is selected into the HDC. The text color of
+the HDC is also set. If the @drawable has a palette (256-color
+mode), the palette is selected and realized.
+
+If any of the line attribute flags (%GDK_GC_LINE_WIDTH,
+%GDK_GC_LINE_STYLE, %GDK_GC_CAP_STYLE and %GDK_GC_JOIN_STYLE) is
+set in @mask, a solid pen of the foreground color and appropriate
+width and stule is created and selected into the HDC. Note that the
+dash properties are not completely implemented.
+
+If the %GDK_GC_FONT flag is set, the background mix mode is set to
+%TRANSPARENT. and the text alignment is set to
+%TA_BASELINE|%TA_LEFT. Note that no font gets selected into the HDC
+by this function.
+
+Some things are done regardless of @mask: If the function in @gc is
+any other than %GDK_COPY, the raster operation of the HDC is
+set. If @gc has a clip mask, the clip region of the HDC is set.
+
+Note that the fill style, tile, stipple, and tile and stipple
+origins in the @gc are ignored by this function. (In general, tiles
+and stipples can't be implemented directly on Win32; you need to do
+multiple pass drawing and blitting to implement tiles or
+stipples. GDK does just that when you call the GDK drawing
+functions with a GC that asks for tiles or stipples.)
+
+When the HDC is no longer used, it should be released by calling
+&lt;function&gt;gdk_win32_hdc_release()&lt;/function&gt; with the same
+parameters.
+
+If you modify the HDC by calling &lt;function&gt;SelectObject&lt;/function&gt;
+you should undo those modifications before calling
+&lt;function&gt;gdk_win32_hdc_release()&lt;/function&gt;.</doc>
+      <return-value>
+        <doc xml:space="preserve">The HDC.</doc>
+        <type c:type="HDC"/>
+      </return-value>
+      <parameters>
+        <parameter name="drawable" transfer-ownership="none">
+          <doc xml:space="preserve">destination #GdkDrawable</doc>
+          <type name="Gdk.Drawable" c:type="GdkDrawable*"/>
+        </parameter>
+        <parameter name="gc" transfer-ownership="none">
+          <doc xml:space="preserve">#GdkGC to use for drawing on @drawable</doc>
+          <type name="Gdk.GC" c:type="GdkGC*"/>
+        </parameter>
+        <parameter name="usage" transfer-ownership="none">
+          <doc xml:space="preserve">mask indicating what properties needs to be set up</doc>
+          <type name="Gdk.GCValuesMask" c:type="GdkGCValuesMask"/>
+        </parameter>
+      </parameters>
+    </function>
+    <function name="hdc_release" c:identifier="gdk_win32_hdc_release">
+      <doc xml:space="preserve">This function deallocates the Windows device context allocated by
+&lt;funcion&gt;gdk_win32_hdc_get()&lt;/function&gt;. It should be called with
+the same parameters.</doc>
+      <return-value transfer-ownership="none">
+        <type name="none" c:type="void"/>
+      </return-value>
+      <parameters>
+        <parameter name="drawable" transfer-ownership="none">
+          <doc xml:space="preserve">destination #GdkDrawable</doc>
+          <type name="Gdk.Drawable" c:type="GdkDrawable*"/>
+        </parameter>
+        <parameter name="gc" transfer-ownership="none">
+          <doc xml:space="preserve">#GdkGC to use for drawing on @drawable</doc>
+          <type name="Gdk.GC" c:type="GdkGC*"/>
+        </parameter>
+        <parameter name="usage" transfer-ownership="none">
+          <doc xml:space="preserve">mask indicating what properties were set up</doc>
+          <type name="Gdk.GCValuesMask" c:type="GdkGCValuesMask"/>
+        </parameter>
+      </parameters>
+    </function>
+    <function name="icon_to_pixbuf_libgtk_only"
+              c:identifier="gdk_win32_icon_to_pixbuf_libgtk_only"
+              introspectable="0">
+      <return-value>
+        <type name="GdkPixbuf.Pixbuf" c:type="GdkPixbuf*"/>
+      </return-value>
+      <parameters>
+        <parameter name="hicon" transfer-ownership="none">
+          <type name="win32.HICON" c:type="HICON"/>
+        </parameter>
+      </parameters>
+    </function>
+    <function name="pixbuf_to_hicon_libgtk_only"
+              c:identifier="gdk_win32_pixbuf_to_hicon_libgtk_only">
+      <return-value transfer-ownership="none">
+        <type name="win32.HICON" c:type="HICON"/>
+      </return-value>
+      <parameters>
+        <parameter name="pixbuf" transfer-ownership="none">
+          <type name="GdkPixbuf.Pixbuf" c:type="GdkPixbuf*"/>
+        </parameter>
+      </parameters>
+    </function>
+    <function name="selection_add_targets"
+              c:identifier="gdk_win32_selection_add_targets">
+      <return-value transfer-ownership="none">
+        <type name="none" c:type="void"/>
+      </return-value>
+      <parameters>
+        <parameter name="owner" transfer-ownership="none">
+          <type name="Gdk.Window" c:type="GdkWindow*"/>
+        </parameter>
+        <parameter name="selection" transfer-ownership="none">
+          <type name="Gdk.Atom" c:type="GdkAtom"/>
+        </parameter>
+        <parameter name="n_targets" transfer-ownership="none">
+          <type name="gint" c:type="gint"/>
+        </parameter>
+        <parameter name="targets" transfer-ownership="none">
+          <type name="Gdk.Atom" c:type="GdkAtom*"/>
+        </parameter>
+      </parameters>
+    </function>
+    <function name="set_modal_dialog_libgtk_only"
+              c:identifier="gdk_win32_set_modal_dialog_libgtk_only">
+      <return-value transfer-ownership="none">
+        <type name="none" c:type="void"/>
+      </return-value>
+      <parameters>
+        <parameter name="window" transfer-ownership="none">
+          <type name="win32.HWND" c:type="HWND"/>
+        </parameter>
+      </parameters>
+    </function>
+    <function name="window_foreign_new_for_display"
+              c:identifier="gdk_win32_window_foreign_new_for_display"
+              introspectable="0">
+      <return-value>
+        <type name="Gdk.Window" c:type="GdkWindow*"/>
+      </return-value>
+      <parameters>
+        <parameter name="display" transfer-ownership="none">
+          <type name="Gdk.Display" c:type="GdkDisplay*"/>
+        </parameter>
+        <parameter name="anid" transfer-ownership="none">
+          <type name="Gdk.NativeWindow" c:type="GdkNativeWindow"/>
+        </parameter>
+      </parameters>
+    </function>
+    <function name="window_get_impl_hwnd"
+              c:identifier="gdk_win32_window_get_impl_hwnd">
+      <return-value transfer-ownership="none">
+        <type name="win32.HWND" c:type="HWND"/>
+      </return-value>
+      <parameters>
+        <parameter name="window" transfer-ownership="none">
+          <type name="Gdk.Window" c:type="GdkWindow*"/>
+        </parameter>
+      </parameters>
+    </function>
+    <function name="window_is_win32" c:identifier="gdk_win32_window_is_win32">
+      <return-value transfer-ownership="none">
+        <type name="gboolean" c:type="gboolean"/>
+      </return-value>
+      <parameters>
+        <parameter name="window" transfer-ownership="none">
+          <type name="Gdk.Window" c:type="GdkWindow*"/>
+        </parameter>
+      </parameters>
+    </function>
+    <function name="window_lookup_for_display"
+              c:identifier="gdk_win32_window_lookup_for_display"
+              introspectable="0">
+      <return-value>
+        <type name="Gdk.Window" c:type="GdkWindow*"/>
+      </return-value>
+      <parameters>
+        <parameter name="display" transfer-ownership="none">
+          <type name="Gdk.Display" c:type="GdkDisplay*"/>
+        </parameter>
+        <parameter name="anid" transfer-ownership="none">
+          <type name="Gdk.NativeWindow" c:type="GdkNativeWindow"/>
+        </parameter>
+      </parameters>
+    </function>
+  </namespace>
+</repository>
