@@ -11,26 +11,26 @@ Download compiled sample app for Windows [here](https://github.com/bognikol/Eleu
 * Background
 * Design Goals
 * Capabilities/Features
-  * Current
-  * Roadmap
+    * Current
+    * Roadmap
 * Getting Started
-  * Build Instructions
-  * My First Application
-	  * Prerequestives
-	  * Simplest Eleusis App
-	  * Adding Content
-	  * Adding Interactivity
-	  * Working with (Editable) Text
-	  * Animation
-	  * Further Steps
+    * Build Instructions
+    * My First Application
+        * Prerequestives
+        * Simplest Eleusis App
+        * Adding Content
+        * Adding Interactivity
+        * Working with (Editable) Text
+        * Animation
+        * Further Steps
 * Contribute
-  * Coding Guidelines
+    * Coding Guidelines
 
 ## Background
 
 Eleusis started as a personal experiment how to create simple GUI library for C++ with modern features.
 
-Eleusis is build upon Cairo and Pango, rendering libraries from GTK familly.
+Eleusis is build upon [Cairo](https://cairographics.org/) and [Pango](http://www.pango.org/), rendering libraries from GTK family.
 
 Eleusis is designed to be multiplatform; however, currently only Win32 implementation exists. 
 
@@ -69,11 +69,12 @@ Eleusis is designed to be multiplatform; however, currently only Win32 implement
 
 * Hardening, hardening, hardening
 * Switch to platform-independent build tool (CMake preferably)
+* Make implementation on macOS Cocoa as well as at least one Linux windowing system (X11, Wayland)
 * Implement basic palette of controls/widgets: TextBox, Slider, ScrollBar, Button etc.
 * Implement rendering caching and rendering paralelization on multi-CPU systems
 * Implement weak styling (CSS-like styling where entity has certain string identifier which acts as a key to object which holds information about requested properties of the entity)
 * Writing large number of UI tests (now we have just basics)
-* Large number of small and larger features and improvements
+* Large number of small and larger features, improvements and bug fixes
 
 ## Getting Started
 
@@ -83,7 +84,7 @@ Eleusis is designed to be multiplatform; however, currently only Win32 implement
 2. Open Eleusis_sln/Eleusis.sln in Visual Studio.
 3. Right click on SampleApp project and click on 'Set as Start Up Project'
 4. Press run. Eleusis library will be build too as it is dependency of SampleApp.
-5. Build should succeed, but run should fail (missing dll error). Go to /Dependencies/40_gtk+/binaries/{your selected platform} and copy all dlls to output folder /Output/{your selected config}/{your selected platform}/Eleusis_SamppleApp. Eleusis actually depends only on some of dlls copied, but for convenience copy all. Full list of dependencies view [here].
+5. Build should succeed, but run should fail (missing dll error). Go to /Dependencies/40_gtk+/binaries/{your selected platform} and copy all dlls to output folder /Output/{your selected config}/{your selected platform}/Eleusis_SamppleApp. Eleusis actually depends only on some of dlls copied, but for convenience copy all. Full list of dependencies view [here](https://github.com/bognikol/Eleusis-Bootstrap/tree/master/libs/Eleusis/Win32/dll).
 6. Press run again.
 
 ### My First Application
@@ -105,85 +106,85 @@ The easiest way to obtain these is to download Eleusis Bootstrap app [here](http
 #### Simplest Eleusis App
 
 Entry point of Eleusis app is an entry point of any Win32 GUI application:
+``` C++
+#include "Windows.h"
 
-	#include "Windows.h"
-
-    int APIENTRY wWinMain
-	    (
-	    _In_     HINSTANCE hInstance,
-	    _In_opt_ HINSTANCE hPrevInstance,
-	    _In_     LPWSTR    lpCmdLine,
-	    _In_     int       nCmdShow
-	    )
-    {
-		return 0;
-    }
-
+int APIENTRY wWinMain
+    (
+        _In_     HINSTANCE hInstance,
+        _In_opt_ HINSTANCE hPrevInstance,
+        _In_     LPWSTR    lpCmdLine,
+        _In_     int       nCmdShow
+    )
+{
+    return 0;
+}
+```
 This app, obviously, does not do anything. Static class Eleusis::Application is used to start event pump and to show the first window of the application.
+``` C++
+#include "Windows.h"
 
- 	#include "Windows.h"
+#include "Application.h"
+#include "Window.h" // This is the header for Eleusis::Window
 
-	#include "Application.h"
-	#include "Window.h" // This is the header for Eleusis::Window
+using namespace Eleusis
 
-	using namespace Eleusis;
+int APIENTRY wWinMain ( ... )
+{
+    Application::registerInstance();
 
-    int APIENTRY wWinMain ( ... )
-    {
-		Application::registerInstance();
-
-		return Application::run(new Window());
-    }
-
+    return Application::run(new Window());
+}
+```
 If compiled and run, this app would show blank black window. We should add some content to the window. To achieve it we might either (1) make an instance of the window and configure it before passing it to the Application::run(); or (2) derive new window type from Eleusis::Window, configure it in the constructor and only then instantiate it and pass to Application::run(). The second approach has an advantage that we can easily make multiple instances of window which appear and behave the same; this is why almost all modern UI frameworks usually use it.
 
 We can create new file called SampleWindow.h and add following code to it:
+``` C++
+#include "Window.h"	
 
-	#include "Window.h"	
-
-	class SampleWindow :
-	    public Eleusis::Window
-	{
-	public:
-	    SampleWindow()
-	    {
-		};
-	};
-
-and then run application with SampleWindow instead of just Eleusis::Window:
-
-	...
-	#include "SampleWindow.h" // This is the header to Eleusis::Window
-	...
-    int APIENTRY wWinMain ( ... )
+class SampleWindow :
+    public Eleusis::Window
+{
+public:
+    SampleWindow()
     {
-		Application::registerInstance();
+    };
+};
+```
+and then run application with SampleWindow instead of just Eleusis::Window:
+``` C++
+...
+#include "SampleWindow.h" 
+...
+int APIENTRY wWinMain ( ... )
+{
+    Application::registerInstance();
 
-		return Application::run(new SampleWindow());
-    }
-
+    return Application::run(new SampleWindow());
+}
+```
 If compiled and run, this app will again show blank black window; we need to add some content to it. 
 
 #### Adding Content
 
 Let's color the background. To achieve this we need to add an Eleusis::Rectangle which would be appropriately colored and which would stretch from edges to edges of the window. Thus, we can modify SampleWindow.h file in the following manner (for simplicity, in this tutorial function definitions are given in header files; in real  production scenarios they should be given in separate source files):
+``` C++
+#include "Window.h"
+#include "Rectangle.h"	
 
-	#include "Window.h"
-	#include "Rectangle.h"	
-
-	class SampleWindow :
-	    public Eleusis::Window
-	{
-	public:
-	    SampleWindow()
-	    {
-			Eleusis::Rectangle* l_background = new Eleusis::Rectangle(100._FPs, 100._FPs);
-	        l_background->fillColor_set(Eleusis::Colors::White);
-	        insertChild(l_background);
-		};
-	};
-
-Here we initiate Rectangle calling its constructor; constructor accepts two Eleusis::Length objects, here initiated initiated using literal operators. Eleusis::Length currently has two implementations: (1) Eleusis::FractionLength, used to specify relative lengths (can be initiated with suffix _FPs - meaning fraction points); and  (2) Eleusis::DeviceIndependentLength used to specify absolute lengths (can be initiated with suffix _DIPs - meaning device independent points - or omitting suffix all together). In this situation, we want a Rectangle to stretch 100% of both width and height of the parent window. After initiating, we set Rectangle's color to Eleusis::Colors::White, which is a constant for Eleusis::RgbaColor object that represents white. And we call Eleusis::Window::insertChild() to actually add a Rectangle to the window.
+class SampleWindow :
+    public Eleusis::Window
+{
+public:
+    SampleWindow()
+    {
+        Eleusis::Rectangle* l_background = new Eleusis::Rectangle(100._FPs, 100._FPs);
+        l_background->fillColor_set(Eleusis::Colors::White);
+        insertChild(l_background);
+    };
+};
+```
+Here we initiate Rectangle calling its constructor; constructor accepts two Eleusis::Length objects, here initiated using literal operators. Eleusis::Length currently has two implementations: (1) Eleusis::FractionLength, used to specify relative lengths (can be initiated with suffix \_FPs - meaning fraction points); and  (2) Eleusis::DeviceIndependentLength used to specify absolute lengths (can be initiated with suffix \_DIPs - meaning device independent points - or omitting suffix all together). In this situation, we want a Rectangle to stretch 100% of both width and height of the parent window. After initiating, we set Rectangle's color to Eleusis::Colors::White, which is a constant for Eleusis::RgbaColor object that represents white. And we call Eleusis::Window::insertChild() to actually add a Rectangle to the window.
 
 If compiled and run, the app will again show a window, but the window should be completely white (apart from the border).
 
@@ -192,12 +193,12 @@ You may notice that in this example we use raw pointer for a Rectangle rather th
 Ownership rules in Eleusis are very clear and strict: an element in GUI tree owns all its children. This rule is extended to Eleusis::Windows too, which means that Rectangle is explicitly owned by a SampleWindow after the point when insertChild() is called; Rectangle will be automatically destructed when SampleWindow is destructed; SampleWindow stops owning a Rectangle once it is removed from it (calling Eleusis::Window::removeChild(), for example); then, again, Rectangle is owned by the developer who is responsible to manage its lifetime and destruction.
 
 Now, let's add a circle to the SampleWindow. Add this snippet at the end of the constructor:
-
-    Eleusis::Circle* l_circle = new Eleusis::Circle(30);
-    l_circle->fillColor_set(Eleusis::Colors::OrangeRed);
-    l_circle->LayoutGuest.Classic.topLeft(200, 80);
-    insertChild(l_circle);
-
+``` C++
+Eleusis::Circle* l_circle = new Eleusis::Circle(30);
+l_circle->fillColor_set(Eleusis::Colors::OrangeRed);
+l_circle->LayoutGuest.Classic.topLeft(200, 80);
+insertChild(l_circle);
+```
 We add an orange-red circle of radius 30 (of device independent points which are usually pixels) at the position 200 pixels from the top of the window and 80 pixels from the left of the window.
 
 Here we introduce layouting: positioning elements inside a window or inside other elements. Each UI element have two different layouting roles which are independent: LayoutGuest and LayoutHost. Set of functions under LayoutGuest   are used to specify how the element should position itself inside its parent; on the other hand, set of functions under LayoutHost are used to specify global rules how children should be positioned inside the element. Only when both LayoutGuest options of a child and LayoutHost options of a parent are specified, size and position of child can be determined. At this point we do not have time to explore Eleusis layouting APIs, but will note that LayoutGuest.Classic.topLeft() function sets top-left position of an element within the parent.
@@ -206,73 +207,73 @@ Here we introduce layouting: positioning elements inside a window or inside othe
 
 But what about interactivity? How to make the Circle change its color when mouse cursor hovers over? 
 
-Eleusis offers its own simple implementation of function-based publisher-subscriber eventing pattern inspired by event-delegate mechanism in .NET languages. In essence, events are strongly-typed ordered collections of handlers (std::function objects) which are sequentially called when event is raised. Generally, adding handler to an event follows following pattern:
-	
-	element->eventName += handler;
-
-where handler is some std::function object of appropriate type. UI elements in Eleusis (whose actual type is Eleusis::Node) natively support following events: mouseClick, mouseDoubleClick, mouseDown, mouseUp, mouseEnter, mouseLeave and mouseMove. Apart from mouse events, Eleusis supports keyboard events: keyDown and keyUp; however, these events are raised only on elements which currently own the focus.
+Eleusis offers its own simple implementation of function-based publisher-subscriber eventing pattern inspired by event-delegate mechanism in .NET languages. In essence, events are strongly-typed ordered collections of handlers (std::function objects) which are sequentially executed when event is raised. Generally, adding handler to an event follows following pattern:
+```	 C++
+element->eventName += handler;
+```
+where handler is some std::function object of appropriate type. UI elements in Eleusis (whose actual type is Eleusis::Node) natively support following events: mouseClick, mouseDoubleClick, mouseDown, mouseUp, mouseWheel, mouseEnter, mouseLeave and mouseMove. Apart from mouse events, Eleusis supports keyboard events: keyDown and keyUp; however, these events are raised only on elements which currently own the focus.
 
 For example, if we want to handle event of mouse entering the circle, we can write code like this:
-
-	l_circle->mouseEnter +=
-	    [l_circle](Node* sender, MouseEventArgs* e)
-	{
-	    l_circle->fillColor_set(Colors::RoyalBlue);
-	};
-
+``` C++
+l_circle->mouseEnter +=
+    [l_circle](Node* sender, MouseEventArgs* e)
+{
+    l_circle->fillColor_set(Colors::RoyalBlue);
+};
+```
 std::function object we add as a handler does not need to be a lambda like in an example above; it can be any std::function object of appropriate type. We also need to be cautious of variable lifespans when capturing variables in lambdas or binding them using std::bind.
 
 Handler types are not arbitrary; handlers always return void and receives two arguments: sender argument (which should be a pointer to object which raised the event) and event data argument (which is a pointer to a structure that contains additional data about the event).
 
 To restore color of circle when mouse leaves, we can use following code:
-
-	 l_circle->mouseLeave +=
-	    [l_circle](Node* sender, MouseEventArgs* e)
-	{
-	    l_circle->fillColor_set(Colors::OrangeRed);
-	};
-
+``` C++
+ l_circle->mouseLeave +=
+    [l_circle](Node* sender, MouseEventArgs* e)
+{
+    l_circle->fillColor_set(Colors::OrangeRed);
+};
+```
 #### Working with (Editable) Text
 
 Eleusis tries to offer rich-text editing functionality. Eleusis::TextBlock is basic text object in Eleusis. TextBlock is made of Eleusis::Paragraphs, and paragraphs consist of Eleusis::Spans. Span is an array of characters that have same rendering parameters.
 
-Eleusis::TextBlock is, as name suggests, a version of TextBlock which supports editing and selection. To add it to our window, we should add following code:
-
-	SelectEdit* l_se = new SelectEdit();
-	l_se->height_set(200);
-	l_se->width_set(200);
-	l_se->setText("Edit me and then click orange circle!");
-	l_se->LayoutGuest.Classic.topLeft(20, 20);
-	insertChild(l_se);
-
+Eleusis::SelectEdit is, as name suggests, a version of TextBlock which supports editing and selection. To add it to our window, we should add following code:
+``` C++
+SelectEdit* l_se = new SelectEdit();
+l_se->height_set(200);
+l_se->width_set(200);
+l_se->setText("Edit me and then click orange circle!");
+l_se->LayoutGuest.Classic.topLeft(20, 20);
+insertChild(l_se);
+```
 SelectEdit is editable by default. If compiled and run, our app will show a window with text which can be selected using mouse cursor and edited using keyboard. However, SelectEdit lacks large number of feature which modern UIs conveniently offer, for example selecting a word with a double click.
 
 Let's give some purpose to our round button:
-
-    l_circle->mouseClick +=
-        [l_se](Node* sender, MouseEventArgs* e)
-    {
-        Application::nativeMsgBox(l_se->getText());
-    };
-
+``` C++
+l_circle->mouseClick +=
+    [l_se](Node* sender, MouseEventArgs* e)
+{
+    Application::nativeMsgBox(l_se->getText());
+};
+```
 #### Animation
 
 Eleusis also incorporates quite powerful animation engine. To demonstrate how animation works in Eleusis, let's add a polygon and then define animation which should happen when double clicked:
+``` C++
+Eleusis::Polygon* l_poly = new Eleusis::Polygon(50, 5);
+l_poly->fillColor_set(Colors::BurlyWood);
+l_poly->LayoutGuest.Classic.topLeft(150, 500);
+insertChild(l_poly);
 
-	Eleusis::Polygon* l_poly = new Eleusis::Polygon(50, 5);
-	l_poly->fillColor_set(Colors::BurlyWood);
-	l_poly->LayoutGuest.Classic.topLeft(150, 500);
-	insertChild(l_poly);
-	
-	l_poly->mouseClick +=
-	    [l_poly](Node* sender, MouseEventArgs* e)
-	{
-	    l_poly->animate()->radius.endValue(1000);
-	    l_poly->animate()->duration_set(5000);
-	    l_poly->animate()->restart();
-	};
-
-To animate things in Eleusis, Animation objects need to be used. There are two ways to work with them: (1) using default animation object each UI element has (it is accessed through animate() property), or (2) using freestanding animation objects which are then bound to specific UI elements we want to animate. Major difference is in memory management: default animation object is exclusively owned by UI element; however, freestanding animation allows us to run same animation upon several UI elements simultaneously and to reuse them.
+l_poly->mouseClick +=
+    [l_poly](Node* sender, MouseEventArgs* e)
+{
+    l_poly->animate()->radius.endValue(1000);
+    l_poly->animate()->duration_set(5000);
+    l_poly->animate()->restart();
+};
+```
+To animate things in Eleusis, Animation objects need to be used. There are two ways to work with them: (1) using default animation object each UI element has (it is accessed through animate() method), or (2) using freestanding animation objects which are then bound to specific UI elements we want to animate. Major difference is in memory management: default animation object is exclusively owned by UI element; however, freestanding animation allows us to run same animation upon several UI elements simultaneously and to reuse them.
 
 Example above is quite self-explanatory. Note, however, that start value of radius is not defined; in these situations Eleusis will take current value as a start value.
 
