@@ -12,10 +12,6 @@ namespace Eleusis
     class PangoLayoutWrapper
     {
     public:
-        PangoLayoutWrapper()
-        {
-        }
-
         ~PangoLayoutWrapper()
         {
             g_object_unref(layout);
