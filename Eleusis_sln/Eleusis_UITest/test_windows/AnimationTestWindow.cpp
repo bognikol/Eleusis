@@ -8,7 +8,7 @@ using namespace std;
 
 AnimationTestControl::AnimationTestControl(Animation* anim, string name)
 {
-    if (!anim) throw new exception("anim parameter must not be null.");
+    //if (!anim) throw new exception("anim parameter must not be null.");
 
     _animation = anim;
 
@@ -126,7 +126,7 @@ AnimationTestControl::AnimationTestControl(Animation* anim, string name)
 
 TimelineTestControl::TimelineTestControl(Timeline* anim, string name)
 {
-    if (!anim) throw new exception("anim parameter must not be null.");
+    //if (!anim) throw new exception("anim parameter must not be null.");
 
     _animation = anim;
 

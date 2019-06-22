@@ -1,3 +1,5 @@
+#ifdef _WIN32
+
 #include "Application.h"
 #include "Window.h"
 
@@ -613,3 +615,5 @@ void Application::nativeMsgBox(string message, string title)
 }
 
 #pragma endregion
+
+#endif

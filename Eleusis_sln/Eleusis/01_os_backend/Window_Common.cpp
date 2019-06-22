@@ -26,13 +26,13 @@ VisualPrimitive* Window::_getMouseEventTarget(MouseInputParams* inputParams)
     }
 }
 
-void Window::onSizeChanged(SizeChangedParams inputParams)
+/*void Window::onSizeChanged(SizeChangedParams inputParams)
 {
     _root->setAbsoluteSizeVector(inputParams.Size);
 
     SizeChangedEventArgs l_sizeChangedEventArgs(inputParams);
     raiseEvent sizeChanged(this, &l_sizeChangedEventArgs);
-}
+}*/
 
 void Window::onRedrawRequested(Rect rectToBeRedrawn)
 {

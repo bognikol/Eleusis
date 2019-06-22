@@ -1,3 +1,5 @@
+#ifdef _WIN32
+
 #include "Window.h"
 #include "Application.h"
 
@@ -205,5 +207,4 @@ void* Window::getNativeHandle()
     return (void*)_windowOSBundle->_hwnd;
 }
 
-
-
+#endif

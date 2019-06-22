@@ -1,4 +1,4 @@
-#include "Windows.h"
+//#include "Windows.h"
 
 #include "Application.h"
 
@@ -23,13 +23,14 @@
 
 using namespace Eleusis;
 
-int APIENTRY wWinMain
+int main(int argc, const char * argv[])
+/*int APIENTRY wWinMain
 (
     _In_     HINSTANCE hInstance,
     _In_opt_ HINSTANCE hPrevInstance,
     _In_     LPWSTR    lpCmdLine,
     _In_     int       nCmdShow
-)
+)*/
 {
     Application::registerInstance();
 

@@ -1,3 +1,5 @@
+#ifdef _WIN32
+
 #include "Timer.h"
 
 #include <Windows.h>
@@ -86,3 +88,5 @@ bool Timer::enabled_get()
 {
     return _enabled;
 }
+
+#endif
