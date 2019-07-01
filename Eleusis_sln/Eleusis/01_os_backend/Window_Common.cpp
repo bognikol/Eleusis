@@ -394,10 +394,10 @@ void Window::onRenderingTimer()
     }
 
     // PREPEARE STATE FOR NEXT ITERATION
-    _prepeareForFollowingRenderingIteration();
+    _cleanUpForFollowingRenderingIteration();
 }
 
-void Window::_prepeareForFollowingRenderingIteration()
+void Window::_cleanUpForFollowingRenderingIteration()
 {
     for (auto node : _nodesWaitingLayout)
     {

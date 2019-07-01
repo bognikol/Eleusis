@@ -9,6 +9,7 @@ namespace Eleusis
     struct WindowOSBundle
     {
         EleusisNSWindow* _nsWindow;
+        CGContextRef _backbuffer;
     };
 }
 

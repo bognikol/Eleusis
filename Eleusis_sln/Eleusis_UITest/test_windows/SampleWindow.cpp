@@ -28,6 +28,8 @@ SampleWindow::SampleWindow()
     _rect->mouseClick +=
         [this](Node* sender, MouseEventArgs* e)
     {
+        //Application::nativeMsgBox("Bingo rect");
+
         if (e->Button == MouseButton::Left)
         {
             _rect->animate()->width.endValue(500);
@@ -44,6 +46,8 @@ SampleWindow::SampleWindow()
     _circ->mouseClick +=
         [this](Node* sender, MouseEventArgs* e)
     {
+
+
         _circ->animate()->radius.endValue(100);
         _circ->animate()->restart();
     };

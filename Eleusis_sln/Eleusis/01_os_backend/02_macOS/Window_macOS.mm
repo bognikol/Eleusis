@@ -3,6 +3,7 @@
 #include "Window.h"
 #include "Application.h"
 #include "WindowOSBundle_macOS.h"
+#include "Timer.h"
 
 #include "cairo.h"
 #include "cairo-quartz.h"
@@ -19,27 +20,27 @@ Window::Window() :
     _windowOSBundle->_nsWindow = [[EleusisNSWindow alloc] initWithOwner:this];
     
     [_windowOSBundle->_nsWindow setStyleMask:NSWindowStyleMaskResizable | NSWindowStyleMaskClosable | NSWindowStyleMaskTitled | NSWindowStyleMaskMiniaturizable];
-    [_windowOSBundle->_nsWindow setContentSize:CGSizeMake(3000, 2000)];
+    [_windowOSBundle->_nsWindow setContentSize:CGSizeMake(3000, 3000)];
     [_windowOSBundle->_nsWindow makeKeyAndOrderFront:_windowOSBundle->_nsWindow];
     
-    CGContextRef l_cgContext = [[_windowOSBundle->_nsWindow graphicsContext] CGContext];
-    
-    CGContextTranslateCTM (l_cgContext, 0.0, (unsigned int)[_windowOSBundle->_nsWindow frame].size.height - 20);
-    CGContextScaleCTM (l_cgContext, 1.0, -1.0);
-    
-    _cairoSurface = cairo_quartz_surface_create_for_cg_context(l_cgContext, 3000, 3000);
+    CGColorSpaceRef l_cs = _windowOSBundle->_nsWindow.colorSpace.CGColorSpace;
+    _windowOSBundle->_backbuffer = CGBitmapContextCreate (NULL, 3000, 3000, 8, 3000*4, l_cs, kCGImageAlphaPremultipliedLast);
+
+    NSRect scale = [_windowOSBundle->_nsWindow convertRectToBacking:NSMakeRect(0, 0, 1.0, 1.0)];
+    CGContextTranslateCTM (_windowOSBundle->_backbuffer, 0.0, 3000);
+    CGContextScaleCTM (_windowOSBundle->_backbuffer, scale.size.width, -scale.size.height);
+
+    _cairoSurface = cairo_quartz_surface_create_for_cg_context (_windowOSBundle->_backbuffer, 3000, 3000);
     _cairoContext = cairo_create(_cairoSurface);
 
-    cairo_set_source_rgb (_cairoContext, 255, 0, 255);
-    cairo_rectangle (_cairoContext, 0, 0, 200, 200);
-    cairo_fill (_cairoContext);
-
-    cairo_surface_flush(_cairoSurface);
-    [[_windowOSBundle->_nsWindow graphicsContext] flushGraphics];
-
-    Application::nativeMsgBox("Cairo drawn");
-
     _root->setContext(static_cast<UIContext*>(this));
+
+    Timer* l_timer = new Timer(1000 / 60, TimerRepetition::Forever);
+    l_timer->elapsed += [this](Timer* sender, EventArgs* e)
+    {
+        this->onRenderingTimer();
+    };
+    l_timer->start();
 }
 
 Window::~Window()
@@ -56,11 +57,14 @@ void Window::show()
 {
     [_windowOSBundle->_nsWindow display];
     
+    _root->setAbsoluteSizeVector(getSize());
+
     _layout();
+    _calculateClippings();
     _updateGeometryAndApplyAbsoluteOffset();
     _render();
-    
-    _prepeareForFollowingRenderingIteration();
+
+    _cleanUpForFollowingRenderingIteration();
 }
 
 void Window::showModal()
@@ -134,23 +138,7 @@ Vector Window::getSize()
 
 
 void Window::onSizeChanged(SizeChangedParams inputParams)
-{
-    /*cairo_destroy(_cairoContext);
-    cairo_surface_destroy(_cairoSurface);
-    
-    CGContextRef l_cgContext = [[_windowOSBundle->_nsWindow graphicsContext] CGContext];
-    
-    CGAffineTransform l_ctm = CGContextGetCTM(l_cgContext);
-    CGAffineTransform l_inverseCtm = CGAffineTransformInvert(l_ctm);
-    CGContextConcatCTM(l_cgContext, l_inverseCtm);
-    
-    CGContextTranslateCTM (l_cgContext, 0.0, inputParams.Size.Y - 20);
-    CGContextScaleCTM (l_cgContext, 1.0, -1.0);
-    
-    _cairoSurface = cairo_quartz_surface_create_for_cg_context(l_cgContext, inputParams.Size.X, inputParams.Size.Y);
-    _cairoContext = cairo_create(_cairoSurface);
-    _root->setContext(static_cast<UIContext*>(this));*/
-    
+{   
     _root->setAbsoluteSizeVector(inputParams.Size);
     
     SizeChangedEventArgs l_sizeChangedEventArgs(inputParams);
@@ -161,19 +149,19 @@ void Window::onSizeChanged(SizeChangedParams inputParams)
 void Window::_render()
 {
     _root->_render(nullptr);
-    
     cairo_surface_flush(_cairoSurface);
-    
-    [[_windowOSBundle->_nsWindow graphicsContext] flushGraphics];
+
+    [_windowOSBundle->_nsWindow show:_windowOSBundle->_backbuffer];
 }
 
 void Window::_render(Region* region)
 {
+    NSLog(@"_render");
+
     _root->_render(region);
-    
     cairo_surface_flush(_cairoSurface);
-    
-    [[_windowOSBundle->_nsWindow graphicsContext] flushGraphics];
+
+    [_windowOSBundle->_nsWindow show:_windowOSBundle->_backbuffer];
 }
 
 Eleusis::Rect Window::surfaceSize()

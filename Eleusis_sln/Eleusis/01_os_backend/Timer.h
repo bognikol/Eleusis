@@ -20,7 +20,7 @@ namespace Eleusis
                 TimerRepetition _repetition = TimerRepetition::Once;
                 bool _enabled = true;
 
-                unsigned int _timerID = 0;
+                void* _timerID = 0;
 
     public:      Timer(unsigned int duration = 5000, TimerRepetition repetition = TimerRepetition::Once);
                 ~Timer();

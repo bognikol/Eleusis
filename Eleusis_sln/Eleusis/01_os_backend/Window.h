@@ -34,11 +34,11 @@ namespace Eleusis
 
                 std::list<Node*>              _nodesWaitingLayout;
                 std::list<VisualPrimitive*>   _vpsWaitingGeometryUpdate;
-                std::list<Node*>            _nodesWaitingOffsetApplication;
+                std::list<Node*>              _nodesWaitingOffsetApplication;
                 std::vector<Node*>            _nodesWaitingRendering;
 
                 VisualPrimitive* _getMouseEventTarget(MouseInputParams* inputParams);
-                void _prepeareForFollowingRenderingIteration();
+                void _cleanUpForFollowingRenderingIteration();
 
                 void _layout();
                 void _calculateClippings();

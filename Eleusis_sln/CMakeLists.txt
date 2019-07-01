@@ -35,7 +35,8 @@ target_link_libraries(eleusis PUBLIC "/Users/bogdannikolic/Repositories/Eleusis/
 target_link_libraries(eleusis PUBLIC "/Users/bogdannikolic/Repositories/Eleusis/Dependencies/02_macOS/40_gtk+/lib/libgobject-2.0.dylib")
 find_library(COCOA_LIBRARY Cocoa)
 target_link_libraries(eleusis PUBLIC ${COCOA_LIBRARY})
-
+find_library(QUARTZ_CORE_LIBRARY QuartzCore)
+target_link_libraries(eleusis PUBLIC ${QUARTZ_CORE_LIBRARY})
 
 file(GLOB_RECURSE cpp_files_ui_test "Eleusis_UITest/**/*.cpp")
 file(GLOB_RECURSE h_files_ui_test "Eleusis_UITest/**/*.h")

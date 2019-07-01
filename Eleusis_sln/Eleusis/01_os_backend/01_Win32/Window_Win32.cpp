@@ -57,7 +57,7 @@ void Window::show()
     _updateGeometryAndApplyAbsoluteOffset();
     _render();
 
-    _prepeareForFollowingRenderingIteration();
+    _cleanUpForFollowingRenderingIteration();
 }
 
 void Window::showModal()

@@ -20,7 +20,6 @@ void Application::registerInstance()
 
 @interface	ApplicationController : NSResponder <NSApplicationDelegate>
     - (void)setStartupWindow:(Window*)window;
-    - (void)onRendering:(NSTimer *)timer;
 @end
 
 @implementation ApplicationController
@@ -34,24 +33,9 @@ void Application::registerInstance()
     _mainWindow = window;
 }
 
-- (void)onRendering:(NSTimer *)timer
-{
-    _mainWindow->onRenderingTimer();
-    raiseEvent Application::renderingCycleExecuted(nullptr, nullptr);
-}
-
 - (void)applicationDidFinishLaunching:(NSNotification*)notification
 {
-    _renderingTimer = [NSTimer timerWithTimeInterval: 30 / 1000 target: self selector:@selector(onRendering:) userInfo:nil repeats:true];
-    _renderingTimer.tolerance = 5 / 1000;
-    
-    [[NSRunLoop currentRunLoop]addTimer:_renderingTimer forMode:NSDefaultRunLoopMode];
     _mainWindow->show();
-    
-    /*!
-     Now you booted up, but you have nothing, even there's no main-menu, so you
-     cannot quit using @c Command+Q.
-     */
 }
 - (void)userTapQuitMenu:(id)sender
 {
@@ -65,14 +49,9 @@ int Application::run(Window* startupWindow)
     {
         ApplicationController* del1	= [[ApplicationController alloc] init];
         [del1 setStartupWindow:startupWindow];
-        NSApplication*	app1 = [NSApplication sharedApplication];		///	Let it to be created by accessing it.
+        NSApplication*	app1 = [NSApplication sharedApplication];
         [app1 setDelegate:del1];
         [app1 run];
-        
-        /*!
-         Calling of @c NSApplicationMain is not required.
-         */
-        //return NSApplicationMain(argc, argv);
     }
     
     return 0;

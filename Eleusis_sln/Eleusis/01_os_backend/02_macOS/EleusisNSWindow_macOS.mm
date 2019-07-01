@@ -3,44 +3,12 @@
 #include "EleusisNSWindow_macOS.h"
 #include "Application.h"
 
+#include "cairo.h"
+#include "cairo-quartz.h"
+
+#include "Timer.h"
+
 using namespace Eleusis;
-
-@interface BaseNSView : NSView 
-{
-    - (id)initWithOwner:(EleusisNSWindow*)ownerWindow;
-}
-
-@implementation BaseNSView
-{
-    - (id)initWithOwner:(EleusisNSWindow*)ownerWindow 
-    {
-        self = [super init];
-
-        return self;
-    }
-
-    - (void)drawRect:(NSRect)rect
-    {
-        CGContextRef myContext = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
-        // ********** Your drawing code here ********** // 2
-        //CGContextSetRGBFillColor (myContext, 1, 0, 0, 1);// 3
-        //CGContextFillRect (myContext, CGRectMake (0, 0, 200, 100 ));// 4
-        //CGContextSetRGBFillColor (myContext, 0, 0, 1, .5);// 5
-        //CGContextFillRect (myContext, CGRectMake (0, 0, 100, 200));// 6
-        
-        
-        //CGContextTranslateCTM (myContext, 0.0, (unsigned int)[self frame].size.height - 20);
-        //CGContextScaleCTM (myContext, 1.0, -1.0);
-        
-        cairo_surface_t* surface = cairo_quartz_surface_create_for_cg_context (myContext, 3000, 3000);
-        cairo_t* cr = cairo_create(surface);
-        
-        cairo_set_source_rgb (cr, 0, 0, 0);
-        cairo_rectangle (cr, -5000, -5000, 10000, 10000);
-        cairo_fill (cr);
-        
-    }
-}
 
 @implementation EleusisNSWindow
 {
@@ -52,10 +20,21 @@ using namespace Eleusis;
     self = [super init];
     
     _eleusisWindowOwner = owner;
-    
+        
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowResized:) name:NSWindowDidResizeNotification object:self];
 
+    self.contentView.layer = [self.contentView makeBackingLayer];
+    self.contentView.layer.contentsGravity = kCAGravityTopLeft;
+    self.contentView.wantsLayer = YES;
+
     return self;
+}
+
+- (void)show:(CGContextRef)context
+{
+    CGImageRef l_image = CGBitmapContextCreateImage(context);
+    self.contentView.layer.contents = (__bridge id)l_image;
+    CGImageRelease(l_image);
 }
 
 - (void)keyDown:(NSEvent*)event
@@ -68,7 +47,7 @@ using namespace Eleusis;
     _eleusisWindowOwner->onKeyDown(l_keyboardInputParams);
 }
 
-- (void)keyUp:(NSEvent*)event
+- (void)keyUp:(NSEvent*)event 
 {
     KeyboardEventArgs l_keyboardInputParams;
     
@@ -80,8 +59,6 @@ using namespace Eleusis;
 
 - (void)mouseDown:(NSEvent*)event
 {
-    Application::nativeMsgBox("Hello world 222");
-
     MouseEventArgs l_mouseEventArgs;
     
     l_mouseEventArgs.Button = MouseButton::Left;
@@ -121,8 +98,6 @@ using namespace Eleusis;
     
     _eleusisWindowOwner->onSizeChanged(l_sizeChangedParams);
 }
-
-
 
 @end
 

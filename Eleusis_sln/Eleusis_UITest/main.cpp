@@ -35,6 +35,6 @@ int main(int argc, const char * argv[])
     Application::registerInstance();
 
     return
-        Application::run(new SampleWindow());
+        Application::run(new Test::WrapLayoutTestWindow());
 
 }
