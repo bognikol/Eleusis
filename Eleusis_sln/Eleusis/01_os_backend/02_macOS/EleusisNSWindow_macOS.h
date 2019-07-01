@@ -8,7 +8,6 @@
 
 @interface EleusisNSWindow : NSWindow
     - (id)initWithOwner:(Eleusis::Window*)owner;
-    - (void) windowResized:(NSWindow*)target;
     - (void)show:(CGContextRef)context;
 @end
 
