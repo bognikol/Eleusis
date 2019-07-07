@@ -44,6 +44,11 @@ file(GLOB_RECURSE h_files_ui_test "Eleusis_UITest/**/*.h")
 add_executable(ui_test "Eleusis_UITest/main.cpp" ${cpp_files_ui_test} ${h_files_ui_test})
 target_link_libraries(ui_test eleusis)
 
+set_target_properties(ui_test PROPERTIES
+  MACOSX_BUNDLE TRUE
+  MACOSX_BUNDLE_INFO_PLIST "/Users/bogdannikolic/Repositories/Eleusis/Eleusis_sln/Eleusis_UITest/Info.plist"
+)
+
 target_compile_options(ui_test PUBLIC "-std=c++11")
 
 target_include_directories(ui_test PUBLIC "Eleusis_UITest")
