@@ -25,6 +25,7 @@ namespace Eleusis
         static Event<void*, MouseEventArgs*> mouseUp; // TODO: This needs handle trully global mouse event.
 
         static void nativeMsgBox(std::string message = "", std::string title = "");
+        static void nativeLog(std::string message);
 
         static KeyState getVirtualKeyState(VirtualKey key);
 

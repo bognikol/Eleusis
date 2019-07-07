@@ -614,6 +614,12 @@ void Application::nativeMsgBox(string message, string title)
     MessageBox(nullptr, converter.from_bytes(message).c_str(), converter.from_bytes(title).c_str(), MB_TASKMODAL);
 }
 
+void Application::nativeLog(string message)
+{
+
+}
+
+
 #pragma endregion
 
 #endif

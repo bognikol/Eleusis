@@ -33,6 +33,11 @@ void Application::registerInstance()
     _mainWindow = window;
 }
 
+- (BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)application
+{
+    return YES;
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification*)notification
 {
     _mainWindow->show();
@@ -74,6 +79,12 @@ void Application::nativeMsgBox(string message, string title)
     [l_nsAlert setInformativeText:l_title];
     [l_nsAlert runModal];
 }
+
+ void Application::nativeLog(string message)
+ {
+     NSLog(@"%@", [NSString stringWithCString:message.c_str() encoding:[NSString defaultCStringEncoding]]);
+ }
+
 
 void Application::Clipboard::putUnicodeText(string text)
 {
