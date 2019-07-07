@@ -40,29 +40,9 @@ using namespace Eleusis;
     }
 
     _trackingArea = [[NSTrackingArea alloc] initWithRect:self.bounds
-        options: (NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved | NSTrackingActiveAlways)
+        options: (NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved | NSTrackingActiveInKeyWindow)
         owner:self userInfo:nil];
     [self addTrackingArea:_trackingArea];
-}
-
-- (void)keyDown:(NSEvent*)event
-{
-    KeyboardEventArgs l_keyboardInputParams;
-    
-    l_keyboardInputParams.VirtualKeyCode = static_cast<VirtualKey>(event.keyCode);
-    l_keyboardInputParams.String = std::string(event.characters.UTF8String);
-
-    _eleusisWindowOwner->onKeyDown(l_keyboardInputParams);
-}
-
-- (void)keyUp:(NSEvent*)event 
-{
-    KeyboardEventArgs l_keyboardInputParams;
-    
-    l_keyboardInputParams.VirtualKeyCode = static_cast<VirtualKey>(event.keyCode);
-    l_keyboardInputParams.String = std::string(event.characters.UTF8String);
-    
-    _eleusisWindowOwner->onKeyUp(l_keyboardInputParams);
 }
 
 - (void)mouseDown:(NSEvent*)event
@@ -84,6 +64,7 @@ using namespace Eleusis;
     l_mouseEventArgs.X = [event locationInWindow].x;
     l_mouseEventArgs.Y = self.frame.size.height - [event locationInWindow].y;
     
+    raiseEvent Application::mouseUp(nullptr, &l_mouseEventArgs);
     _eleusisWindowOwner->onMouseButtonUp(l_mouseEventArgs);
 }
 
@@ -110,6 +91,17 @@ using namespace Eleusis;
 }
 
 - (void)mouseMoved:(NSEvent*)event
+{
+    MouseEventArgs l_mouseEventArgs;
+    
+    l_mouseEventArgs.Button = MouseButton::None;
+    l_mouseEventArgs.X = [event locationInWindow].x;
+    l_mouseEventArgs.Y = self.frame.size.height - [event locationInWindow].y;
+    
+    _eleusisWindowOwner->onMouseMove(l_mouseEventArgs);
+}
+
+- (void)mouseDragged:(NSEvent*)event
 {
     MouseEventArgs l_mouseEventArgs;
     
@@ -170,16 +162,41 @@ using namespace Eleusis;
 @end
 
 @implementation EleusisNSWindow
+{
+    Window* _eleusisWindowOwner;
+}
+
 - (id)initWithOwner:(Eleusis::Window*)owner
 {
     self = [super init];
     self.contentView = [[EleusisNSView alloc] initWithOwner: owner];
+    _eleusisWindowOwner = owner;
     return self;
 }
 
 - (void)show:(CGContextRef)context
 {
     [self.contentView show:context];
+}
+
+- (void)keyDown:(NSEvent*)event
+{
+    KeyboardEventArgs l_keyboardInputParams;
+    
+    l_keyboardInputParams.VirtualKeyCode = static_cast<VirtualKey>(event.keyCode);
+    l_keyboardInputParams.String = std::string(event.characters.UTF8String);
+
+    _eleusisWindowOwner->onKeyDown(l_keyboardInputParams);
+}
+
+- (void)keyUp:(NSEvent*)event 
+{
+    KeyboardEventArgs l_keyboardInputParams;
+    
+    l_keyboardInputParams.VirtualKeyCode = static_cast<VirtualKey>(event.keyCode);
+    l_keyboardInputParams.String = std::string(event.characters.UTF8String);
+    
+    _eleusisWindowOwner->onKeyUp(l_keyboardInputParams);
 }
 @end
 

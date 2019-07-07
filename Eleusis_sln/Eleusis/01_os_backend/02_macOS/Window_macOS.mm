@@ -19,7 +19,7 @@ Window::Window() :
 {
     _windowOSBundle->_nsWindow = [[EleusisNSWindow alloc] initWithOwner:this];
     
-    [_windowOSBundle->_nsWindow setStyleMask:NSWindowStyleMaskResizable | NSWindowStyleMaskClosable | NSWindowStyleMaskTitled | NSWindowStyleMaskMiniaturizable];
+    [_windowOSBundle->_nsWindow setStyleMask:NSWindowStyleMaskResizable | NSWindowStyleMaskTitled | NSWindowStyleMaskClosable | NSWindowStyleMaskTitled | NSWindowStyleMaskMiniaturizable];
     [_windowOSBundle->_nsWindow setContentSize:CGSizeMake(3000, 3000)];
     [_windowOSBundle->_nsWindow makeKeyAndOrderFront:_windowOSBundle->_nsWindow];
     
@@ -39,6 +39,7 @@ Window::Window() :
     l_timer->elapsed += [this](Timer* sender, EventArgs* e)
     {
         this->onRenderingTimer();
+        raiseEvent Application::renderingCycleExecuted(nullptr, nullptr);
     };
     l_timer->start();
 }
@@ -156,8 +157,6 @@ void Window::_render()
 
 void Window::_render(Region* region)
 {
-    NSLog(@"_render");
-
     _root->_render(region);
     cairo_surface_flush(_cairoSurface);
 
