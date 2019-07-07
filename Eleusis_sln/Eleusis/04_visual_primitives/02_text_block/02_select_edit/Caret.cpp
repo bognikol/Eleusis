@@ -22,7 +22,8 @@ Caret::Caret()
 
 Caret::~Caret()
 {
-    delete _timer;}
+    delete _timer;
+}
 
 void Caret::resetTimer()
 {
