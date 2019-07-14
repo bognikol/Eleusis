@@ -99,6 +99,7 @@ WindowAppearanceState Window::getWindowState()
 
 void Window::focus()
 {
+    
 }
 
 bool Window::isFocused()
@@ -136,16 +137,6 @@ Vector Window::getSize()
 {
     return {[_windowOSBundle->_nsWindow frame].size.width, [_windowOSBundle->_nsWindow frame].size.height};
 }
-
-
-void Window::onSizeChanged(SizeChangedParams inputParams)
-{   
-    _root->setAbsoluteSizeVector(inputParams.Size);
-    
-    SizeChangedEventArgs l_sizeChangedEventArgs(inputParams);
-    raiseEvent sizeChanged(this, &l_sizeChangedEventArgs);
-}
-
 
 void Window::_render()
 {
