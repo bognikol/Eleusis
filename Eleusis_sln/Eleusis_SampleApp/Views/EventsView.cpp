@@ -88,21 +88,21 @@ EventsView::EventsView(Length width, Length height) :
 
     _eventData = new TextualShape();
     _eventData->LayoutGuest.Classic.topLeft(70, 20);
-	_eventData->fontFamily_set("Consolas");
+	_eventData->fontFamily_set("Courier");
     _eventData->text_set("EVENT DATA");
 	_eventData->fillColor_set(Colors::Black);
     insertChild(_eventData);
 
 	_focusEventData = new TextualShape();
 	_focusEventData->LayoutGuest.Classic.topLeft(300, 20);
-	_focusEventData->fontFamily_set("Consolas");
+	_focusEventData->fontFamily_set("Courier");
 	_focusEventData->text_set("FUCUS EVENT DATA");
 	_focusEventData->fillColor_set(Colors::Black);
 	insertChild(_focusEventData);
 
 	_focusHolderData = new TextualShape();
 	_focusHolderData->LayoutGuest.Classic.topLeft(350, 20);
-	_focusHolderData->fontFamily_set("Consolas");
+	_focusHolderData->fontFamily_set("Courier");
 	_focusHolderData->text_set("FUCUS HOLDER EVENT DATA");
 	_focusHolderData->fillColor_set(Colors::Black);
 	insertChild(_focusHolderData);

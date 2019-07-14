@@ -13,10 +13,10 @@ HomeView::NavigateButton::NavigateButton()
 	_textBlock = new TextBlock();
 	_textBlock->width_set(100._FPs);
 	_textBlock->spaceBefore_set(0);
-	_textBlock->fontFamily_set("Segoe UI");
+	_textBlock->fontFamily_set("Arial");
 	_textBlock->textSize_set(12);
 	_textBlock->fillColor_set(Colors::RoyalBlue);
-	_textBlock->LayoutGuest.Classic.top(38);
+	_textBlock->LayoutGuest.Classic.top(40);
 	_textBlock->paragraphAligment_set(ParagraphAlignment::Center);
 	insertChild(_textBlock);
 
@@ -80,10 +80,10 @@ HomeView::HomeView()
 
 	TextBlock* l_aboutEleusis = new TextBlock();
 	l_aboutEleusis->LayoutGuest.Classic.topLeft(30._FPs, 20);
-    l_aboutEleusis->width_set(800);
+    l_aboutEleusis->width_set(650);
 	l_aboutEleusis->setText("Welcome to Eleusis.");
 	l_aboutEleusis->textSize_set(25);
-	l_aboutEleusis->fontFamily_set("Segoe UI Light");
+	l_aboutEleusis->fontFamily_set("Arial");
 	l_aboutEleusis->fillColor_set(Colors::White);
     insertChild(l_aboutEleusis);
 

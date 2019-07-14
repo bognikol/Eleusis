@@ -15,7 +15,7 @@ TextView::TextView() :
     l_editTextBlock->setText("Edit me :-)");
     l_editTextBlock->textSize_set(35);
     l_editTextBlock->fillColor_set(Colors::Gray);
-    l_editTextBlock->fontFamily_set("Segoe UI Light");
+    l_editTextBlock->fontFamily_set("Arial");
     l_editTextBlock->width_set(600);
     l_editTextBlock->height_set(100._FPs);
     l_editTextBlock->caretColor_set(Colors::Gray);
@@ -25,7 +25,7 @@ TextView::TextView() :
     l_paragraph1->setText("Eleusis tries to offer rich-text editing functionality. Eleusis uses Pango, "
         "text rendering library from GTK family, and adds editing capabilities to it.");
     l_paragraph1->textSize_set(13);
-    l_paragraph1->fontFamily_set("Segoe UI");
+    l_paragraph1->fontFamily_set("Arial");
     l_paragraph1->fontWeight_set(FontWeight::w900_Ultraheavy);
     l_editTextBlock->insertParagraph(l_paragraph1);
 
@@ -33,7 +33,7 @@ TextView::TextView() :
     l_paragraph2->setText("TextBlock is basic text object in Eleusis. "
     "TextBlock is made of Paragraphs, and paragraphs consist of ");
     l_paragraph2->textSize_set(20);
-    l_paragraph2->fontFamily_set("Palatino Linotype");
+    l_paragraph2->fontFamily_set("Georgia");
     l_paragraph2->fontStyle_set(FontStyle::Italic);
     l_paragraph2->leftIndent_set(100);
     l_editTextBlock->insertParagraph(l_paragraph2);
@@ -49,7 +49,7 @@ TextView::TextView() :
     Paragraph* l_paragraph3 = new Paragraph();
     l_paragraph3->setText("Span is an array of characters that have same rendering parameters.");
     l_paragraph3->textSize_set(20);
-    l_paragraph3->fontFamily_set("Palatino Linotype");
+    l_paragraph3->fontFamily_set("Times New Roman");
     l_paragraph3->fontWeight_set(FontWeight::w900_Ultraheavy);
     l_paragraph3->leftIndent_set(20);
     shared_ptr<LinearGradientBrush> l_gradient2 = shared_ptr<LinearGradientBrush>(new LinearGradientBrush());
