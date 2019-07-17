@@ -1,0 +1,14 @@
+prefix=/Users/bogdannikolic/gtk/inst
+exec_prefix=/Users/bogdannikolic/gtk/inst
+libdir=/Users/bogdannikolic/gtk/inst/lib
+includedir=/Users/bogdannikolic/gtk/inst/include
+
+Name: FreeType 2
+URL: http://freetype.org
+Description: A free, high-quality, and portable font engine.
+Version: 19.0.13
+Requires:
+Requires.private: zlib, libpng
+Libs: -L${libdir} -lfreetype
+Libs.private: 
+Cflags: -I${includedir}/freetype2

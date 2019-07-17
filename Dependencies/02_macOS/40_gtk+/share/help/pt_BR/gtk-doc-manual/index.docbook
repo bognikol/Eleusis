@@ -1,0 +1,1525 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<?xml-stylesheet type="text/xml" href="params.xsl"?>
+<!-- vim: set ai tw=80 ts=3 sw=3: -->
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN" "
+              http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd" [
+<!ENTITY FDL SYSTEM "fdl-appendix.xml">
+<!ENTITY FDLlink "<link linkend='fdl'>included</link>">
+]>
+<!-- =============Document Header ============================= -->
+<book id="index" lang="pt-BR">
+  <bookinfo>
+    <title>Manual do GTK-Doc</title>
+    <edition>1.24.1</edition>
+    <abstract role="description"><para>Manual de usuário para desenvolvedores com instruções do uso do GTK-Doc.</para></abstract>
+    <authorgroup>
+      <author><firstname>Chris</firstname> <surname>Lyttle</surname> <affiliation> <address> <email>chris@wilddev.net</email> </address> </affiliation></author>
+      <author><firstname>Dan</firstname> <surname>Mueth</surname> <affiliation> <address> <email>d-mueth@uchicago.edu</email> </address> </affiliation></author>
+      <author><firstname>Stefan</firstname> <surname>Sauer (Kost)</surname> <affiliation> <address> <email>ensonic@users.sf.net</email> </address> </affiliation></author>
+    </authorgroup>
+    <publisher role="maintainer"><publishername>Projeto GTK-Doc</publishername> <address><email>gtk-doc-list@gnome.org</email></address></publisher>
+    <copyright><year>2000, 2005</year> <holder>Dan Mueth e Chris Lyttle</holder></copyright>
+    <copyright><year>2007-2015</year> <holder>Stefan Sauer (Kost)</holder></copyright>
+
+    <!-- translators: uncomment this:
+    <copyright>
+      <year>2000</year>
+      <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
+    </copyright>
+    -->
+
+    <legalnotice>
+      <para>Permissão concedida para copiar, distribuir e/ou modificar este documento sob os termos da <citetitle>Licença de Documentação Livre GNU</citetitle> (GNU Free Documentation License), Versão 1.1 ou qualquer versão mais recente publicada pela Free Software Foundation; sem Seções Invariantes, Textos de Capa Frontal, e sem Textos de Contracapa. Você pode encontrar uma cópia da licença está <link linkend="fdl">inclusa</link>.</para>
+      <para>Muitos dos nomes usados por empresas para distinguir seus produtos e serviços são reivindicados como marcas registradas. Onde esses nomes aparecem em qualquer documentação do GNOME e os membros do Projeto de Documentação do GNOME estiverem cientes dessas marcas registradas, os nomes aparecerão impressos em letras maiúsculas ou com iniciais em maiúsculas.</para>
+    </legalnotice>
+
+    <revhistory>
+      <revision>
+        <revnumber>1.25</revnumber>
+        <date>21 March 2016</date>
+        <authorinitials>ss</authorinitials>
+        <revremark>bug fixes, test cleanups</revremark>
+      </revision>
+      <revision><revnumber>1.24</revnumber> <date>29 Maio 2015</date> <authorinitials>ss</authorinitials> <revremark>correção de erros</revremark></revision>
+      <revision><revnumber>1.23</revnumber> <date>17 Maio 2015</date> <authorinitials>ss</authorinitials> <revremark>correção de erros</revremark></revision>
+      <revision><revnumber>1.22</revnumber> <date>07 Maio 2015</date> <authorinitials>ss</authorinitials> <revremark>correção de erros, desativadas funcionalidades obsoletas</revremark></revision>
+      <revision><revnumber>1.21</revnumber> <date>17 Jul 2014</date> <authorinitials>ss</authorinitials> <revremark>correção de erros, desativadas funcionalidades obsoletas</revremark></revision>
+      <revision><revnumber>1.20</revnumber> <date>14 Fev 2014</date> <authorinitials>ss</authorinitials> <revremark>correção de erros, suporte a markdown, melhorias no estilo</revremark></revision>
+      <revision><revnumber>1.19</revnumber> <date>05 Jun 2013</date> <authorinitials>ss</authorinitials> <revremark>correção de erros</revremark></revision>
+      <revision><revnumber>1.18</revnumber> <date>14 Set 2011</date> <authorinitials>ss</authorinitials> <revremark>correção de erros, aceleração, suporte a markdown</revremark></revision>
+      <revision><revnumber>1.17</revnumber> <date>26 Fev 2011</date> <authorinitials>sk</authorinitials> <revremark>atualização de correção de erro urgente</revremark></revision>
+      <revision><revnumber>1.16</revnumber> <date>14 Jan 2011</date> <authorinitials>sk</authorinitials> <revremark>correção de erros, melhorias no layout</revremark></revision>
+      <revision><revnumber>1.15</revnumber> <date>21 Maio 2010</date> <authorinitials>sk</authorinitials> <revremark>correção de erros e regressões</revremark></revision>
+      <revision><revnumber>1.14</revnumber> <date>28 Mar 2010</date> <authorinitials>sk</authorinitials> <revremark>Correção de erro e melhorias na performance</revremark></revision>
+      <revision><revnumber>1.13</revnumber> <date>18 Dez 2009</date> <authorinitials>sk</authorinitials> <revremark>atualização de tarball defeituoso</revremark></revision>
+      <revision><revnumber>1.12</revnumber> <date>18 Dez 2009</date> <authorinitials>sk</authorinitials> <revremark>novas funcionalidades da ferramenta e correção de erros</revremark></revision>
+      <revision><revnumber>1.11</revnumber> <date>16 Nov 2008</date> <authorinitials>mal</authorinitials> <revremark>Migração do GNOME doc-utils</revremark></revision>
+    </revhistory>
+
+  
+    <othercredit class="translator">
+      <personname>
+        <firstname>Marcelo Rodrigues</firstname>
+      </personname>
+      <email>marcelopires@mmsantos.com.br</email>
+    </othercredit>
+    <copyright>
+      
+        <year>2010</year>
+      
+      <holder>Marcelo Rodrigues</holder>
+    </copyright>
+  
+    <othercredit class="translator">
+      <personname>
+        <firstname>Rafael Fontenelle</firstname>
+      </personname>
+      <email>rafaelff@gnome.org</email>
+    </othercredit>
+    <copyright>
+      
+        <year>2013</year>
+      
+        <year>2014</year>
+      
+        <year>2016</year>
+      
+      <holder>Rafael Fontenelle</holder>
+    </copyright>
+  </bookinfo>
+
+  <!-- ======== Chapter 1: Introduction ======================== -->
+
+  <chapter id="introduction">
+    <title>Introdução</title>
+
+    <para>Este capítulo introduz GTK-Doc e dá um visão geral do que ele é e como ele é usado.</para>
+
+    <sect1 id="whatisgtkdoc">
+      <title>O que é GTK-Doc?</title>
+
+      <para>GTK-Doc é usado para documentar código C. Ele é tipicamente usado para documentar a API pública das bibliotecas, como as bibliotecas do GTK+ e do GNOME. Mas ele também pode ser usado para documentar código de aplicativos.</para>
+    </sect1>
+
+    <sect1 id="howdoesgtkdocwork">
+      <title>Como o GTK-Doc funciona?</title>
+
+      <para>O GTK-Doc funciona usando a documentação de funções colocadas dentro dos arquivos fonte em blocos de comentários especialmente formatados ou documentação adicionada aos arquivos modelo que o GTK-Doc usa (apesar disso, note que o GTK-Doc vai documentar apenas funções que são declaradas em arquivos de cabeçalho; ele não irá produzir saída para funções estáticas).</para>
+
+      <para>GTK-Doc consiste de um número de scripts perl, cada um executando uma etapa diferente no processo.</para>
+
+      <para>Há 5 etapas principais no processo:</para>
+
+      <orderedlist>
+
+        <listitem>
+          <para><guilabel>Escrevendo a documentação.</guilabel> O autor preenche os arquivos fonte com a documentação para cada função, macro, union, etc. (Anteriormente, a informação era inserida em arquivos de modelo gerados, o que não é mais recomendado).</para>
+        </listitem>
+
+        <listitem>
+          <para><guilabel>Juntando informação sobre o código.</guilabel> <application>gtkdoc-scan</application> varre os arquivos de cabeçalho do código buscando por declarações de funções, macros, enums, structs e unions. Ele cria o arquivo <filename>&lt;módulo&gt;-decl-list.txt</filename> contendo uma lista de declarações, inserindo-as em seções da acordo com o arquivo de cabeçalho no qual se encontram. Na primeira execução, este arquivo é copiado para <filename>&lt;módulo&gt;-sections.txt</filename>. O autor pode reorganizar as seções, e a ordem das declarações dentro delas, para produzir a ordem final desejada. O segundo arquivo que ele gera é <filename>&lt;módulo&gt;-decl.txt</filename>. Este arquivo contém as declarações completas encontradas pela varredura. Se por algum motivo se queira que alguns apareçam nos documentos, no qual declarações completas não puderam ser encontradas pela varredura ou a declaração deveria aparecer de outra forma, pode-se colocar entidades similares aos do <filename>&lt;módulo&gt;-decl.txt</filename> no <filename>&lt;módulo&gt;-overrides.txt</filename>.</para>
+         <para><application>gtkdoc-scangobj</application> também pode ser usado para consultar dinamicamente uma biblioteca sobre qualquer subclasse GObject que ele exporta. Ele salva informações sobre cada posição do objeto na hierarquia de classe e sobre quaisquer propriedades GObject e sinais que ela fornece.</para>
+         <para><application>gtkdoc-scanobj</application> não deveria mais ser usada. Ele era necessário no passado, quando GObject ainda era GtkObject dentro do gtk+.</para>
+        </listitem>
+
+        <listitem>
+          <para><guilabel>Gerando os arquivos "template".</guilabel> <application>gtkdoc-mktmpl</application> cria uma quantidade de arquivos no subdiretório <filename class="directory">tmpl/</filename>, usando a informação coletada na primeira etapa. (Note que ele pode ser executado repetidas vezes e vai tentar garantir que nenhuma documentação será perdida, jamais.)</para>
+          <note>
+            <para>Desde o GTK-Doc 1.9, os modelos ("templates") podem ser evitados. Nós encorajamos as pessoas a manter a documentação no código. <application>gtkdocize</application> possui suporte a uma opção <option>--flavour no-tmpl</option> que escolhe um makefile que ignora totalmente o uso de tmpl. Se você nunca alterou o arquivo em tmpl manualmente, por favor remova o diretório (ex.: do sistema de controle de versão).</para>
+          </note>
+        </listitem>
+
+        <listitem>
+          <para><guilabel>Gerando o XML e HTML/PDF.</guilabel> <application>gtkdoc-mkdb</application> transforma os arquivos modelos em arquivos XML no subdiretório <filename class="directory">xml/</filename>. Se o código fonte contém documentação nas funções, usando os blocos de comentários especiais, ela é mesclada aqui. Se não há arquivos tmpl sendo usados, ele apenas lê documentos dos dados de introspecção e dos fontes.</para>
+          <para><application>gtkdoc-mkhtml</application> transforma os arquivos XML em arquivos HTML no subdiretório <filename class="directory">html/</filename>. Da mesma forma, <application>gtkdoc-mkpdf</application> transforma os arquivos XML em um documento PDF chamado <filename>&lt;pacote&gt;.pdf</filename>.</para>
+          <para>Arquivos nos diretórios <filename class="directory">xml/</filename> e <filename class="directory">html/</filename> são sempre sobrescritos. Não devem ser editados manualmente.</para>
+        </listitem>
+
+        <listitem>
+          <para><guilabel>Consertando referências cruzadas entre documentos.</guilabel> Após a instalação dos arquivos HTML, <application>gtkdoc-fixxref</application> pode ser executado para consertar referências cruzadas entre documentos separados. Por exemplo, a documentação do GTK+ contém muitas referências cruzadas a tipos documentados no manual do GLib. Ao criar um tarball fonte para distribuição, <application>gtkdoc-rebase</application> transforma todos os links externos em web-links. Ao instalar documentações distribuídas (geradas previamente), o mesmo aplicativo vai tentar transformar links de volta para links locais (onde aquelas documentações estão instaladas).</para>
+        </listitem>
+      </orderedlist>
+
+    </sect1>
+
+    <sect1 id="gettinggtkdoc">
+      <title>Obtendo GTK-Doc</title>
+
+      <sect2 id="requirements">
+        <title>Requisitos</title>
+        <para><guilabel>Perl v5</guilabel> - os scripts principais são Perl.</para>
+        <para><guilabel>xsltproc</guilabel> - o processador de xslt do libxslt <ulink url="http://xmlsoft.org/XSLT/" type="http">xmlsoft.org/XSLT/</ulink></para>
+        <para><guilabel>docbook-xsl</guilabel> - as folhas de estilo xsl de docbook <ulink url="http://sourceforge.net/projects/docbook/files/docbook-xsl/" type="http">sourceforge.net/projects/docbook/files/docbook-xsl</ulink></para>
+        <para><guilabel>Python</guilabel> - opcional - para gtkdoc-depscan</para>
+        <para>Um dentre <guilabel>source-highlight</guilabel>, <guilabel>highlight</guilabel> ou <guilabel>vim</guilabel> - opcional - usado para destaque de sintaxe de exemplos</para>
+      </sect2>
+    </sect1>
+
+    <sect1 id="aboutgtkdoc">
+      <title>Sobre GTK-Doc</title>
+
+      <para>(CORRIJA-ME)</para>
+
+      <para>(História, autores, páginas web, lista de discussão, licença, planos futuros, comparação com outros sistemas similares.)</para>
+
+    </sect1>
+
+    <sect1 id="aboutthismanual">
+      <title>Sobre este manual</title>
+
+      <para>(CORRIJA-ME)</para>
+
+      <para>(pra quem ele serve, onde você pode obtê-lo, licença)</para>
+
+    </sect1>
+
+  </chapter>
+
+  <chapter id="settingup">
+    <title>Preparando seu projeto</title>
+
+    <para>As próximas seções descrevem quais as etapas para realizar a integração do GTK-Doc em seu projeto. Estas seções consideram que nós trabalhamos em um projeto chamado "meep". Este projeto contém uma biblioteca chamada "libmeep" e um aplicativo para usuário final chamado "meeper". Nós também consideramos que você estará usando autoconf e automake. Além disso, a seção sobre <link linkend="plain_makefiles">makefiles simples ou outros sistemas de compilação</link> vai descrever as necessidades básicas para trabalhar em uma configuração de compilação diferente.</para>
+
+    <sect1 id="settingup_docfiles">
+      <title>Preparando o esqueleto de uma documentação</title>
+
+      <para>No diretório raiz do seu projeto, crie pastas chamadas docs/reference (desta forma, você também pode ter docs/help para documentação para usuário final). É recomendado criar um outro subdiretório com o nome do pacote de documentação. Para pacotes com apenas uma biblioteca, esta etapa não é obrigatória.</para>
+
+      <para>Isto pode, então, parecer como exibido abaixo: <example><title>Exemplo de estrutura de diretórios</title>
+          <programlisting>
+meep/
+  docs/
+    reference/
+      libmeep/
+      meeper/
+  src/
+    libmeep/
+    meeper/
+</programlisting>
+        </example></para>
+    </sect1>
+
+    <sect1 id="settingup_autoconf">
+      <title>Integração com autoconf</title>
+
+      <para>Muito fácil! Basta adicionar uma linha ao seu script <filename>configure.ac</filename>.</para>
+
+      <para>
+        <example><title>Integração com autoconf</title>
+          <programlisting>
+# verifica por gtk-doc
+GTK_DOC_CHECK([1.14],[--flavour no-tmpl])
+</programlisting>
+        </example>
+      </para>
+
+      <para>Isso vai exigir que todos os desenvolvedores tenham o gtk-doc instalado. Se não houver problema para seu projeto ter uma configuração opcional de compilação de documentação de API, você pode resolver isso como mostrado abaixo. Mantenha assim, pois o gtkdocize está procurando por <function>GTK_DOC_CHECK</function> no começo de uma linha. <example><title>Mantenha o gtk-doc como opcional</title>
+          <programlisting>
+# verifica por gtk-doc
+m4_ifdef([GTK_DOC_CHECK], [
+GTK_DOC_CHECK([1.14],[--flavour no-tmpl])
+],[
+AM_CONDITIONAL([ENABLE_GTK_DOC], false)
+])
+</programlisting>
+        </example></para>
+
+      <para>O primeiro argumento é usado para verificar a gtkdocversion em tempo de compilação. O segundo argumento é opcional, sendo usado por <application>gtkdocize</application>. A macro <symbol>GTK_DOC_CHECK</symbol> também adiciona várias opções de configuração:</para>
+      <orderedlist>
+        <listitem><para>--with-html-dir=CAMINHO : caminho para as documentações instaladas</para></listitem>
+        <listitem><para>--enable-gtk-doc : usa gtk-doc para compilar documentação [padrão=no]</para></listitem>
+        <listitem><para>--enable-gtk-doc-html : compila documentação em formato html [padrão=sim]</para></listitem>
+        <listitem><para>--enable-gtk-doc-pdf : compila documentação em formato pdf [padrão=não]</para></listitem>
+      </orderedlist>
+
+      <important>
+      	<para>GTK-Doc está desabilitado por padrão! Lembre-se de passar a opção <option>"--enable-gtk-doc"</option> à próxima execução do <filename>configure</filename>. Do contrário, uma documentação gerada previamente é instalada (o que faz sentido para usuários, mas não para desenvolvedores).</para>
+      </important>
+
+      <para>Além disso, é recomendado que você tenha a seguinte linha dentro do seu script <filename>configure.ac</filename>. Ela permite que <application>gtkdocize</application> copie automaticamente a definição de macro para <function>GTK_DOC_CHECK</function> para o seu projeto.</para>
+
+      <para>
+        <example><title>Preparação para gtkdocize</title>
+          <programlisting>
+AC_CONFIG_MACRO_DIR(m4)
+</programlisting>
+        </example>
+      </para>
+      <para>Após todas as alterações do <filename>configure.ac</filename> serem feitas, atualize o arquivo <filename>configure</filename>. Isso pode ser feito executando novamente <code>autoreconf -i</code> ou <code>autogen.sh</code>.</para>
+    </sect1>
+
+    <sect1 id="settingup_automake">
+      <title>Integração com automake</title>
+
+      <para>Primeiro copie o <filename>Makefile.am</filename> dos subdiretório do <filename class="directory">exemplo</filename> do <ulink url="https://git.gnome.org/browse/gtk-doc/tree/examples/Makefile.am">gtkdoc-sources</ulink> para o diretório de documentação da API do seu projeto ( <filename class="directory">./docs/reference/&lt;pacote&gt;</filename>). Uma cópia local deveria estar disponível sob, por exemplo, <filename>/usr/share/doc/gtk-doc-tools/examples/Makefile.am</filename>. Se você tiver múltiplos pacotes de documentação, repita isso para cada um.</para>
+
+      <para>A próxima etapa é editar as configurações dentro do <filename>Makefile.am</filename>. Todas as configurações tem um comentário em cima que descreve seu propósito. A maioria das configurações são opções extras passadas para as respectivas ferramentas. Cada ferramenta tem uma variável na forma <option>&lt;NOME-FERRAMENTA&gt;_OPTIONS</option>. Todas as ferramentas têm suporte a <option>--help</option> pra listar os parâmetros disponíveis.</para>
+
+      <!-- FIXME: explain options ? -->
+
+    </sect1>
+
+    <sect1 id="settingup_autogen">
+      <title>Integração com autogen</title>
+
+      <para>A maioria dos projetos têm um script <filename>autogen.sh</filename> para configurar a infraestrutura de compilação após baixar do sistema de controle de versão (como cvs/svn/git). GTK-Doc vêm com uma ferramenta chamada <application>gtkdocize</application> que pode ser usada em um script assim. O gtkdocize deveria ser executado antes de autoheader, automake ou autoconf.</para>
+
+      <para>
+        <example><title>Executando gtkdocize no autogen.sh</title>
+          <programlisting>
+gtkdocize || exit 1
+</programlisting>
+        </example>
+      </para>
+
+      <para>Ao executar <application>gtkdocize</application>, ele copia <filename>gtk-doc.make</filename> para a raiz do seu projeto (ou qualquer diretório especificado pela opção <option>--docdir</option>). Ele também verifica se seu script de configuração pela chamada de <function>GTK_DOC_CHECK</function>. Esta macro pode ser usada para passar parâmetros extras para <application>gtkdocize</application>.</para>
+
+      <para>Historicamente, GTK-Doc estava gerando arquivos modelo (template) nos quais os desenvolvedores inseriam as documentações. Isso acabou sendo não tão bom (ex.: a necessidade de serem gerados arquivos sob controle de versão). Desde o GTK-Doc 1.9 as ferramentas podem obter todas as informações dos comentários no fonte e, portanto, os arquivos modelo podem ser evitados. Nós encorajamos as pessoas a manter a documentação no código. O <application>gtkdocize</application> possui agora suporte à opção <option>--flavour no-tmpl</option> que escolhe um makefile que ignora totalmente o uso de tmpl. Além de adicionar a opção diretamente à chamada do comando, elas também podem ser adicionadas a uma variável de ambiente chamada <symbol>GTKDOCIZE_FLAGS</symbol> ou definidas como um segundo parâmetro na macro <symbol>GTK_DOC_CHECK</symbol> no script configure. Se você nunca alterou um arquivo tmpl a mão e está migrando de versões antigas do gtkdoc, por favor remova o diretório (ex.: do sistema de controle de versão).</para>
+    </sect1>
+
+    <sect1 id="settingup_firstrun">
+      <title>Executando a compilação da documentação</title>
+
+      <para>Após as etapas anteriores, é hora de executar a compilação. Primeiro, nós queremos executar novamente o <filename>autogen.sh</filename>. Se este script executa o configure para você, então forneça a este a opção <option>--enable-gtk-doc</option>. Do contrário, execute manualmente <filename>configure</filename> com esta opção em seguida.</para>
+      <para>A primeira execução do make cria vários arquivos adicionais nos diretórios de documentação. Os importantes são: <filename>&lt;pacote&gt;.types</filename>, <filename>&lt;pacote&gt;-docs.xml</filename> (no passado, .sgml), <filename>&lt;pacote&gt;-sections.txt</filename>.</para>
+      <para>
+        <example><title>Executando a compilação da documentação</title>
+          <programlisting>
+./autogen.sh --enable-gtk-doc
+make
+</programlisting>
+        </example>
+      </para>
+      <para>Agora você pode apontar seu navegador para <filename>docs/reference/&lt;pacote&gt;/index.html</filename>. Sim, é um pouco desapontador. Mas aguente aí, durante o próximo capítulo nós vamos dizer como você pode preencher as páginas com vida.</para>
+    </sect1>
+
+    <sect1 id="settingup_vcs">
+      <title>Integração com sistemas de controle de versão</title>
+
+      <para>Como uma regra de ouro, são aqueles arquivos que você edita que deveriam entrar no controle de versão. Para projetos normais, esses são os arquivos: <filename>&lt;pacote&gt;.types</filename>, <filename>&lt;pacote&gt;-docs.xml</filename> (no passado, .sgml), <filename>&lt;pacote&gt;-sections.txt</filename>, <filename>Makefile.am</filename></para>
+      <para>Arquivos nos diretórios <filename>xml/</filename> e <filename>html/</filename> não deveriam entrar no controle de versão. Da mesma forma, não deveriam entrar arquivos <filename>.stamp</filename>.</para>
+    </sect1>
+
+    <sect1 id="plain_makefiles">
+      <title>Integração com makefiles simples ou outros sistemas de compilação</title>
+
+      <para>Neste caso, não se deseja usar o automake e, portanto, <filename>gtk-doc.mak</filename>. Será necessário chamar as ferramentas do gtkdoc na ordem correta nos makefiles devidos (ou outras ferramentas de compilação).</para>
+
+      <para>
+        <example><title>Etapas de compilação da documentação</title>
+          <programlisting>
+DOC_MODULE=meep
+// fontes foram alterados
+gtkdoc-scan --module=$(DOC_MODULE) &lt;source-dir=&gt;
+gtkdoc-scangobj --module=$(DOC_MODULE)
+gtkdoc-mkdb --module=$(DOC_MODULE) --output-format=xml --source-dir=&lt;source-dir&gt;
+// arquivos xml foram alterados 
+mkdir html
+cd html &amp;&amp; gtkdoc-mkhtml $(DOC_MODULE) ../meep-docs.xml
+gtkdoc-fixxref --module=$(DOC_MODULE) --module-dir=html
+</programlisting>
+        </example>
+      </para>
+
+      <para>Será necessário olhar no <filename>Makefile.am</filename> e no <filename>gtk-doc.mak</filename> para obter as opções extras necessárias.</para>
+    </sect1>
+
+    <sect1 id="cmake">
+       <title>Integração com sistemas de compilação CMake</title>
+
+       <para>GTK-Doc agora fornece um módulo <filename>GtkDocConfig.cmake</filename> (e o module <filename>GtkDocConfigVersion.cmake</filename> correspondente). Ele fornece um comando <literal>gtk_doc_add_module</literal> que você pode usar em seu arquivo <filename>CMakeLists.txt</filename>.</para>
+
+       <para>O exemplo a seguir mostra como usar este comando. <example><title>Exemplo de uso do GTK-Doc no CMake</title>
+             <programlisting>
+find_package(GtkDoc 1.25 REQUIRED)
+
+# Cria o alvo doc-libmeep.
+gtk_doc_add_module(
+   libmeep ${CMAKE_SOURCE_DIR}/libmeep
+      XML meep-docs.xml
+      LIBRARIES libmeep
+)
+
+# Compila doc-libmeep como parte do alvo padrão. Sem isso, você precisaria
+# executar explicitamente algo como `make doc-libmeep` para compilar os
+# documentos.
+add_custom_target(documentation ALL DEPENDS doc-libmeep)
+
+# Install the docs. (This assumes you're using the GNUInstallDirs CMake module
+# to set the CMAKE_INSTALL_DOCDIR variable correctly).
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/libmeep/html
+        DESTINATION ${CMAKE_INSTALL_DOCDIR})
+</programlisting>
+         </example></para>
+     </sect1>
+  </chapter>
+
+  <chapter id="documenting">
+    <title>Documentando o código</title>
+
+    <para>GTK-Doc usa comentários do código fonte com uma sintaxe especial para documentação do código. Além disso, ele obtém informações sobre a estrutura do seu projeto a partir de outros fontes. Na próxima seção, você vai descobrir todas as informações sobre a sintaxe dos comentários.</para>
+
+    <note>
+      <title>Localização da documentação</title>
+      <para>Antigamente, a maioria das documentações tinha que ser preenchida em arquivos residentes dentro do diretório <filename>tmpl</filename>. Isso tem as desvantagens das informações frequentemente não serem atualizadas e também que o arquivo tende a causar conflitos com sistemas de controle de versão.</para>
+      <para>Para evitar os problemas mencionados a seguir nós sugerimos que a documentação seja colocada dentro das fontes. Este manual vai apenas descrever esta forma de documentar código.</para>
+    </note>
+
+    <para>A varredura sabe lidar com a maioria dos cabeçalhos de C sem problemas. Caso se receba avisos (warnings) na varredura que pareça ser um caso especial, pode-se informar ao GTK-Doc para ignorá-los. <example><title>Bloco de comentário do GTK-Doc</title>
+        <programlisting>
+#ifndef __GTK_DOC_IGNORE__
+/* código não analisável arqui */
+#endif
+</programlisting>
+      </example></para>
+
+    <note>
+      <title>Limitações</title>
+      <para>Note que o GTK-Doc oferece suporte a <code>#ifndef(__GTK_DOC_IGNORE__)</code>, mas não a <code>#if !defined(__GTK_DOC_IGNORE__)</code> ou outras combinações.</para>
+    </note>
+
+    <!--  -->
+
+    <sect1 id="documenting_syntax">
+      <title>Comentários de documentação</title>
+
+      <para>Um comentário multilinha que começa com um "*" adicional marca um bloco de documentação que será processado pelas ferramentas do GTK-Doc. <example><title>Bloco de comentário do GTK-Doc</title>
+          <programlisting>
+/**
+ * identificador:
+ * documentação ...
+ */
+</programlisting>
+        </example></para>
+
+      <para>O "identificador" é uma linha com o nome do item ao qual o comentário está relacionado. A sintaxe difere um pouco dependendo do item.</para>
+
+      <para>O bloco "documentação" também é diferente para cada tipo de símbolo. Tipos de símbolos que levam parâmetros, como funções e macros, têm a descrição de parâmetro começando com uma linha vazia (apenas com um "*"). Posteriormente, segue com a descrição detalhada. Todas as linhas (fora das listagens do programa e seções CDATA) contendo apenas um " *" (espaço em branco e asterisco) são convertidas para quebras de parágrafos. Se você não quiser uma quebra de parágrafo, altere isso para " * " (espaço, asterisco, espaço e espaço). Isso é útil em textos pré-formatados (listagens de código).</para>
+
+      <tip>
+        <para>Ao documentar um código, descreva dois aspectos: <itemizedlist>
+             <listitem>
+               <para>O que é: O nome de uma classe ou função pode, em alguns casos, levar a um entendimento equivocado pessoas com experiências diferentes.</para>
+             </listitem>
+             <listitem>
+               <para>O que isso faz: Fale sobre usos comuns. Coloque em relação com a outra API.</para>
+             </listitem>
+           </itemizedlist></para>
+      </tip>
+
+      <para>Uma vantagem do hipertexto de texto simples é a habilidade de ter links no documento. Porém, escrever a marcação correta para cada link pode ser entediante. GTK-Doc vem para ajudar fornecendo abreviações úteis. <itemizedlist>
+          <listitem>
+            <para>Use function() para referir às funções ou macros que levam argumentos.</para>
+          </listitem>
+          <listitem>
+            <para>Use @param para se referir a parâmetros. Também, use isso ao se referir a parâmetros de outras funções, relacionadas àquele sendo descrito.</para>
+          </listitem>
+          <listitem>
+            <para>Use %constant para se referir a uma constante, ex.: %G_TRAVERSE_LEAFS.</para>
+          </listitem>
+          <listitem>
+            <para>Use #symbol para se referir a outros tipos de símbolos, ex.: structs, enums e macros que não levam argumentos.</para>
+          </listitem>
+          <listitem>
+            <para>Use #Object::signal para se referir a um sinal de GObject.</para>
+          </listitem>
+          <listitem>
+            <para>Use #Object:property para se referir a uma propriedade de GObject.</para>
+          </listitem>
+          <listitem>
+            <para>Use #Struct.field para se referir a um campo dentro de uma estrutura e #GObjectClass.foo_bar() para se referir a um vmethod.</para>
+          </listitem>
+        </itemizedlist></para>
+
+      <tip>
+        <para>Se você precisar usar os caracteres especiais "&lt;", "&gt;", "()", "@", "%" ou "#" em sua documentação sem GTK-Doc alterando-os, você pode usar as entidades XML "&amp;lt;", "&amp;gt;", "&amp;lpar;", "&amp;rpar;", "&amp;commat;", "&amp;percnt;" e "&amp;num;", respectivamente, ou escapá-los com uma contrabarra "\".</para>
+      </tip>
+
+      <para>DocBook pode fazer mais do que apenas links. Ele também pode ter listas, exemplos, títulos e imagens. A partir da versão 1.20, a forma preferível é usar um subconjunto de sintaxe de formatação de texto básica chamada <ulink url="http://daringfireball.net/projects/markdown/">Markdown</ulink>. Em versões mais antigas do GTK-Doc, qualquer documentação que inclui Markdown será renderizada como está. Por exemplo, itens de lista aparecerão como linhas começando com um traço.</para>
+
+      <para>Enquanto markdown é agora preferível, é possível misturar ambos. Uma limitação aqui é que é possível usar docbook xml no markdown, mas não há suporte a markdown no docbook xml.</para>
+
+      <para>Em versões mais antigas do GTK-Doc, se você precisasse de suporte para formatação adicional, você precisaria de habilitar o uso de tags de XML de docbook dentro de comentários de documentação colocando <option>--xml-mode</option> (ou <option>--sgml-mode</option>) na variável <symbol>MKDB_OPTIONS</symbol> dentro de <filename>Makefile.am</filename>.</para>
+
+      <para>
+        <example><title>Bloco de comentário do GTK-Doc usando Markdown</title>
+          <programlisting>
+/**
+ * identificador:
+ *
+ * parágrafo de documentação ...
+ *
+ * # Subtítulo #
+ *
+ * ## Segundo subtítulo
+ *
+ * # Subtítulo com um link âncora # {#titulo-dois}
+ *
+ * mais documentação:
+ *
+ * - item 1 da lista
+ *
+ *   Parágrafo dentro de um item de lista.
+ *
+ * - item 2 da lista
+ *
+ * 1. item numerado da lista
+ *
+ * 2. outro item numerado da lista
+ *
+ * Outro parágrafo. [Um link para o site do GNOME](http://www.gnome.org/)
+ *
+ * ![uma imagem embutida](plot-result.png)
+ *
+ * [Um link para um título acima][titulo-dois]
+ *
+ * Um exemplo em linguagem C:
+ * |[&lt;!-- language="C" --&gt;
+ * GtkWidget *label = gtk_label_new ("Esplêndido!");
+ * ]|
+ */
+</programlisting>
+        </example>
+      </para>
+
+      <para>Mais exemplos do quais tags de markdown tags tem suporte pode ser encontrado na <ulink url="https://wiki.gnome.org/Projects/GTK%2B/DocumentationSyntax/Markdown">Referência de sintaxe de markdown de documentação</ulink>.</para>
+
+      <tip>
+        <para>Como já mencionado anteriormente, GTK-Doc serve para documentar API pública. Portanto, não é possível escrever documentação para símbolos estáticos. Não obstante, é bom comentar estes símbolos também. Isso ajuda outros a entender seu código. Portanto, é recomendado comentá-los usando comentários normais (sem o segundo "*" na primeira linha). Se, posteriormente, a função precisar ser publicada, tudo que precisa ser feito é adicionar outro "*" no bloco de comentário e inserir o nome do símbolo no lugar correto do arquivo e seções.</para>
+      </tip>
+    </sect1>
+
+    <sect1 id="documenting_sections">
+      <title>Documentando seções</title>
+
+      <para>Cada seção da documentação contém informações sobre uma classe ou um módulo. Para introduzir o componente, pode-se escrever um bloco de seção. A descrição curta também é usada dentro da tabela de conteúdo (sumário). Todos os @fields são opcionais.</para>
+
+      <para>
+        <example><title>Bloco de comentário de sessão</title>
+          <programlisting>
+/**
+ * SECTION:meepapp
+ * @short_description: A classe do aplicativo
+ * @title: Aplicativo Meep
+ * @section_id:
+ * @see_also: #MeepSettings
+ * @stability: Estável
+ * @include: meep/app.h
+ * @image: aplicativo.png
+ *
+ * A classe do aplicativo cuida de ...
+ */
+</programlisting>
+        </example>
+      </para>
+
+      <variablelist>
+        <varlistentry>
+          <term>SECTION:&lt;nome&gt;</term>
+          <listitem>
+            <para>O nome vincula a documentação da seção à respectiva parte do arquivo <filename>&lt;pacote&gt;-sections.txt</filename>. O nome informado aqui deve corresponder à tag &lt;FILE&gt; no arquivo <filename>&lt;pacote&gt;-sections.txt</filename>.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>@short_description</term>
+          <listitem>
+            <para>Uma descrição de uma linha da sessão,que mais tarde aparecerá após os links no TOC (sumário) no topo da página da sessão.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>@title</term>
+          <listitem>
+            <para>O padrão para título de seção é &lt;nome&gt; da declaração da SECTION. Ele pode ser sobrescrito com o campo @title.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>@section_id</term>
+          <listitem>
+            <para>Sobrescreve o uso do título como um identificador de seção. Para GObjects, o &lt;title&gt; é usado como um section_id e para outras seções ele é &lt;MÓDULO&gt;-&lt;title&gt;.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>@see_also</term>
+          <listitem>
+            <para>Uma lista de símbolos que estão relacionados a esta sessão.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>@stability</term>
+          <listitem>
+            <para>Uma descrição informal do nível de estabilidade que esta API tem. Nós recomendamos o uso de um desses termos: <itemizedlist>
+                <listitem>
+                  <para>Estável - A intenção de uma interface estável é permitir terceiros arbitrários desenvolverem aplicativos para essas interfaces, lançá-los e ter a confiança de que eles vão funcionar em todos os lançamentos menores do produto (após aquele no qual a interface foi introduzida e naquele mesmo lançamento maior). Atém mesmo em um lançamento maior, espera-se que alterações incompatíveis sejam raras e que tenham fortes justificativas.</para>
+                </listitem>
+                <listitem>
+                  <para>Instável - Interfaces instáveis são experimentais ou transicionais. Elas são normalmente usadas para dar a desenvolvedores externos um acesso prévio a nova tecnologia ou em rápida alteração, ou para fornecer uma solução interina para um problema que uma solução mais genérica foi antecipada. Nenhuma responsabilidade é assumida pela compatbilidade dos binários ou dos fontes de uma versão menor para a próxima.</para>
+                </listitem>
+                <listitem>
+                  <para>Privado - Uma interface que pode ser usada dentro da própria pilha do GNOME, mas que não está documentada para usuários finais. Tais funções deveriam ser usadas nas formas especificadas e documentadas.</para>
+                </listitem>
+                <listitem>
+                  <para>Interna - Uma interface que é interna a um módulo e não requer documentação para o usuário final. Funções que não estão documentadas são presumidas como sendo "Interna".</para>
+                </listitem>
+              </itemizedlist></para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>@include</term>
+          <listitem>
+            <para>Os arquivos <literal>#include</literal> a ser mostrado na sinopse da seção (uma lista separada por vírgulas), sobrescrevendo o valor global do <link linkend="metafiles_sections">arquivo de seção</link> ou linha de comando. Este item é opcional.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>@image</term>
+          <listitem>
+            <para>A imagem a ser exibida no topo da página de referência desta seção. Isso frequentemente será um tipo de diagrama para ilustrar a aparência visual de uma classe ou uma diagrama de suas relações a outras classes. Este item é opcional.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+
+      <tip>
+        <para>Para evitar recompilação desnecessária após alterações de documentação inseridas nas documentações de seção no fonte em C onde possível.</para>
+      </tip>
+
+    </sect1>
+
+    <sect1 id="documenting_symbols">
+      <title>Documentando símbolos</title>
+
+      <para>Cada símbolo (função, macro, struct, enum, signal e property) é documentado em uma bloco separado. O bloco é melhor localizado perto da definição dos símbolos, de forma que seja fácil de mantê-los em sincronia. Portanto, as funções são normalmente documentadas no fonte em C e macros, scructs e enums no arquivo de header.</para>
+
+      <sect2><title>Tags gerais</title>
+
+        <para>Você pode adicionar informação sobre versionamento em todos os elementos de documentação para informar quando uma API foi introduzida ou quando ela se tornou obsoleta.</para>
+
+        <variablelist><title>Tags de versionamento</title>
+          <varlistentry><term>Since:</term>
+            <listitem>
+              <para>Descrição de desde qual versão do código a API está disponível.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry><term>Deprecated:</term>
+            <listitem>
+              <para>Parágrafo denotando que esta função deveria não mais ser usada. A descrição deveria apontar o leitor para a nova API.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+
+        <para>Você também pode adicionar informação sobre estabilidade em todos os elementos de documentação para indicar se a estabilidade de uma API é garantida para eles para futuros lançamentos menores do projeto.</para>
+
+        <para>O nível de estabilidade padrão para todos os elementos de documentação pode ser definido passando o argumento <option>--default-stability</option> para <application>gtkdoc-mkdb</application> com um dos balores abaixo.</para>
+
+        <variablelist><title>Tags de estabilidade</title>
+          <varlistentry><term>Stability: Stable</term>
+            <listitem>
+              <para>Marca o elemento como estável. Isto é para APIs públicas cuja estabilidade é garantida para todos os próximos lançamentos menores do projeto.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry><term>Stability: Unstable</term>
+            <listitem>
+              <para>Marca o elemento como instável. Isto é para APIs públicas que são publicados como versão de desenvolvimento antes de se tornar estável.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry><term>Stability: Private</term>
+            <listitem>
+              <para>Marca o elemento como privado. Isto é para interfaces que podem ser usadas por um conjunto pequeno de módulos, mas não por terceiros.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+
+        <example><title>Tags gerais</title>
+          <programlisting>
+/**
+ * foo_get_bar:
+ * @foo: Um foo
+ *
+ * Obtém o bar do @foo.
+ *
+ * Returns: bar do @foo
+ *
+ * Since: 2.6
+ * Deprecated: 2.12: Use foo_baz_get_bar() no seu lugar.
+ */
+Bar *
+foo_get_bar(Foo *foo)
+{
+...
+</programlisting>
+        </example>
+      </sect2>
+
+      <sect2><title>Anotações</title>
+
+        <para>Blocos de documentação podem conter tags de anotação. Essas tags serão renderizadas com dicas de ferramentas descrevendo seu significados. As tags são usadas pelo gobject-introspection para garantir associações (bindings) de linguagens. Uma lista detalhada tags aceitas podem ser encontrada <ulink url="http://live.gnome.org/GObjectIntrospection/Annotations" type="http">no wiki</ulink>.</para>
+
+        <example><title>Anotações</title>
+          <programlisting>
+/**
+ * foo_get_bar: (anotação)
+ * @foo: (anotação): algum foo
+ *
+ * Obtém bar do @foo.
+ *
+ * Returns: (anotação): bar do @foo
+ */
+...
+/**
+ * foo_set_bar_using_the_frobnicator: (anotação) (outra anotação)
+ *                                    (e uma outra anotação)
+ * @foo: (anotação) (uma outra anotação): algum foo
+ *
+ * Define bar no @foo.
+ */
+</programlisting>
+        </example>
+      </sect2>
+
+      <sect2><title>Bloco de comentário de função</title>
+
+        <para>Por favor, lembre-se de: <itemizedlist>
+            <listitem>
+              <para>Documente se objetos, listas, strings, etc. retornados devem ser não usados/não referenciados/liberada.</para>
+            </listitem>
+            <listitem>
+              <para>Documente se parâmetros pode ser NULL e o que acontece se eles o forem.</para>
+            </listitem>
+            <listitem>
+              <para>Mencione pré-condições e pós-condições interessantes onde for apropriado.</para>
+            </listitem>
+          </itemizedlist></para>
+
+        <para>Gtk-doc presume que todos os símbolos (macros, funções) começando com "_" são privadas. Elas são tratadas como funções estáticas.</para>
+
+        <example><title>Bloco de comentário de função</title>
+          <programlisting>
+/**
+ * nome_da_função:
+ * @par1:  descrição do parâmetro 1. Esta pode se estender por mais de
+ * uma linha.
+ * @par2:  descrição do parâmetro 2
+ * @...: uma lista de bars terminada em %NULL
+ *
+ * A descrição da função vai aqui. Você pode usar @par1 para se referir a parâmetros
+ * de forma que eles ficam em destaque na saída. Você também pode usar %constant
+ * para constantes, nome_da_função2() para funções e #GtkWidget para links para
+ * outras declarações (que pode ser documentada em outro lugar).
+ *
+ * Returns: um inteiro.
+ *
+ * Since: 2.2
+ * Deprecated: 2.18: Use outra_função() em seu lugar.
+ */
+</programlisting>
+        </example>
+
+        <variablelist><title>Tags de função</title>
+          <varlistentry><term>Returns:</term>
+            <listitem>
+              <para>Parágrafo descrevendo o resultado retornado.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry><term>@...:</term>
+            <listitem>
+              <para>No caso da função possuir argumentos variados, você deveria usar esta tag (@Varargs: também funciona por motivos de histórico).</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+
+      </sect2>
+
+      <sect2><title>Bloco de comentário de propriedade</title>
+
+        <example><title>Bloco de comentário de propriedade</title>
+          <programlisting>
+/**
+ * AlgumWidget:alguma-propriedade:
+ *
+ * Aqui você pode documentar uma propriedade.
+ */
+g_object_propriedade_install_classe (object_classe, PROP_ALGUMA_PROPRIEDADE, ...);
+</programlisting>
+        </example>
+
+      </sect2>
+
+      <sect2><title>Bloco de comentário de sinal</title>
+
+        <para>Por favor, lembre-se de: <itemizedlist>
+            <listitem>
+              <para>Documente quando o sinal é emitido e se ele é emitido antes ou após outros sinais.</para>
+            </listitem>
+            <listitem>
+              <para>Documente o que um aplicativo pode fazer no manipulador do sinal.</para>
+            </listitem>
+          </itemizedlist></para>
+
+        <example><title>Bloco de comentário de sinal</title>
+          <programlisting>
+/**
+ * FooWidget::foobarizado:
+ * @widget: o widget que recebeu o sinal
+ * @foo: algum foo
+ * @bar: algum bar
+ *
+ * O sinal ::foobarized é emitido cada vez que alguém tenta foobarizar @widget.
+ */
+foo_sinais[FOOBARIZAR] =
+  g_signal_novo ("foobarizar",
+                ...
+</programlisting>
+        </example>
+
+      </sect2>
+
+      <sect2><title>Bloco de comentário de struct</title>
+        <example><title>Bloco de comentário de struct</title>
+          <programlisting>
+/**
+ * FooWidget:
+ * @bar: algum #gboolean
+ *
+ * Este é o melhor widget, já mais visto.
+ */
+typedef struct _FooWidget {
+  GtkWidget parent_intance;
+
+  gboolean bar;
+} FooWidget;
+</programlisting>
+        </example>
+
+        <para>Use <code>/*&lt; private &gt;*/</code> antes dos campos da struct privada que você deseja esconder. Use <code>/*&lt; public &gt;*/</code> para o comportamento inverso.</para>
+
+        <para>Se o primeiro campo for "g_iface", "parent_instance" ou "parent_class", ele será automaticamente considerado como privado e não precisará ser mencionado no bloco de comentário.</para>
+
+        <para>Blocos de comentário de struct também podem ser usados para GObjects e GObjectClasses. É normalmente uma boa ideia adicionar um bloco de comentário para uma classe, se ela possui vmethods (pois assim é como elas podem ser documentadas). Para o próprio GOBject pode-se usar os documentos de seção relacionados, tendo um bloco separado para a instância do struct seria útil se a instância possui campos públicos. Uma desvantagem aqui é que isso cria duas entradas no índice do mesmo nome (a estrutura e a seção).</para>
+
+      </sect2>
+
+      <sect2><title>Bloco de comentário de enum</title>
+        <example><title>Bloco de comentário de enum</title>
+          <programlisting>
+/**
+ * Alguma coisa:
+ * @ALGUMACOISA_FOO: alguma coisa foo
+ * @ALGUMCAOISA_BAR: alguma coisa bar
+ *
+ * Valores de enum usados para a coisa, para especificar a coisa.
+ */
+typedef enum {
+  ALGUMACOISA_FOO,
+  ALGUMACOISA_BAR,
+  /*&lt; private &gt;*/
+  ALGUMACOISA_CONTAGEM
+} Alguma coisa;
+</programlisting>
+        </example>
+
+        <para>Use <code>/*&lt; private &gt;*/</code> antes de valores privados de enum que você deseja ocultar. Use <code>/*&lt; public &gt;*/</code> para o comportamento inverso.</para>
+
+      </sect2>
+    </sect1>
+
+    <sect1 id="documenting_docbook">
+      <title>Tags úteis do DocBook</title>
+
+      <para>Aqui estão algumas tags de DocBook que são muito úteis quando se está documentado o código.</para>
+
+      <para>Para vincular a outra seção nas documentações do GTK: <informalexample>
+          <programlisting>
+&lt;link linkend="glib-Hash-Tables"&gt;Tabela de hashes&lt;/link&gt;
+</programlisting>
+        </informalexample> O fim do link é o ID do SGML/XML no item superior da páginao a qual você deseja vincular. Para a maioria das páginas isto é atualmente a parte ("gtk", "gdk", "glib") e, então, o título da página ("Hash Tables"). Para os widgets isso é apenas o nome da classe. Espaços e sublinhados são convertidos em '-' para estar em conformidade com SGML/XML.</para>
+
+      <para>Para se referir a uma função externa, como, por exemplo, uma função padrão do C: <informalexample>
+          <programlisting>
+&lt;function&gt;...&lt;/function&gt;
+</programlisting>
+        </informalexample></para>
+
+      <para>Para incluir um código de exemplo: <informalexample>
+          <programlisting>
+&lt;example&gt;
+  &lt;title&gt;Usando uma GHashTable.&lt;/title&gt;
+  &lt;programlisting&gt;
+      ...
+  &lt;/programlisting&gt;
+&lt;/example&gt;
+</programlisting>
+        </informalexample> ou possivelmente este, para fragmentos de código bem curtos que não precisam de um título: <informalexample>
+          <programlisting>
+&lt;informalexample&gt;
+  &lt;programlisting&gt;
+  ...
+  &lt;/programlisting&gt;
+&lt;/informalexample&gt;
+</programlisting>
+        </informalexample> Para este último, GTK-Doc também possui suporte a uma abreviação: |[ ... ]|</para>
+
+      <para>Para incluir listas com marcadores: <informalexample>
+          <programlisting>
+&lt;itemizedlist&gt;
+  &lt;listitem&gt;
+    &lt;para&gt;
+      ...
+    &lt;/para&gt;
+  &lt;/listitem&gt;
+  &lt;listitem&gt;
+    &lt;para&gt;
+      ...
+    &lt;/para&gt;
+  &lt;/listitem&gt;
+&lt;/itemizedlist&gt;
+</programlisting>
+        </informalexample></para>
+
+      <para>Para incluir uma nota que fique fora do texto: <informalexample>
+          <programlisting>
+&lt;note&gt;
+  &lt;para&gt;
+    Certifique-se de que você liberou os dados após usá-los.
+  &lt;/para&gt;
+&lt;/note&gt;
+</programlisting>
+        </informalexample></para>
+
+      <para>Para se referir a um tipo: <informalexample>
+          <programlisting>
+&lt;type&gt;unsigned char&lt;/type&gt;
+</programlisting>
+        </informalexample></para>
+
+      <para>Para se referir a uma estrutura externa (não uma descrita nos documentos do GTK): <informalexample>
+          <programlisting>
+&lt;structname&gt;XFontStruct&lt;/structname&gt;
+</programlisting>
+        </informalexample></para>
+
+      <para>Para se referir a um campo de uma estrutura: <informalexample>
+          <programlisting>
+&lt;structfield&gt;len&lt;/structfield&gt;
+</programlisting>
+        </informalexample></para>
+
+      <para>Para se referir a um nome de classe, nós possivelmente poderíamos usar: <informalexample>
+          <programlisting>
+&lt;classname&gt;GtkWidget&lt;/classname&gt;
+</programlisting>
+        </informalexample> mas você provavelmente vai estar usando #GtkWidget em vez disso (para criar automaticamente um link para a página do GtkWidget - veja <link linkend="documenting_syntax">as abreviações</link>).</para>
+
+      <para>Para enfatizar um texto: <informalexample>
+          <programlisting>
+&lt;emphasis&gt;Isso é importante&lt;/emphasis&gt;
+</programlisting>
+        </informalexample></para>
+
+      <para>Para nome de arquivos use: <informalexample>
+          <programlisting>
+&lt;filename&gt;/home/usuario/documentos&lt;/filename&gt;
+</programlisting>
+        </informalexample></para>
+
+      <para>Para se referir a chaves use: <informalexample>
+          <programlisting>
+&lt;keycombo&gt;&lt;keycap&gt;Control&lt;/keycap&gt;&lt;keycap&gt;L&lt;/keycap&gt;&lt;/keycombo&gt;
+</programlisting>
+        </informalexample></para>
+
+    </sect1>
+  </chapter>
+
+  <chapter id="metafiles">
+    <title>Preenchendo os arquivos extras</title>
+
+    <para>Há alguns poucos arquivos extras, que precisam ser mantidos junto com os comentários inseridos no código fonte: <filename>&lt;pacote&gt;.types</filename>, <filename>&lt;pacote&gt;-docs.xml</filename> (no passado, .sgml), <filename>&lt;pacote&gt;-sections.txt</filename>.</para>
+
+    <sect1 id="metafiles_types">
+      <title>Editando o arquivo de tipos</title>
+
+      <para>Se sua biblioteca ou aplicativo inclui GObjects, você deseja que seus sinais, argumentos/parâmetros e posição na hierarquia sejam mostrados na documentação. Tudo que você precisa fazer é listar as funções <function>xxx_get_type</function> junto com seus include dentro do arquivo <filename>&lt;pacote&gt;.types</filename>.</para>
+
+      <para>
+        <example><title>Trecho de exemplo de arquivo de tipos</title>
+          <programlisting>
+#include &lt;gtk/gtk.h&gt;
+
+gtk_accel_label_get_type
+gtk_adjustment_get_type
+gtk_alignment_get_type
+gtk_arrow_get_type
+</programlisting>
+        </example>
+      </para>
+
+      <para>Desde o GTK-Doc 1.8, o <application>gtkdoc-scan</application> pode gerar esta lista para você. Basta adicionar "--rebuild-types" a SCAN_OPTIONS no <filename>Makefile.am</filename>. Se você usar esta abordagem, você não deveria distribuir o arquivo de tipos nem tê-lo sob um controle de versão.</para>
+
+    </sect1>
+
+    <sect1 id="metafiles_master">
+      <title>Editando o documento mestre</title>
+
+      <para>O Gtk-Doc produz documentação em DocBook SGML/XML. Ao processar os comentários inseridos nos fontes, as ferramentas do GTK-Doc geram uma página de documentação por classe ou módulo como um arquivo separado. O documento mestre os inclui e os coloca em uma ordem.</para>
+
+      <para>Enquanto o Gtk-Doc cria um modelo de documento mestre para você, execuções posteriores não vão tocá-lo novamente. Isso significa que se pode estruturar a documentação livremente. Isso inclui agrupamento de páginas e adição de páginas extras. O Gtk-Doc agora possui uma suíte de teste, na qual também o documento mestre é recriado do zero. É uma boa ideia verificar isso de tempo em tempo para ver se há itens a serem introduzidos lá.</para>
+
+      <tip>
+        <para>Não crie tutoriais como documentos extras. Apenas escreva capítulos extras. O benefício de embutir diretamente o tutorial para sua biblioteca na documentação da API é que é mais fácil vincular o tutorial a um símbolo da documentação. Além disso, as chances são mais altas que o tutorial obtenha atualizações junto com a biblioteca.</para>
+      </tip>
+
+      <para>Então, quais são as coisas para se alterar dentro do documento mestre? Para começar é apenas um pouco. Existem alguns mantedores de espaço (texto em colchetes) que você deve cuidar.</para>
+
+      <para>
+        <example><title>Cabeçalho do documento mestre</title>
+          <programlisting>
+&lt;bookinfo&gt;
+  &lt;title&gt;Manual de referência do NOMEDOMÓDULO&lt;/title&gt;
+  &lt;releaseinfo&gt;
+    for NOMEDOMÓDULO [VERSÃO]
+    A última versão desta documentação também pode ser encontrada on-line em
+    &lt;ulink role="online-location" url="http://[SERVIDOR]/NOMEDOMÓDULO/index.html"&gt;http://[SERVIDOR]/NOMEDOMÓDULO/&lt;/ulink&gt;.
+  &lt;/releaseinfo&gt;
+&lt;/bookinfo&gt;
+
+&lt;chapter&gt;
+  &lt;title&gt;[Insira o título aqui]&lt;/title&gt;
+</programlisting>
+        </example>
+      </para>
+
+      <para>Além disso, alguns elementos de opção são criados na forma comentada. Você pode revisá-los e habilitá-los como preferir.</para>
+      
+      <para>
+        <example><title>Parte opcional do documento mestre</title>
+          <programlisting>
+  &lt;!-- habilite isso se você usa anotações do gobject introspection
+  &lt;xi:include href="xml/annotation-glossary.xml"&gt;&lt;xi:fallback /&gt;&lt;/xi:include&gt;
+  --&gt;          
+</programlisting>
+        </example>
+      </para>
+      
+      <para>Finalmente você precisa adicionar nova seção sempre que você a introduzir. A ferramenta <link linkend="modernizing-gtk-doc-1-16">gtkdoc-check</link> vai lembrar você de arquivos xml recentemente gerados que ainda não foram incluídos na documentação.</para>
+
+      <para>
+        <example><title>Incluindo seções geradas</title>
+          <programlisting>
+  &lt;chapter&gt;
+    &lt;title&gt;minha biblioteca&lt;/title&gt;
+      &lt;xi:include href="xml/object.xml"/&gt;
+      ...
+</programlisting>
+        </example>
+      </para>
+
+    </sect1>
+
+    <sect1 id="metafiles_sections">
+      <title>Editando o arquivo de seção</title>
+
+      <para>O arquivo de seção é usado para organizar a saída da documentação pelo GTK-Doc. Aqui pode-se especificar qual símbolo pertence a qual módulo ou classe e controla a visibilidade (pública ou privada).</para>
+
+      <para>O arquivo de seção é uma arquivo texto simples com seções delimitadas por tags. Linhas em branco são ignoradas e linhas começando com um "#" são tratadas como linhas de comentários.</para>
+      
+      <note>
+        <para>Enquanto as tags fazem o arquivo se parecer xml, ele não é. Por favor, não feche tags como &lt;SUBSECTION&gt;.</para>
+      </note>
+
+      <para>
+        <example><title>Incluindo seções geradas</title>
+          <programlisting>
+&lt;INCLUDE&gt;libmeep/meep.h&lt;/INCLUDE&gt;
+
+&lt;SECTION&gt;
+&lt;FILE&gt;meepapp&lt;/FILE&gt;
+&lt;TITLE&gt;MeepApp&lt;/TITLE&gt;
+MeepApp
+&lt;SUBSECTION Standard&gt;
+MEEP_APP
+...
+MeepAppClass
+meep_app_get_type
+&lt;/SECTION&gt;
+</programlisting>
+        </example>
+      </para>
+
+      <para>A tag &lt;FILE&gt; ... &lt;/FILE&gt; é usada para especificar o nome de arquivo, sem qualquer sufixo. Por exemplo, ao usar "&lt;FILE&gt;gnome-config&lt;/FILE&gt;" resultará nas declarações da seção serem retornadas no arquivo modelo <filename>tmpl/gnome-config.sgml</filename>, o qual será convertido no arquivo DocBook XML <filename>xml/gnome-config.sgml</filename> ou no arquivo DocBook XML <filename>xml/gnome-config.xml</filename>. (O nome do arquivo HTML é baseado no nome do módulo e no título da seção ou, para GObjects, é baseado no nome da classe GObjects convertidos os caracteres para minúsculos).</para>
+
+      <para>A tag &lt;TITLE&gt; ... &lt;/TITLE&gt; é usada para especificar o título da seção. Ela é usada apenas antes do modelo (se usado) ser criado inicialmente, já que o título definido no arquivo de modelo sobrescreve este. Também, se for usado o comentário SECTION nos fontes, isso está obsoleto.</para>
+
+      <para>Você pode agrupar itens na seção usando a tag &lt;SUBSECTION&gt;. Atualmente, ela retorna uma linha em branco entre as subseções na seção de sinópse. Você também pode usar &lt;SUBSECTION Standard&gt; para declarações padrão do GObject (ex.: as funções como g_object_get_type e macros como G_OBJECT(), G_IS_OBJECT() etc.). Atualmente, estas são deixadas fora da documentação. Você também pode usar &lt;SUBSECTION Private&gt; para declarações privadas que não serão retornadas (é uma forma prática de evitar mensagens de aviso sobre declarações não usadas). Se sua biblioteca contém tipos privados que você não deseja que apareçam na hierarquia do objeto e a linha de classes implementadas ou exigidas, adicione-as a uma subseção privada. Se você colocaria o GObject e GObjectClass como structs numa seção padrão ou pública depende se há entradas públicas (variáveis, vmethods).</para>
+
+      <para>Você também pode usar &lt;INCLUDE&gt; ... &lt;/INCLUDE&gt; para especificar os arquivos #include que são mostrados nas seções de sinópse. Ela contém uma lista separada por vírgula de arquivos #include, sem os sinais de maior que e menor que. Se você define-a fora de quaisquer seções, ela age para todas as seções até o fim do arquivo. Se você define-a em uma seção, ela só vai se aplicar àquela seção.</para>
+
+    </sect1>
+
+  </chapter>
+
+  <chapter id="reports">
+    <title>Controlando o resultado</title>
+
+    <para>Uma execução do GTK-Doc gera arquivos de relatórios dentro do diretório de documentação. Os arquivos gerados são chamados: <filename>&lt;pacote&gt;-undocumented.txt</filename>, <filename>&lt;pacote&gt;-undeclared.txt</filename> e <filename>&lt;pacote&gt;-unused.txt</filename>. Todos eles são arquivos texto simples que podem ser facilmente visualizados e pós-processados.</para>
+
+    <para>O arquivo <filename>&lt;pacote&gt;-undocumented.txt</filename> começa com um sumário de cobertura da documentação. Abaixo estão duas seções divididas por linhas brancas. A primeira seção lista símbolos não documentados e incompletos. A segunda seção faz o mesmo para os documentos de seção. Entradas incompletas são aquelas que foram documentadas, mas nas quais, por exemplo, um novo parâmetro foi adicionado.</para>
+
+    <para>O arquivo <filename>&lt;pacote&gt;-undeclared.txt</filename> lista símbolos dados no <filename>&lt;pacote&gt;-sections.txt</filename>, mas não encontrados nos fontes. Verifique se eles foram removidos ou se eles foram escritos incorretamente.</para>
+
+    <para>O arquivo <filename>&lt;pacote&gt;-unused.txt</filename> lista nomes de símbolo cuja documentação foi localizada na varredura do GTK-Doc, mas que não sabe onde colocá-los. Isso significa que o símbolo não foi adicionado ainda ao arquivo <filename>&lt;pacote&gt;-sections.txt</filename>.</para>
+
+    <tip>
+      <para>Habilite ou adicione a linha <option>TESTS=$(GTKDOC_CHECK)</option> no Makefile.am. Se pelo menos GTK-Doc 1.9 estiver instalado, isso vai executar verificações de sanidade durante a execução de <command>make check</command>.</para>
+    </tip>
+
+    <para>Também pode-se buscar nos arquivos produzidos pela varredura do código aberto: <filename>&lt;pacote&gt;-decl-list.txt</filename> e <filename>&lt;pacote&gt;-decl.txt</filename>. O primeiro pode ser comparado com o arquivo de seção, se ele for mantido manualmente. O segundo lista todas as declarações de cabeçalhos. Se um símbolo está faltando, pode-se verificar se este arquivo o contém.</para>
+
+    <para>Se o projeto é baseado em GObject, pode-se também procurar nos arquivos produzidos pela varredura de objetos: <filename>&lt;pacote&gt;.args.txt</filename>, <filename>&lt;pacote&gt;.hierarchy.txt</filename>, <filename>&lt;pacote&gt;.interfaces.txt</filename>, <filename>&lt;pacote&gt;.prerequisites.txt</filename> e <filename>&lt;pacote&gt;.signals.txt</filename>. Se há símbolos faltando em qualquer um deles, pode-se exigir que o GTK-Doc mantenha o arquivo intermediário de varredura para análise posterior, executando <command>GTK_DOC_KEEP_INTERMEDIATE=1 make</command>.</para>
+  </chapter>
+  
+  <chapter id="modernizing">
+    <title>Modernizando a documentação</title>
+    
+    <para>GTK-Doc está por aí já faz um tempo. Nesta seção, nós listamos novas funcionalidades juntamente da versão desde a qual está disponível.</para>
+    
+    <sect1 id="modernizing-gtk-doc-1-9">
+      <title>GTK-Doc 1.9</title>
+
+      <para>Ao usar xml em vez de sgml, na verdade, é possível nomear o documento mestre <filename>&lt;pacote&gt;-docs.xml</filename>.</para>
+      
+      <para>Essa versão provê suporte <option>SCAN_OPTIONS=--rebuild-sections</option> em <filename>Makefile.am</filename>. Quando esta opção está habilitada, o <filename>&lt;package&gt;-sections.txt</filename> é auto-gerado e pode ser removido a partir do VCS. Isso só funciona corretamente para projetos que têm uma estrutura muito regular (ex.: cada par .{c,h} vai criar uma nova seção). Se uma pessoa organiza um projeto próximo a isso atualizando um arquivo de seção mantido manualmente pode ser tão simples quanto executando <code>meld &lt;package&gt;-decl-list.txt &lt;package&gt;-sections.txt</code>.</para>
+      
+      <para>A versão 1.8 já introduziu a sintaxe para documentação seções nos fontes em vez dos arquivos separados sob <filename class="directory">tmpl</filename>. Essa versão adiciona opções para alternar todo o módulo de documentação para não usar a etapa de compilação extra do tmpl, usando <option>--flavour no-tmpl</option> no <filename>configure.ac</filename>. Se você não possui um <filename class="directory">tmpl</filename> no seu sistema de controle de versão e ainda não trocou, basta adicionar uma opção ao <filename>configure.ac</filename> e está resolvido.</para>
+    </sect1>
+    
+    <sect1 id="modernizing-gtk-doc-1-10">
+      <title>GTK-Doc 1.10</title>
+
+      <para>Essa versão provê suporte <option>SCAN_OPTIONS=--rebuild-types</option> no <filename>Makefile.am</filename>. Quando isso está habilitado, o <filename>&lt;package&gt;.types</filename> é auto-gerado e pode ser removido do VCS. Quando usando essa funcionalidade é importante também configurar o <varname>IGNORE_HFILES</varname> no <filename>Makefile.am</filename> para código que é compilado condicionalmente.</para>
+    </sect1>
+
+    <sect1 id="modernizing-gtk-doc-1-16">
+      <title>GTK-Doc 1.16</title>
+
+      <para>Essa versão inclui uma nova ferramenta chamada gtkdoc-check. Essa ferramenta pode executar um conjunto de verificações de sanidade na sua documentação. Ela é habilitada adicionando essas linhas ao final do <filename>Makefile.am</filename>. <example><title>Habilitar gtkdoc-check</title>
+          <programlisting>
+if ENABLE_GTK_DOC
+TESTS_ENVIRONMENT = \
+  DOC_MODULE=$(DOC_MODULE) DOC_MAIN_SGML_FILE=$(DOC_MAIN_SGML_FILE) \
+  SRCDIR=$(abs_srcdir) BUILDDIR=$(abs_builddir)
+TESTS = $(GTKDOC_CHECK)
+endif
+</programlisting>
+        </example></para>
+    </sect1>
+
+    <sect1 id="modernizing-gtk-doc-1-20">
+      <title>GTK-Doc 1.20</title>
+
+      <para>A versão 1.18 trouxe algum suporte inicial a markdown. O uso de markdown em comentários de documentação é menos intrusiva do que escrever xml de docbook. Essa versão melhora em muito nisso e adiciona muito mais estilos. A seção que explica a <link linkend="documenting_syntax">sintaxe de comentário</link> tem todos os detalhes.</para>
+    </sect1>
+
+    <sect1 id="modernizing-gtk-doc-1-25">
+      <title>GTK-Doc 1.25</title>
+
+      <para>Os makefiles fornecidos com esta versão geram um arquivo de entidade em <filename>xml/gtkdocentities.ent</filename>, contendo entidades para, por exemplo, nome-pacote e versão-pacote. Você pode usar isto, por exemplo, no arquivo xml principal para evitar ter que inserir diretamente o número de versão. Logo abaixo encontra-se um exemplo que mostra como o arquivo de entidade é incluído e como as entidades são usadas. As entidades também podem ser usadas em todos arquivos gerados, GTK-Doc usará o mesmo cabeçalho xml nos arquivos xml gerados. <example><title>Usando entradas geradas previamente</title>
+          <programlisting>
+&lt;?xml version="1.0"?&gt;
+&lt;!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+               "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd"
+[
+  &lt;!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2003/XInclude'"&gt;
+  &lt;!ENTITY % gtkdocentities SYSTEM "xml/gtkdocentities.ent"&gt;
+  %gtkdocentities;
+]&gt;
+&lt;book id="index" xmlns:xi="http://www.w3.org/2003/XInclude"&gt;
+  &lt;bookinfo&gt;
+    &lt;title&gt;Manual de referência do &amp;nome-pacote;&lt;/title&gt;
+    &lt;releaseinfo&gt;
+      para &amp;versão-pacote;.
+      A última versão desta documentação pode ser encontra on-line em
+      &lt;ulink role="online-location" url="http://[SERVIDOR]/&amp;nome-pacote;/index.html"&gt;http://[SERVIDOR]/&amp;nome-pacote;/&lt;/ulink&gt;.
+    &lt;/releaseinfo&gt;
+  &lt;/bookinfo&gt;
+</programlisting>
+        </example></para>
+    </sect1>
+  </chapter>
+
+  <chapter id="documenting-others">
+    <title>Documentando outras interfaces</title>
+
+    <para>Até agora nós temos usado o GTK-Doc para documentar a API de um código. As próximas sessões contêm sugestões de como as ferramentas podem ser usadas para documentar outras interfaces, também.</para>
+
+    <sect1 id="commandline-interfaces">
+      <title>Opções de linha de comando e de páginas man</title>
+
+      <para>Já que também é possível gerar páginas man para um refentry do docbook, soa como uma boa ideia usá-lo para este propósito. Desta forma, a interface é parte da referência e é possível obter a página man de graça.</para>
+
+      <sect2 id="commandline-interfaces-file">
+        <title>Documentar a ferramenta</title>
+
+        <para>Crie um arquivo refentry por ferramenta. Segundo <link linkend="settingup_docfiles">nosso exemplo</link> nós chamaríamos ele de <filename>meep/docs/reference/meeper/meep.xml</filename>. Para as tags xml que devem ser usadas e podem parecer no arquivo gerado no subdiretório xml assim como exemplos, por exemplo, em glib.</para>
+      </sect2>
+
+      <sect2 id="commandline-interfaces-configure">
+        <title>Adicionando a verificação extra ao configure</title>
+
+        <para>
+          <example><title>Verificações extra no configure</title>
+            <programlisting>
+AC_ARG_ENABLE(man,
+              [AC_HELP_STRING([--enable-man],
+                              [regenerate man pages from Docbook [default=no]])],enable_man=yes,
+              enable_man=no)
+
+AC_PATH_PROG([XSLTPROC], [xsltproc])
+AM_CONDITIONAL(ENABLE_MAN, test x$enable_man != xno)
+</programlisting>
+          </example>
+        </para>
+      </sect2>
+
+      <sect2 id="commandline-interfaces-make">
+        <title>Adicionando as regras extras ao makefile</title>
+
+        <para>
+          <example><title>Verificações extra no configure</title>
+            <programlisting>
+man_MANS = \
+       meeper.1
+
+if ENABLE_GTK_DOC
+if ENABLE_MAN
+
+%.1 : %.xml
+        @XSLTPROC@ -nonet http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl $&lt;
+
+endif
+endif
+
+BUILT_EXTRA_DIST = $(man_MANS)
+EXTRA_DIST += meep.xml
+</programlisting>
+          </example>
+        </para>
+      </sect2>
+    </sect1>
+
+    <sect1 id="dbus-interfaces">
+      <title>Interfaces DBus</title>
+
+      <para>(CORRIJA-ME: http://hal.freedesktop.org/docs/DeviceKit/DeviceKit.html, http://cgit.freedesktop.org/DeviceKit/DeviceKit/tree/doc/dbus)</para>
+    </sect1>
+
+  </chapter>
+
+  <chapter id="faq">
+    <title>Perguntas frequentes</title>
+
+    <segmentedlist>
+      <?dbhtml list-presentation="list"?>
+      <segtitle>Questão</segtitle>
+      <segtitle>Resposta</segtitle>
+      <seglistitem>
+        <seg>Sem hierarquia de classe.</seg>
+        <seg>A função de objetos <function>xxx_get_type()</function> não foi inserida no arquivo <filename>&lt;pacote&gt;.types</filename>.</seg>
+      </seglistitem>
+      <seglistitem>
+        <seg>Ainda sem hierarquia.</seg>
+        <seg>Nomenclatura faltando ou incorreta no arquivo <filename>&lt;pacote&gt;-sections.txt</filename> (veja a <ulink url="http://mail.gnome.org/archives/gtk-doc-list/2003-October/msg00006.html">explicação</ulink>).</seg>
+      </seglistitem>
+      <seglistitem>
+        <seg>Droga. Eu ainda não tenho hierarquia de classes.</seg>
+        <seg>Por acaso o nome do objeto (nome da struct da instância, ex. <type>GtkWidget</type>) faz parte da seção normal (não coloque isso em subseções Standard ou Private)?</seg>
+      </seglistitem>
+      <seglistitem>
+        <seg>Nenhum símbolo de índice.</seg>
+        <seg>O <filename>&lt;pacote&gt;-docs.{xml,sgml}</filename> contém um índice que "xi:inclui" o índice gerado?</seg>
+      </seglistitem>
+      <seglistitem>
+        <seg>Símbolos não estão vinculados ao seus doc-section.</seg>
+        <seg>O doc-comment está usando a marcação correta (adicionado #,% or ())? Verifique se o gtkdoc-fixxref avisa sobre xrefs não resolvidos.</seg>
+      </seglistitem>
+      <seglistitem>
+        <seg>Uma nova classe não aparece nos documentos.</seg>
+        <seg>A nova página foi "xi:incluída" do <filename>&lt;pacote&gt;-docs.{xml,sgml}</filename>?</seg>
+      </seglistitem>
+      <seglistitem>
+        <seg>Um novo símbolo não aparece nos documentos.</seg>
+        <seg>O doc-comment está formatado adequadamente? Verifique erros de escrita no começo do comentário. Verifique se o gtkdoc-fixxref avisa sobre xrefs não resolvíveis. Verifique se o símbolo está listado corretamente no <filename>&lt;pacote&gt;-sections.txt</filename> em uma subseção pública.</seg>
+      </seglistitem>
+      <seglistitem>
+        <seg>Um tipo está faltando da hierarquia de classe.</seg>
+        <seg>Se o tipo está listado no <filename>&lt;pacote&gt;.hierarchy</filename>, mas não em <filename>xml/tree_index.sgml</filename>, então certifique-se de que o tipo está colocado corretamente no <filename>&lt;pacote&gt;-sections.txt</filename>. Se a instância do tipo (ex.: <type>GtkWidget</type>) não está listada ou incidentalmente marcada como privada, ela não será mostrada.</seg>
+      </seglistitem>
+      <seglistitem>
+        <seg>Obtenho links de seguimento de documentos para todas as anotações gobject.</seg>
+        <seg>Verifique se <filename>xml/annotation-glossary.xml</filename> está "xi:incluído" de <filename>&lt;pacote&gt;-docs.{xml,sgml}</filename>.</seg>
+      </seglistitem>
+
+      <!-- gtk-doc warnings: -->
+      <seglistitem>
+        <seg>Parâmetro descrito no bloco de comentário do código fonte não existe</seg>
+        <seg>Verifique se o protótipo no cabeçalho tem nomes de parâmetros diferentes da fonte.</seg>
+      </seglistitem>
+
+      <!-- docbook warnings: -->
+      <seglistitem>
+        <seg>Múltiplos "IDs" para restrições do fim do link XYZ</seg>
+        <seg>O símbolo XYZ aparece duas vezes no arquivo <filename>&lt;pacote&gt;-sections.txt</filename>.</seg>
+      </seglistitem>
+      <seglistitem>
+        <seg>Elemento typename no espaço de nome '' encontrado em para, mas nenhum modelo correspondeu.</seg>
+        <seg/>
+      </seglistitem>
+    </segmentedlist>
+  </chapter>
+
+  <chapter id="contrib">
+    <title>Ferramentas relacionadas ao gtk-doc</title>
+
+    <para>GtkDocPlugin - um plug-in de integração com <ulink url="http://trac-hacks.org/wiki/GtkDocPlugin">Trac GTK-Doc</ulink>, que adiciona documentos de API a um site trac e integra com a pesquisa do trac.</para>
+    <para>Gtkdoc-depscan - uma ferramenta (parte do gtk-doc) para verificar APIs usadas, a partir de suas tags, para determinar a versão mínima necessária.</para>
+
+  </chapter>
+
+  <!-- ======== Appendix: FDL ================================== -->
+  <!--  
+     The GNU Free Documentation License 1.1 in DocBook
+     Markup by Eric Baudais <baudais@okstate.edu>
+     Maintained by the GNOME Documentation Project
+     http://developer.gnome.org/projects/gdp
+     Version: 1.0.1
+     Last Modified: Nov 16, 2000
+-->
+
+<appendix id="fdl">
+  <appendixinfo>
+    <releaseinfo>Versão 1.1, Março de 2000</releaseinfo>
+    <copyright><year>2000</year><holder>Free Software Foundation, Inc.</holder></copyright>
+    <legalnotice id="fdl-legalnotice">
+      <para><address>Free Software Foundation, Inc. <street>51 Franklin Street, 
+        Suite 330</street>, <city>Boston</city>, <state>MA</state>  
+        <postcode>02110-1301</postcode>  <country>USA</country></address> É permitido a qualquer um copiar e distribuir cópias exatas deste documento de licença, embora não seja permitido alterá-lo.</para>
+    </legalnotice>
+  </appendixinfo>
+  <title>Licença de Documentação Livre GNU</title>
+
+  <sect1 id="fdl-preamble">
+    <title>0. INTRODUÇÃO</title>
+    <para>O propósito desta Licença é fazer um manual, livro-texto, ou outro documento escrito <quote>livre</quote> em seu sentido de liberdade: para garantir a todos a liberdade efetiva de copiá-lo e redistribui-lo, com ou sem modificações, tanto comercialmente como não comercialmente. Em segundo lugar, esta Licença preserva ao autor e ao editor uma forma de obter crédito pelo seu trabalho, enquanto não é considerado responsável por modificações feitas por outros.</para>
+    
+    <para>Esta licença é um tipo de <quote>copyleft</quote>, que significa que trabalhos derivados do documento precisam ser, por sua vez, livres no mesmo sentido. Ela complementa a Licença Pública Geral GNU (GNU General Public License), que é uma licença copyleft projetada para softwares livres.</para>
+    
+    <para>Nós projetamos esta Licença a fim de ser utilizada em manuais de software livre, já que softwares livres precisam de documentações livres: um programa livre deveria vir com manuais que ofereçam as mesmas liberdades que o software proporciona. Mas esta Licença não é limitada a manuais de software; ela pode ser usada para qualquer trabalho de texto, independente do assunto ou se é publicado como um livro impresso. Nós recomendamos esta Licença principalmente para trabalhos cujo propósito seja instrução ou referência.</para>
+  </sect1>
+  <sect1 id="fdl-section1">
+    <title>1. APLICABILIDADE E DEFINIÇÕES</title>
+    <para id="fdl-document">Esta Licença se aplica a qualquer manual ou outro trabalho que contenha um aviso colocado pelo detentor dos direitos autorais dizendo que o documento pode ser distribuído sob os termos desta. O <quote>Documento</quote>, abaixo, refere-se a qualquer manual ou trabalho. Qualquer membro do público é um licenciado, e será referenciado como <quote>você</quote>.</para>
+    
+    <para id="fdl-modified">Uma <quote>Versão Modificada</quote> do Documento significa qualquer trabalho contendo o Documento ou uma porção deste, seja uma cópia literal ou com modificações e/ou traduzido em outro idioma.</para>
+	
+    <para id="fdl-secondary">Uma <quote>Seção Secundária</quote> é um apêndice com nome ou uma seção inicial do <link linkend="fdl-document">Documento</link> que trata exclusivamente da relação dos editores ou autores do Documento com seu assunto geral (ou temas relacionados) e não contém nada que possa estar diretamente dentro do assunto geral. (Por exemplo, se o Documento é em parte um livro-texto de matemática, uma Seção Secundária não pode explicar nada de matemática). Tal relação pode ser uma questão de conexão histórica com o assunto ou com temas relacionados, ou tratar de questões legais, comerciais, filosóficas, éticas ou políticas com relação a eles.</para>
+
+    <para id="fdl-invariant">As <quote>Seções Invariantes</quote> são certas <link linkend="fdl-secondary">Seções Secundárias</link> cujos títulos são designados como sendo de Seções Invariantes na nota que afirma que o <link linkend="fdl-document">Documento</link> é publicado sob esta Licença.</para>
+    
+    <para id="fdl-cover-texts">Os <quote>Textos de Capa</quote> são certas passagens de texto curtas que são listadas, como Textos de Capa Frontal ou Texto de Contra Capa, na nota que afirma que o <link linkend="fdl-document">Documento</link> é publicado sob esta Licença.</para>
+	
+    <para id="fdl-transparent">Uma cópia <quote>Transparente</quote> do <link linkend="fdl-document">Documento</link> significa uma cópia legível por máquina, representada em um formato cuja especificação esteja disponível ao público geral e que cujo conteúdo possa ser visualizado e editado de forma clara e direta por editores de texto genéricos ou programas genéricos de desenho (para imagens compostas de pixels) ou para alguns dos editores de desenho amplamente disponíveis (para desenhos) e que seja apropriado para inclusão em formatadores de texto ou para a tradução automática em uma variedade de formatos apropriados de entrada em formatadores de texto. Uma cópia feita em outro formato de arquivo Transparente cuja marcação, ou ausência desta, tenha sido manipulada para impedir ou desencorajar modificação subsequente pelos leitores não é Transparente. Uma cópia que não é <quote>Transparente</quote> é chamada <quote>Opaca</quote>.</para>
+    
+    <para>Exemplos de formatos apropriados para cópias Transparentes incluem ASCII puro sem marcação, formato de entrada Texinfo, formato de entrada LaTex, SGML ou XML usando um DTD publicamente disponível, e HTML simples em conformidade padrão projetado para modificação por humanos. Formatos Opacos incluem PostScript, PDF, formatos proprietários que podem ser lidos ou editados somente por processadores de texto proprietários, SGML ou XML cujos DTD e/ou ferramenta de processamento não estão largamente disponibilizados, e o HTML gerado por máquina produzido por algum processador de texto com propósito apenas de saída.</para>
+    
+    <para id="fdl-title-page">A <quote>Página de Título</quote> significa, para um livro impresso, a própria página do título, além das páginas subsequentes necessárias para conter, de forma legível, o material que esta Licença requer que apareça na página do título. Para trabalhos em formatos que não possuem qualquer página de título semelhante, <quote>Página de Título</quote> significa o texto próximo à ocorrência mais proeminente do título do trabalho, precedendo o início do corpo do texto.</para>
+  </sect1>
+    
+  <sect1 id="fdl-section2">
+    <title>2. CÓPIA ESCRITA</title>
+    <para>Você pode copiar e distribuir o <link linkend="fdl-document">Documento</link> em qualquer meio, seja este de forma comercial ou não, desde que esta licença, as notas de direitos autorais (copyright), e a nota de licença afirmando que esta Licença se aplica ao Documento sejam reproduzidas em todas as cópias, e que você não inclua outras condições, quaisquer que sejam, às condições desta Licença. Você não pode usar de medidas técnicas para obstruir ou controlar a leitura ou cópia futura das cópias que você fizer ou distribuir. Contudo, você pode aceitar compensação em troca das cópias. Se você distribuir um número suficientemente grande de cópias, você deve também respeitar as condições descritas na <link linkend="fdl-section3">seção 3</link>.</para>
+    
+    <para>Você também pode emprestar cópias, sob as mesmas condições relacionadas acima, e você pode publicamente exibir cópias.</para>
+    </sect1>
+    
+  <sect1 id="fdl-section3">
+    <title>3. COPIANDO EM QUANTIDADE</title>
+    <para>Se você publicar cópias impressas do <link linkend="fdl-document">Documento</link>, em número maior que 100, e a nota de licença do Documento exigir <link linkend="fdl-cover-texts">Textos de Capa</link>, você deve encadernar as cópias em capas que carreguem, de forma clara e legível, todos estes Textos de Capa: Textos de Capa Frontal na capa frontal e Textos de Contracapa na contracapa. Ambas as capas devem também identificar, de forma clara e legível, você como o editor das cópias. A capa frontal deve apresentar o título completo com todas as palavras deste igualmente proeminentes e visíveis. Além disso, você pode adicionar outro material nas capas. As cópias com mudanças limitadas às capas, desde que preservem o título do <link linkend="fdl-document">Documento</link> e satisfaçam estas condições podem ser tratadas como cópias literais em outros aspectos.</para>
+    
+    <para>Se os textos necessários a qualquer uma das capas forem muito volumosos para serem incluídos de forma legível, você deve colocar os primeiros textos listados (quantos couberem razoavelmente) na própria capa, e continuar o resto em páginas adjacentes.</para>
+    
+    <para>Se você publicar ou distribuir cópias <link linkend="fdl-transparent">Opacas</link> do <link linkend="fdl-document">Documento</link> em número maior que 100, você deve incluir uma cópia <link linkend="fdl-transparent">Transparente</link> legível por máquina juntamente com cada cópia Opaca, ou dizer em (ou juntamente com) cada cópia Opaca, um endereço de rede a partir do qual o público geral de usuários possam acessar e obter de forma anônima e sob nenhum custo, usando protocolos de rede públicos padrão, uma cópia Transparente completa do Documento, livre de materiais adicionados. Se você decidir pela segunda opção, você deve seguir passos com certa prudência ao começar a distribuir as cópias Opacas em quantidade, a fim de garantir que esta cópia transparente permanecerá acessível no local indicado por pelo menos um ano após a última vez que você distribuir uma cópia Opaca (diretamente ou através de seus agentes ou distribuidores) desta edição ao público.</para>
+    
+    <para>É solicitado, mas não exigido, que você contate os autores do <link linkend="fdl-document">Documento</link> muito antes de redistribuir qualquer grande número de cópias, para dar a eles uma chance de lhe fornecer uma versão atualizada do Documento.</para>
+    </sect1>
+    
+  <sect1 id="fdl-section4">
+    <title>4. MODIFICAÇÕES</title>
+    <para>Você pode copiar e distribuir uma <link linkend="fdl-modified">Versão Modificada</link> do <link linkend="fdl-document">Documento</link> sob as condições das seções <link linkend="fdl-section2">2</link> e <link linkend="fdl-section3">3</link> acima, desde que você forneça a Versão Modificada estritamente sob esta Licença, com a Versão Modificada preenchendo a função de Documento, permitindo assim a distribuição e modificação da Versão Modificada a quem quer que possua uma cópia desta. Além disso, você deve executar os seguintes procedimentos na Versão Modificada:</para>
+    
+    <itemizedlist mark="opencircle">
+      <listitem>
+	<formalpara>
+	  <title>A</title>
+	  <para>Usar na <link linkend="fdl-title-page">Página de Título</link> (e nas capas, se existirem) um título distinto em relação ao do <link linkend="fdl-document">Documento</link>, e daqueles de versões anteriores (os quais devem, na existência de algum, ser listados na seção "Histórico" do Documento). Você pode usar o mesmo título de uma versão anterior se o editor original daquela versão conceder-lhe permissão.</para>
+	</formalpara>
+      </listitem>
+      
+      <listitem>
+	<formalpara>
+	  <title>B</title>
+	  <para>Listar na <link linkend="fdl-title-page">Página de Título</link> como autores, uma ou mais pessoas ou entidades responsáveis pela autoria das modificações na <link linkend="fdl-modified">Versão Modificada</link>, juntamente com pelo menos cinco autores principais do <link linkend="fdl-document">Documento</link> (todos seus autores principais, se houver menos que cinco).</para>
+	</formalpara>
+      </listitem>
+      
+      <listitem>
+	<formalpara>
+	  <title>C</title>
+	  <para>Declarar na <link linkend="fdl-title-page">Página de Título</link> o nome do editor da <link linkend="fdl-modified">Versão Modificada</link>, como seu editor.</para>
+	</formalpara>
+      </listitem>
+      
+      <listitem>
+	<formalpara>
+	  <title>D</title>
+	  <para>Preservar todas as notas de direitos autorais (copyright) do <link linkend="fdl-document">Documento</link>.</para>
+	</formalpara>
+      </listitem>
+      
+      <listitem>
+	<formalpara>
+	  <title>E</title>
+	  <para>Adicionar uma nota apropriada de direitos autorais para suas modificações, adjacente às outras notas de direitos autorais.</para>
+	</formalpara>
+      </listitem>
+      
+      <listitem>
+	<formalpara>
+	  <title>F</title>
+	  <para>Incluir, imediatamente após as notas de direitos autorais, uma nota de licença concedendo permissão pública para o uso da <link linkend="fdl-modified">Versão Modificada</link> sob os termos desta Licença, na forma mostrada no Adendo abaixo.</para>
+	</formalpara>
+      </listitem>
+      
+      <listitem>
+	<formalpara>
+	  <title>G</title>
+	  <para>Preservar na referida nota de licença a lista completa de <link linkend="fdl-invariant">Seções Invariantes</link> e <link linkend="fdl-cover-texts">Textos de Capa</link> obrigatórios, dados na nota de licença do <link linkend="fdl-document">Documento</link>.</para>
+	</formalpara>
+      </listitem>
+      
+      <listitem>
+	<formalpara>
+	  <title>H</title>
+	  <para>Inclua uma cópia inalterada desta Licença.</para>
+	</formalpara>
+      </listitem>
+      
+      <listitem>
+	<formalpara>
+	  <title>I</title>
+	  <para>Preservar a seção intitulada <quote>Histórico</quote>, preservar seu título, e adicionar a esta um item declarando ao menos o título, o ano, novos autores, e o editor da <link linkend="fdl-modified">Versão Modificada</link> conforme incluído na <link linkend="fdl-title-page">Página de Título</link>. Se nenhuma seção intitulada <quote>Histórico</quote> estiver presente no <link linkend="fdl-document">Documento</link>, crie uma informando o título, o ano, os autores e o editor do Documento como evidenciado na Página de Título, em seguida adicione um item descrevendo a Versão Modificada como mencionado na sentença anterior.</para>
+	</formalpara>
+      </listitem>
+      
+      <listitem>
+	<formalpara>
+	  <title>J</title>
+	  <para>Preservar o endereço de rede, se existir algum, informado pelo <link linkend="fdl-document">Documento</link> para acesso público a uma cópia <link linkend="fdl-transparent">Transparente</link> deste e, da mesma maneira, os endereços de rede dados no Documento para versões anteriores nas quais este se baseia. Estes podem ser colocados na seção <quote>Histórico</quote>. Você pode omitir um endereço de rede para um trabalho que foi publicado pelo menos quatro anos antes do Documento em si, ou se o editor original da versão à qual o endereço se refere der permissão.</para>
+	</formalpara>
+      </listitem>
+      
+      <listitem>
+	<formalpara>
+	  <title>K</title>
+	  <para>Preservar o título da seção para qualquer seção intitulada <quote>Agradecimentos</quote> ou <quote>Dedicatórias</quote> e preservar dentro da seção toda a substância e tom de cada um dos agradecimentos e/ou dedicatórias lá mencionados.</para>
+	</formalpara>
+      </listitem>
+      
+      <listitem>
+	<formalpara>
+	  <title>L</title>
+	  <para>Preservar todas as <link linkend="fdl-invariant">Seções Invariantes</link> do <link linkend="fdl-document">Documento</link>, sem alterações em seus textos e títulos. Números de seção ou o equivalente não são considerados parte dos títulos das seções.</para>
+	</formalpara>
+      </listitem>
+      
+      <listitem>
+	<formalpara>
+	  <title>M</title>
+	  <para>Apagar qualquer seção intitulada <quote>Apoio</quote>. Tal seção não deve ser incluída na <link linkend="fdl-modified">Versão Modificada</link>.</para>
+	</formalpara>
+      </listitem>
+      
+      <listitem>
+	<formalpara>
+	  <title>N</title>
+	  <para>Não renomear o título de qualquer seção existente como <quote>Apoio</quote> ou que resulte em conflito com o título de qualquer <link linkend="fdl-invariant">Seção Invariante</link>.</para>
+	</formalpara>
+      </listitem>
+    </itemizedlist>
+    
+    <para>Se a <link linkend="fdl-modified">Versão Modificada</link> incluir novas seções iniciais ou apêndices que sejam qualificados como <link linkend="fdl-secondary">Seções Secundárias</link>, e não contiver material copiado do Documento, você pode, a seu critério, tornar algumas dessas ou todas essas seções em invariantes. Para fazer isso, adicione seus títulos à lista de <link linkend="fdl-invariant">Seções Invariantes</link> na nota de licença da Versão Modificada. Estes títulos devem ser distintos de quaisquer outros títulos de seções.</para>
+    
+    <para>Você pode incluir uma seção intitulada <quote>Apoio</quote>, desde que esta contenha apenas apoios recebidos limitados a sua <link linkend="fdl-modified">Versão Modificada</link> por várias fontes -- por exemplo, notas do revisor ou de que o texto foi aprovado por uma organização como a definição oficial de um padrão.</para>
+    
+    <para>Você pode adicionar uma passagem de até cinco palavras como <link linkend="fdl-cover-texts">Texto de Capa Frontal</link>, e uma passagem de até 25 palavras como <link linkend="fdl-cover-texts">Texto de Contracapa</link>, ao fim da lista de <link linkend="fdl-cover-texts">Textos de Capa</link> na <link linkend="fdl-modified">Versão Modificada</link>. Somente uma passagem de Texto de Capa Frontal e uma de Texto de Contracapa podem ser adicionados por (ou através de arranjos feitos por) uma entidade qualquer. Caso o <link linkend="fdl-document">Documento</link> já incluir um texto de capa para a mesma capa, previamente incluído por você ou pelo arranjo feito pela mesma entidade em cujo nome você está agindo, você não poderá adicionar outro; mas você poderá substituir o antigo, com a permissão explícita do editor anterior, que o incluiu.</para>
+    
+    <para>O(s) autor(es) e editor(es) do <link linkend="fdl-document">Documento</link>, por esta Licença, não concedem permissão para que seus nomes sejam usados a fins de publicidade, para defesa ou para apoio implícito de qualquer <link linkend="fdl-modified">Versão Modificada</link>.</para>
+  </sect1>
+    
+  <sect1 id="fdl-section5">
+    <title>5. COMBINANDO DOCUMENTOS</title>
+    <para>Você pode combinar o <link linkend="fdl-document">Documento</link> com outros documentos publicados sob esta Licença, sob os termos definidos na <link linkend="fdl-section4">seção 4</link> acima para versões modificadas, desde que você inclua na combinação todas as <link linkend="fdl-invariant">Seções Invariantes</link> de todos os documentos originais, sem modificações, e as liste como Seções Invariantes de seu trabalho combinado, na sua nota de licença.</para>
+    
+    <para>O trabalho combinado precisa conter somente uma cópia desta Licença, e várias <link linkend="fdl-invariant">Seções Invariantes</link> idênticas podem ser substituídas por uma única cópia. Se existirem várias Seções Invariantes de mesmo nome, porém com conteúdos diferentes, você deve tornar o título de cada uma destas seções único, adicionando ao fim destes, entre parênteses, o nome do autor ou, se conhecido, o editor original desta seção, ou ainda um número único. Faça o mesmo ajuste nos títulos de seção na lista de Seções Invariantes na nota de licença do trabalho combinado.</para>
+    
+    <para>Na combinação, você deve combinar quaisquer seções intituladas <quote>Histórico</quote> nos vários documentos originais, formando uma seção intitulada <quote>Histórico</quote>; do mesmo modo, combine quaisquer seções intituladas <quote>Agradecimentos</quote>, e quaisquer seções intituladas <quote>Dedicatórias</quote>. Você deve apagar todas as seções intituladas <quote>Apoio</quote>.</para>
+    </sect1>
+    
+  <sect1 id="fdl-section6">
+    <title>6. COLEÇÕES DE DOCUMENTOS</title>
+    <para>Você pode fazer uma coleção que consiste do <link linkend="fdl-document">Documento</link> e outros documentos publicados sob esta Licença, e substituir as cópias individuais desta Licença, nos vários documentos, por uma única cópia a ser incluída na coleção, desde que você siga as regras desta Licença para cópias literais de cada documento em todos os outros aspectos.</para>
+    
+    <para>Você pode extrair um único documento desta coleção, e distribuí-lo individualmente sob esta Licença, desde que você insira uma cópia desta Licença no documento extraído, e siga esta Licença em todos os outros aspectos com relação à cópia literal do documento.</para>
+    </sect1>
+    
+  <sect1 id="fdl-section7">
+    <title>7. AGREGAÇÃO COM TRABALHOS INDEPENDENTES</title>
+    <para>Uma compilação do <link linkend="fdl-document">Documento</link> ou seus derivados com outros documentos ou trabalhos separados e independentes, dentro de ou sob um volume de um meio de armazenamento ou distribuição, não conta como um todo para uma <link linkend="fdl-modified">Versão Modificada</link> do Documento, contanto que nenhum direito autoral de compilação seja reivindicado para esta compilação. Tal compilação configura um <quote>agregado</quote> e esta Licença não se aplica aos outros trabalhos contidos na compilação do Documento, levando em conta serem compilados, caso eles mesmos não forem trabalhos derivados do Documento. Se o requisito de <link linkend="fdl-cover-texts">Texto da Capa</link> da <link linkend="fdl-section3">seção 3</link> é aplicável a estas cópias do Documento, e ainda se o Documento é menor do que um quarto do agregado inteiro, os Textos de Capa do Documento podem ser inseridos nas capas que envolvem somente o Documento no agregado. Caso contrário, eles devem aparecer em capas em volta do agregado como um todo.</para>
+    </sect1>
+    
+  <sect1 id="fdl-section8">
+    <title>8. TRADUÇÃO</title>
+    <para>Uma tradução é considerada como sendo um tipo de modificação, desta forma você pode distribuir traduções do <link linkend="fdl-document">Documento</link> sob os termos da <link linkend="fdl-section4">seção 4</link>. A substituição das <link linkend="fdl-invariant">Seções Invariantes</link> por traduções requer permissão especial dos detentores dos direitos autorais, embora você possa incluir traduções de algumas ou todas as Seções Invariantes juntamente às versões originais destas. Você pode incluir uma tradução desta Licença, desde que você também inclua a versão original em Inglês desta Licença. Em caso de discordância entre a tradução e a versão original desta Licença ou nota de licença, a versão original em inglês prevalecerá.</para>
+    </sect1>
+    
+  <sect1 id="fdl-section9">
+    <title>9. TÉRMINO</title>
+    <para>Você não pode copiar, modificar, sublicenciar, ou distribuir o <link linkend="fdl-document">Documento</link> com exceção do que foi expressamente previsto sob esta Licença. Qualquer outra tentativa de cópia, modificação, sublicenciamento ou distribuição do Documento é nula, e implicará na rescisão automática de seus direitos sob esta Licença. Contudo, as partes que receberam as cópias, ou direitos, de você sob esta Licença não terão suas licenças rescindidas enquanto tais partes permanecerem em total acordo com a Licença.</para>
+    </sect1>
+    
+  <sect1 id="fdl-section10">
+    <title>10. FUTURAS REVISÕES DESTA LICENÇA</title>
+    <para>A <ulink type="http" url="http://www.gnu.org/fsf/fsf.html">Free Software Foundation</ulink> pode publicar novas versões, revisadas, da Licença de Documentação Livre GNU de tempos em tempos. Tais versões posteriores terão ideologia similar à presente versão, embora possam diferir em detalhes a fim de abordar novos problemas ou preocupações. Consulte: <ulink type="http" url="http://www.gnu.org/copyleft">http://www.gnu.org/copyleft/</ulink>.</para>
+    
+    <para>É dado, a cada versão da Licença, um número de versão distinto. Se o <link linkend="fdl-document">Documento</link> especificar que um número de versão em específico desta Licença <quote>ou qualquer versão posterior</quote> se aplica a ele, você tem a opção de seguir os termos e condições tanto da versão especificada quanto de qualquer versão posterior que tenha sido publicada (não como rascunho) pela Free Software Foundation. Se o documento não especificar um número de versão desta Licença, você pode escolher qualquer versão já publicada (não como rascunho) pela Free Software Foundation.</para>
+  </sect1>
+
+  <sect1 id="fdl-using">
+    <title>Adendo</title>
+    <para>Para usar esta Licença em um documento que você escreveu, inclua uma cópia desta no documento e adicione as seguintes notas de direitos autorais e licença logo após a página de título:</para>
+    
+    <blockquote>
+      <para>Copyright ANO SEU NOME.</para>
+      <para>Permissão concedida para copiar, distribuir e/ou modificar este documento sob os termos da Licença de Documentação Livre GNU (GNU Free Documentation License), Versão 1.1 ou qualquer versão mais recente publicada pela Free Software Foundation; com as <link linkend="fdl-invariant">Seções Invariantes</link>, sendo LISTADO SEUS TÍTULOS, com os <link linkend="fdl-cover-texts">Textos de Capa Frontal</link> sendo LISTADOS, e com os <link linkend="fdl-cover-texts">Textos de Contracapa</link> sendo LISTADOS. Uma cópia da licença está inclusa na seção entitulada <quote>Licença de Documentação Livre GNU (GNU Free Documentation License)</quote>.</para>
+    </blockquote>
+      
+    <para>Se você não tiver qualquer <link linkend="fdl-invariant">Seção Invariante</link>, escreva <quote>sem Seções Invariantes</quote> ao invés de afirmar quais são invariantes. Se você não tem <link linkend="fdl-cover-texts">Textos de Capa Frontal</link>, escreva <quote>sem Textos de Capa Frontal</quote> ao invés de <quote>Textos de Capa Frontal sendo LISTADOS</quote>; O mesmo se aplica a <link linkend="fdl-cover-texts">Textos de Contracapa</link>.</para>
+    
+    <para>Se seu documento contiver exemplos não-triviais de código de programação, recomendamos publicar estes exemplos paralelamente, sob a licença de software livre que você escolher, como por exemplo a <ulink type="http" url="http://www.gnu.org/copyleft/gpl.html">Licença Pública Geral GNU</ulink> (GNU General Public License), para permitir seu uso em software livre.</para>
+  </sect1>
+</appendix>  
+
+
+
+
+
+
+
+
+</book>

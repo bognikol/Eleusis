@@ -1,0 +1,4 @@
+[Thumbnailer Entry]
+TryExec=/Users/bogdannikolic/gtk/inst/bin/gdk-pixbuf-thumbnailer
+Exec=/Users/bogdannikolic/gtk/inst/bin/gdk-pixbuf-thumbnailer -s %s %u %o
+MimeType=image/svg+xml;image/svg+xml-compressed;

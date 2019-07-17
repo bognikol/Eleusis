@@ -1,0 +1,11 @@
+lib/libffi-3.2.1/include/ffi.h
+lib/libffi-3.2.1/include/ffitarget.h
+lib/libffi.6.dylib
+lib/libffi.a
+lib/libffi.dylib
+lib/pkgconfig/libffi.pc
+share/info/libffi.info
+share/man/man3/ffi.3
+share/man/man3/ffi_call.3
+share/man/man3/ffi_prep_cif.3
+share/man/man3/ffi_prep_cif_var.3

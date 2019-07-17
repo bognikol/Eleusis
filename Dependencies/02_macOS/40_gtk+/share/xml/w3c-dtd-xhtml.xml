@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE catalog PUBLIC "-//OASIS//DTD XML Catalogs V1.0//EN"
+  "file:///Users/bogdannikolic/gtk/inst/share/xml/schema/xml-core/catalog.dtd">
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+<delegatePublic publicIdStartString="-//W3C//ENTITIES Special for XHTML//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/entities/xhtml/catalog.xml"/>
+<delegatePublic publicIdStartString="-//W3C//DTD XHTML 1.1//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/xhtml/schema/dtd/1.1/catalog.xml"/>
+<delegatePublic publicIdStartString="-//W3C//DTD XHTML Basic//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/xhtml/schema/dtd/catalog.xml"/>
+<delegatePublic publicIdStartString="-//W3C//DTD XHTML 1.0 Frameset//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/xhtml/schema/dtd/1.0/catalog.xml"/>
+<delegatePublic publicIdStartString="-//W3C//DTD XHTML 1.0 Transitional//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/xhtml/schema/dtd/1.0/catalog.xml"/>
+<delegatePublic publicIdStartString="-//W3C//ENTITIES Latin 1 for XHTML//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/entities/xhtml/catalog.xml"/>
+<delegatePublic publicIdStartString="-//W3C//DTD XHTML 1.0 Strict//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/xhtml/schema/dtd/1.0/catalog.xml"/>
+<delegatePublic publicIdStartString="-//W3C//DTD HTML//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/xhtml/schema/dtd/catalog.xml"/>
+<delegatePublic publicIdStartString="-//W3C//DTD XHTML Basic 1.0//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/xhtml/schema/dtd/basic/catalog.xml"/>
+<delegatePublic publicIdStartString="-//W3C//DTD XHTML 1//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/xhtml/schema/dtd/catalog.xml"/>
+<delegatePublic publicIdStartString="-//W3C//ENTITIES Symbols for XHTML//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/entities/xhtml/catalog.xml"/>
+<delegatePublic publicIdStartString="-//W3C//DTD XHTML//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/xhtml/schema/dtd/catalog.xml"/>
+</catalog>

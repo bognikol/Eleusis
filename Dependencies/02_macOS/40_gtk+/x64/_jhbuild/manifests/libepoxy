@@ -1,0 +1,6 @@
+include/epoxy/common.h
+include/epoxy/gl.h
+include/epoxy/gl_generated.h
+lib/libepoxy.0.dylib
+lib/libepoxy.dylib
+lib/pkgconfig/epoxy.pc

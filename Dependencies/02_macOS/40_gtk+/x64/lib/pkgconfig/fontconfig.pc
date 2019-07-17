@@ -1,0 +1,18 @@
+prefix=/Users/bogdannikolic/gtk/inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+sysconfdir=${prefix}/etc
+localstatedir=${prefix}/var
+PACKAGE=fontconfig
+confdir=${sysconfdir}/fonts
+cachedir=${localstatedir}/cache/${PACKAGE}
+
+Name: Fontconfig
+Description: Font configuration and customization library
+Version: 2.12.1
+Requires:  freetype2
+Requires.private:  expat
+Libs: -L${libdir} -lfontconfig
+Libs.private: -L/Users/bogdannikolic/gtk/inst/lib -lexpat -L/Users/bogdannikolic/gtk/inst/lib -lfreetype  
+Cflags: -I${includedir}  -I/Users/bogdannikolic/gtk/inst/include/freetype2 -I/Users/bogdannikolic/gtk/inst/include/libpng16  
