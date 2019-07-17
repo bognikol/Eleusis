@@ -36,4 +36,5 @@ message(${GTK_ROOT})
 add_subdirectory(Eleusis)
 add_subdirectory(Eleusis_SampleApp)
 add_subdirectory(Eleusis_UITest)
+add_subdirectory(Eleusis_UnitTests)
 
