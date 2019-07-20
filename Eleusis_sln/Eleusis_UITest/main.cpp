@@ -1,5 +1,3 @@
-#include "Windows.h"
-
 #include "Application.h"
 
 #include "test_windows/SampleWindow.h"
