@@ -4,10 +4,6 @@ file(GLOB_RECURSE h_files_unit_tests "./**/*.h")
 add_executable(unit_tests "./main.cpp" "./gtest/src/gtest-all.cc" ${cpp_files_unit_tests} ${h_files_unit_tests})
 target_link_libraries(unit_tests eleusis)
 
-set_target_properties(unit_tests PROPERTIES
-  MACOSX_BUNDLE FALSE
-)
-
 target_include_directories(unit_tests PUBLIC "./")
 target_include_directories(unit_tests PUBLIC "./gtest/includes")
 target_include_directories(unit_tests PUBLIC "./gtest")
@@ -34,3 +30,8 @@ target_include_directories(unit_tests PUBLIC "${GTK_ROOT}/include/cairo")
 target_include_directories(unit_tests PUBLIC "${GTK_ROOT}/include/pango-1.0")
 target_include_directories(unit_tests PUBLIC "${GTK_ROOT}/include/glib-2.0")
 target_include_directories(unit_tests PUBLIC "${GTK_ROOT}/lib/glib-2.0/include")
+
+if (WIN32)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP /GS /W3 /Gy /Zc:wchar_t /Zi /Gm- /fp:precise /errorReport:prompt /WX- /Zc:forScope /Gd /Oi /EHsc /nologo")
+	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /GL /Zc:inline")
+endif (WIN32)

@@ -28,6 +28,7 @@ target_link_libraries(eleusis PUBLIC "${GTK_ROOT}/lib/${LIB_PREFIX}pangocairo-1.
 target_link_libraries(eleusis PUBLIC "${GTK_ROOT}/lib/${LIB_PREFIX}gobject-2.0.${LIB_EXTENSION}")
 
 if (WIN32)
+	add_definitions(-DELEUSIS_EXPORTS)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP /GS /W3 /Gy /Zc:wchar_t /Zi /Gm- /fp:precise /errorReport:prompt /WX- /Zc:forScope /Gd /Oi /EHsc /nologo")
 	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /GL /Zc:inline")
 endif (WIN32)

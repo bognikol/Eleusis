@@ -5,6 +5,7 @@ add_executable(ui_test "./main.cpp" ${cpp_files_ui_test} ${h_files_ui_test})
 target_link_libraries(ui_test eleusis)
 
 set_target_properties(ui_test PROPERTIES
+  WIN32_EXECUTABLE TRUE
   MACOSX_BUNDLE TRUE
   MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist"
 )
@@ -36,3 +37,8 @@ target_include_directories(ui_test PUBLIC "${GTK_ROOT}/include/cairo")
 target_include_directories(ui_test PUBLIC "${GTK_ROOT}/include/pango-1.0")
 target_include_directories(ui_test PUBLIC "${GTK_ROOT}/include/glib-2.0")
 target_include_directories(ui_test PUBLIC "${GTK_ROOT}/lib/glib-2.0/include")
+
+if (WIN32)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP /GS /W3 /Gy /Zc:wchar_t /Zi /Gm- /fp:precise /errorReport:prompt /WX- /Zc:forScope /Gd /Oi /EHsc /nologo")
+	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /GL /Zc:inline")
+endif (WIN32)
