@@ -57,7 +57,8 @@ Window::~Window()
 void Window::show()
 {
     [_windowOSBundle->_nsWindow display];
-    
+    [_windowOSBundle->_nsWindow orderFront:(_windowOSBundle->_nsWindow)];
+
     _root->setAbsoluteSizeVector(getSize());
 
     _layout();
@@ -75,14 +76,17 @@ void Window::showModal()
 
 void Window::hide()
 {
+    [_windowOSBundle->_nsWindow orderOut:(_windowOSBundle->_nsWindow)];
 }
 
 void Window::minimize()
 {
+    [_windowOSBundle->_nsWindow miniaturize:(_windowOSBundle->_nsWindow)];
 }
 
 void Window::maximize()
 {
+    [_windowOSBundle->_nsWindow toggleFullScreen:nil];
 }
 
 bool Window::isModal()
@@ -99,43 +103,59 @@ WindowAppearanceState Window::getWindowState()
 
 void Window::focus()
 {
-    
+    [_windowOSBundle->_nsWindow makeKeyWindow];
+    [_windowOSBundle->_nsWindow orderFront:(_windowOSBundle->_nsWindow)];
 }
 
 bool Window::isFocused()
 {
-    return false;
+    return static_cast<bool>([_windowOSBundle->_nsWindow isKeyWindow]);
 }
 
 void Window::enable()
 {
+    _enabled = true;
 }
 
 void Window::disable()
 {
+    _enabled = false;
 }
 
 bool Window::isEnabled()
 {
-    return true;
+    return _enabled;
 }
 
 void Window::setPosition(Vector position)
 {
+    NSPoint l_point;;
+    l_point.x = position.X;
+    l_point.y = position.Y;
+    
+    [_windowOSBundle->_nsWindow setFrameTopLeftPoint:l_point];
 }
 
 Vector Window::getPosition()
 {
-    return Vector();
+    NSRect l_frame = [_windowOSBundle->_nsWindow frame];
+    double l_screenHeight = [[_windowOSBundle->_nsWindow screen] frame].size.height;
+    return {l_frame.origin.x, l_screenHeight - l_frame.size.height - l_frame.origin.y};
 }
 
 void Window::setSize(Vector size)
 {
+    NSRect l_frame = [_windowOSBundle->_nsWindow frame];
+    l_frame.size.width = size.X;
+    l_frame.size.height = size.Y;
+    
+    [_windowOSBundle->_nsWindow setFrame:l_frame display: NO];
 }
 
 Vector Window::getSize()
 {
-    return {[_windowOSBundle->_nsWindow frame].size.width, [_windowOSBundle->_nsWindow frame].size.height};
+    NSRect l_frame = [_windowOSBundle->_nsWindow frame];
+    return {l_frame.size.width, l_frame.size.height};
 }
 
 void Window::_render()

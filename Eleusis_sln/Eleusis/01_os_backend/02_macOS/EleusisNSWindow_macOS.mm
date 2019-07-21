@@ -47,6 +47,8 @@ using namespace Eleusis;
 
 - (void)mouseDown:(NSEvent*)event
 {
+    if (!_eleusisWindowOwner->isEnabled()) return;
+
     MouseEventArgs l_mouseEventArgs;
     
     l_mouseEventArgs.Button = MouseButton::Left;
@@ -58,6 +60,8 @@ using namespace Eleusis;
 
 - (void)mouseUp:(NSEvent*)event
 {
+    if (!_eleusisWindowOwner->isEnabled()) return;
+
     MouseEventArgs l_mouseEventArgs;
     
     l_mouseEventArgs.Button = MouseButton::Left;
@@ -70,6 +74,8 @@ using namespace Eleusis;
 
 - (void)rightMouseDown:(NSEvent *)event
 {
+    if (!_eleusisWindowOwner->isEnabled()) return;
+
     MouseEventArgs l_mouseEventArgs;
     
     l_mouseEventArgs.Button = MouseButton::Right;
@@ -81,6 +87,8 @@ using namespace Eleusis;
 
 - (void)rightMouseUp:(NSEvent *)event
 {
+    if (!_eleusisWindowOwner->isEnabled()) return;
+
     MouseEventArgs l_mouseEventArgs;
     
     l_mouseEventArgs.Button = MouseButton::Right;
@@ -92,6 +100,8 @@ using namespace Eleusis;
 
 - (void)mouseMoved:(NSEvent*)event
 {
+    if (!_eleusisWindowOwner->isEnabled()) return;
+
     MouseEventArgs l_mouseEventArgs;
     
     l_mouseEventArgs.Button = MouseButton::None;
@@ -103,6 +113,8 @@ using namespace Eleusis;
 
 - (void)mouseDragged:(NSEvent*)event
 {
+    if (!_eleusisWindowOwner->isEnabled()) return;
+
     MouseEventArgs l_mouseEventArgs;
     
     l_mouseEventArgs.Button = MouseButton::None;
@@ -114,6 +126,8 @@ using namespace Eleusis;
 
 - (void)scrollWheel:(NSEvent *)event
 {
+    if (!_eleusisWindowOwner->isEnabled()) return;
+
     MouseScrollInputParams l_mouseWheelInputParams;
 
     if (fabs(event.scrollingDeltaY) > fabs(event.scrollingDeltaX))
@@ -133,20 +147,24 @@ using namespace Eleusis;
     _eleusisWindowOwner->onMouseWheel(l_mouseWheelInputParams);
 }
 
-- (void)mouseEntered:(NSEvent *)theEvent{
+- (void)mouseEntered:(NSEvent *)theEvent
+{
+    if (!_eleusisWindowOwner->isEnabled()) return;
     _eleusisWindowOwner->onMouseEnter();
 }
 
-- (void)mouseExited:(NSEvent *)theEvent{
+- (void)mouseExited:(NSEvent *)theEvent
+{
+    if (!_eleusisWindowOwner->isEnabled()) return;
     _eleusisWindowOwner->onMouseLeave();
 }
 
 - (void) viewResized:(NSView*)target
 {
+    if (!_eleusisWindowOwner->isEnabled()) return;
+
     SizeChangedParams l_sizeChangedParams;
-    
-    l_sizeChangedParams.Size = { self.frame.size.width, self.frame.size.height };
-    
+    l_sizeChangedParams.Size = { self.frame.size.width, self.frame.size.height };    
     _eleusisWindowOwner->onSizeChanged(l_sizeChangedParams);
 }
 
@@ -181,6 +199,8 @@ using namespace Eleusis;
 
 - (void)keyDown:(NSEvent*)event
 {
+    if (!_eleusisWindowOwner->isEnabled()) return;
+    
     KeyboardEventArgs l_keyboardInputParams;
     
     l_keyboardInputParams.VirtualKeyCode = static_cast<VirtualKey>(event.keyCode);
@@ -191,6 +211,8 @@ using namespace Eleusis;
 
 - (void)keyUp:(NSEvent*)event 
 {
+    if (!_eleusisWindowOwner->isEnabled()) return;
+
     KeyboardEventArgs l_keyboardInputParams;
     
     l_keyboardInputParams.VirtualKeyCode = static_cast<VirtualKey>(event.keyCode);

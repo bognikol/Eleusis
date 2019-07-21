@@ -36,6 +36,9 @@ namespace Eleusis
                 std::list<VisualPrimitive*>   _vpsWaitingGeometryUpdate;
                 std::list<Node*>              _nodesWaitingOffsetApplication;
                 std::vector<Node*>            _nodesWaitingRendering;
+        
+                // macOS specific
+                bool _enabled = true;
 
                 VisualPrimitive* _getMouseEventTarget(MouseInputParams* inputParams);
                 void _cleanUpForFollowingRenderingIteration();
