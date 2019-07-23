@@ -117,6 +117,11 @@ long long Application::timestamp()
     return duration_cast<milliseconds>(steady_clock::now().time_since_epoch()).count();
 }
 
+System Application::currentSystem()
+{
+    return System::Win32;
+}
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)

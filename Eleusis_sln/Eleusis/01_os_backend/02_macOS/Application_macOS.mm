@@ -67,6 +67,11 @@ long long Application::timestamp()
     return duration_cast<milliseconds>(steady_clock::now().time_since_epoch()).count();
 }
 
+System Application::currentSystem()
+{
+    return System::MacOS;
+}
+
 void Application::nativeMsgBox(string message, string title)
 {
     NSString* l_message = [NSString stringWithUTF8String:message.c_str()];
@@ -88,12 +93,17 @@ void Application::nativeMsgBox(string message, string title)
 
 void Application::Clipboard::putUnicodeText(string text)
 {
+    NSString* l_stringForClipboard = [NSString stringWithCString:text.c_str()
+                                                        encoding:NSUTF8StringEncoding];
+    NSPasteboard* l_pasteboard = [NSPasteboard generalPasteboard];
+    [l_pasteboard clearContents];
+    [l_pasteboard setString:l_stringForClipboard forType:NSPasteboardTypeString];
 }
 
 string Application::Clipboard::getUnicodeText()
 {
-    string l_clipboardString;
-    return l_clipboardString;
+    NSString* l_stringFromClipboard = [[NSPasteboard generalPasteboard] stringForType:NSPasteboardTypeString];
+    return string([l_stringFromClipboard UTF8String]);
 }
 
 #endif

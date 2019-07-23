@@ -6,6 +6,7 @@
 
 #include "event.h"
 #include "VirtualKey.h"
+#include "System.h"
 
 #define ELEUSIS_WINDOW_CLASS L"Eleusis_alpha_E159F67AEE26A7AA29FB8F4B329465A1328F6D2C"
 
@@ -20,6 +21,8 @@ namespace Eleusis
         static void      registerInstance();
         static int       run(Window*);
         static long long timestamp();
+        
+        static System    currentSystem();
 
         static Event<void*, EventArgs*> renderingCycleExecuted;
         static Event<void*, MouseEventArgs*> mouseUp; // TODO: This needs handle trully global mouse event.
