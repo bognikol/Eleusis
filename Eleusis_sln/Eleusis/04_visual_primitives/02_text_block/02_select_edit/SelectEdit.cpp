@@ -1,4 +1,4 @@
-﻿#include "SelectEdit.h"
+#include "SelectEdit.h"
 
 #include <sstream>
 
@@ -282,31 +282,30 @@ void SelectEdit::_keyDown(Node* sender, KeyboardEventArgs* e)
         case VirtualKey::Down:
             moveCaretDown();
             break;
-        case VirtualKey::X:
-            if (e->ControlDown)
-            {
-                Application::Clipboard::putUnicodeText(getSelectionText());
-                deleteSelection();
-                break;
-            }
-        case VirtualKey::C:
-            if (e->ControlDown)
-            {
-                Application::Clipboard::putUnicodeText(getSelectionText());
-                break;
-            }
-        case VirtualKey::V:
-            if (e->ControlDown)
-            {
-                insertText(Application::Clipboard::getUnicodeText(), _caretLocation);
-                setCaretLocation(_selectionStart + Application::Clipboard::getUnicodeText().size());
-                break;
-            }
         default:
         {
-            if (e->ControlDown)    break;
             if (e->String.empty()) break;
 
+            if ((Application::currentSystem() == System::MacOS && e->CommandDown) ||
+                (Application::currentSystem() == System::Win32 && e->ControlDown))
+            {
+                if (e->String == "x" || e->String == "X")
+                {
+                    Application::Clipboard::putUnicodeText(getSelectionText());
+                    deleteSelection();
+                }
+                else if (e->String == "c" || e->String == "C")
+                {
+                    Application::Clipboard::putUnicodeText(getSelectionText());
+                }
+                else if (e->String == "v" || e->String == "V")
+                {
+                    insertText(Application::Clipboard::getUnicodeText(), _caretLocation);
+                    setCaretLocation(_caretLocation + Application::Clipboard::getUnicodeText().size());
+                }
+                break;
+            }
+            
             _deleteRange(_selectionStart, _selectionEnd);
 
             insertText(e->String, _caretLocation);

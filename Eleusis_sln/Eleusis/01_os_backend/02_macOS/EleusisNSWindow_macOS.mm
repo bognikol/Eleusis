@@ -49,79 +49,90 @@ using namespace Eleusis;
 {
     if (!_eleusisWindowOwner->isEnabled()) return;
 
-    MouseEventArgs l_mouseEventArgs;
+    MouseInputParams l_mouseInputParams;
     
-    l_mouseEventArgs.Button = MouseButton::Left;
-    l_mouseEventArgs.X = [event locationInWindow].x;
-    l_mouseEventArgs.Y = self.frame.size.height - [event locationInWindow].y;
+    l_mouseInputParams.Button = MouseButton::Left;
+    l_mouseInputParams.X = [event locationInWindow].x;
+    l_mouseInputParams.Y = self.frame.size.height - [event locationInWindow].y;
     
-    _eleusisWindowOwner->onMouseButtonDown(l_mouseEventArgs);
+    [EleusisNSWindow populateSpecialKeyState:&l_mouseInputParams event:event];
+    
+    _eleusisWindowOwner->onMouseButtonDown(l_mouseInputParams);
 }
 
 - (void)mouseUp:(NSEvent*)event
 {
     if (!_eleusisWindowOwner->isEnabled()) return;
 
-    MouseEventArgs l_mouseEventArgs;
+    MouseInputParams l_mouseInputParams;
     
-    l_mouseEventArgs.Button = MouseButton::Left;
-    l_mouseEventArgs.X = [event locationInWindow].x;
-    l_mouseEventArgs.Y = self.frame.size.height - [event locationInWindow].y;
+    l_mouseInputParams.Button = MouseButton::Left;
+    l_mouseInputParams.X = [event locationInWindow].x;
+    l_mouseInputParams.Y = self.frame.size.height - [event locationInWindow].y;
     
-    raiseEvent Application::mouseUp(nullptr, &l_mouseEventArgs);
-    _eleusisWindowOwner->onMouseButtonUp(l_mouseEventArgs);
+    [EleusisNSWindow populateSpecialKeyState:&l_mouseInputParams event:event];
+    
+    _eleusisWindowOwner->onMouseButtonUp(l_mouseInputParams);
 }
 
 - (void)rightMouseDown:(NSEvent *)event
 {
     if (!_eleusisWindowOwner->isEnabled()) return;
 
-    MouseEventArgs l_mouseEventArgs;
+    MouseInputParams l_mouseInputParams;
     
-    l_mouseEventArgs.Button = MouseButton::Right;
-    l_mouseEventArgs.X = [event locationInWindow].x;
-    l_mouseEventArgs.Y = self.frame.size.height - [event locationInWindow].y;
+    l_mouseInputParams.Button = MouseButton::Right;
+    l_mouseInputParams.X = [event locationInWindow].x;
+    l_mouseInputParams.Y = self.frame.size.height - [event locationInWindow].y;
     
-    _eleusisWindowOwner->onMouseButtonDown(l_mouseEventArgs);
+    [EleusisNSWindow populateSpecialKeyState:&l_mouseInputParams event:event];
+    
+    _eleusisWindowOwner->onMouseButtonDown(l_mouseInputParams);
 }
 
 - (void)rightMouseUp:(NSEvent *)event
 {
     if (!_eleusisWindowOwner->isEnabled()) return;
 
-    MouseEventArgs l_mouseEventArgs;
+    MouseInputParams l_mouseInputParams;
     
-    l_mouseEventArgs.Button = MouseButton::Right;
-    l_mouseEventArgs.X = [event locationInWindow].x;
-    l_mouseEventArgs.Y = self.frame.size.height - [event locationInWindow].y;
+    l_mouseInputParams.Button = MouseButton::Right;
+    l_mouseInputParams.X = [event locationInWindow].x;
+    l_mouseInputParams.Y = self.frame.size.height - [event locationInWindow].y;
     
-    _eleusisWindowOwner->onMouseButtonUp(l_mouseEventArgs);
+    [EleusisNSWindow populateSpecialKeyState:&l_mouseInputParams event:event];
+    
+    _eleusisWindowOwner->onMouseButtonUp(l_mouseInputParams);
 }
 
 - (void)mouseMoved:(NSEvent*)event
 {
     if (!_eleusisWindowOwner->isEnabled()) return;
 
-    MouseEventArgs l_mouseEventArgs;
+    MouseInputParams l_mouseInputParams;
     
-    l_mouseEventArgs.Button = MouseButton::None;
-    l_mouseEventArgs.X = [event locationInWindow].x;
-    l_mouseEventArgs.Y = self.frame.size.height - [event locationInWindow].y;
+    l_mouseInputParams.Button = MouseButton::None;
+    l_mouseInputParams.X = [event locationInWindow].x;
+    l_mouseInputParams.Y = self.frame.size.height - [event locationInWindow].y;
     
-    _eleusisWindowOwner->onMouseMove(l_mouseEventArgs);
+    [EleusisNSWindow populateSpecialKeyState:&l_mouseInputParams event:event];
+
+    _eleusisWindowOwner->onMouseMove(l_mouseInputParams);
 }
 
 - (void)mouseDragged:(NSEvent*)event
 {
     if (!_eleusisWindowOwner->isEnabled()) return;
 
-    MouseEventArgs l_mouseEventArgs;
+    MouseInputParams l_mouseInputParams;
     
-    l_mouseEventArgs.Button = MouseButton::None;
-    l_mouseEventArgs.X = [event locationInWindow].x;
-    l_mouseEventArgs.Y = self.frame.size.height - [event locationInWindow].y;
+    l_mouseInputParams.Button = MouseButton::None;
+    l_mouseInputParams.X = [event locationInWindow].x;
+    l_mouseInputParams.Y = self.frame.size.height - [event locationInWindow].y;
     
-    _eleusisWindowOwner->onMouseMove(l_mouseEventArgs);
+    [EleusisNSWindow populateSpecialKeyState:&l_mouseInputParams event:event];
+
+    _eleusisWindowOwner->onMouseMove(l_mouseInputParams);
 }
 
 - (void)scrollWheel:(NSEvent *)event
@@ -144,6 +155,9 @@ using namespace Eleusis;
     l_mouseWheelInputParams.Button = MouseButton::None;
     l_mouseWheelInputParams.X = [event locationInWindow].x;
     l_mouseWheelInputParams.Y = self.frame.size.height - [event locationInWindow].y;
+    
+    [EleusisNSWindow populateSpecialKeyState:&l_mouseWheelInputParams event:event];
+
     _eleusisWindowOwner->onMouseWheel(l_mouseWheelInputParams);
 }
 
@@ -184,6 +198,16 @@ using namespace Eleusis;
     Window* _eleusisWindowOwner;
 }
 
++ (void)populateSpecialKeyState:(Eleusis::SpecialKeysInputParams*)inputParams event:(NSEvent*)event
+{
+    NSEventModifierFlags flags = [event modifierFlags];
+    if (flags & NSEventModifierFlagShift)    inputParams->ShiftDown    = true;
+    if (flags & NSEventModifierFlagControl)  inputParams->ControlDown  = true;
+    if (flags & NSEventModifierFlagOption)   inputParams->AltDown      = true;
+    if (flags & NSEventModifierFlagCommand)  inputParams->CommandDown  = true;
+    if (flags & NSEventModifierFlagFunction) inputParams->FunctionDown = true;
+}
+
 - (id)initWithOwner:(Eleusis::Window*)owner
 {
     self = [super init];
@@ -201,11 +225,13 @@ using namespace Eleusis;
 {
     if (!_eleusisWindowOwner->isEnabled()) return;
     
-    KeyboardEventArgs l_keyboardInputParams;
+    KeyboardInputParams l_keyboardInputParams;
     
     l_keyboardInputParams.VirtualKeyCode = static_cast<VirtualKey>(event.keyCode);
     l_keyboardInputParams.String = std::string(event.characters.UTF8String);
 
+    [EleusisNSWindow populateSpecialKeyState:&l_keyboardInputParams event:event];
+    
     _eleusisWindowOwner->onKeyDown(l_keyboardInputParams);
 }
 
@@ -213,10 +239,12 @@ using namespace Eleusis;
 {
     if (!_eleusisWindowOwner->isEnabled()) return;
 
-    KeyboardEventArgs l_keyboardInputParams;
+    KeyboardInputParams l_keyboardInputParams;
     
     l_keyboardInputParams.VirtualKeyCode = static_cast<VirtualKey>(event.keyCode);
     l_keyboardInputParams.String = std::string(event.characters.UTF8String);
+    
+    [EleusisNSWindow populateSpecialKeyState:&l_keyboardInputParams event:event];
     
     _eleusisWindowOwner->onKeyUp(l_keyboardInputParams);
 }

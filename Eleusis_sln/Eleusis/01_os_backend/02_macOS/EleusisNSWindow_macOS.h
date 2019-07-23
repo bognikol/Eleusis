@@ -9,6 +9,7 @@
 @interface EleusisNSWindow : NSWindow
     - (id)initWithOwner:(Eleusis::Window*)owner;
     - (void)show:(CGContextRef)context;
+    + (void)populateSpecialKeyState:(Eleusis::SpecialKeysInputParams*)inputParams event:(NSEvent*)event;
 @end
 
 

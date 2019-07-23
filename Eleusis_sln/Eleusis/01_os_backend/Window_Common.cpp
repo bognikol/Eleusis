@@ -123,6 +123,8 @@ void Window::onMouseButtonUp(MouseInputParams inputParams)
 {
     MouseEventArgs l_mouseEventArgs(inputParams);
 
+    raiseEvent Application::mouseUp(nullptr, &l_mouseEventArgs);
+    
     VisualPrimitive* l_currentMouseUpVisualPrimitive = _getMouseEventTarget(&inputParams);
     Node* l_targetNode = l_currentMouseUpVisualPrimitive;
     l_mouseEventArgs.PrimarySender = l_targetNode;

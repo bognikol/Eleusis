@@ -20,6 +20,7 @@ string EventsView::_getStringParams(MouseEventArgs* e, string senderName, string
     sstream << "Control Down: " << to_string(e->ControlDown) << "\n";
     sstream << "Shift Down: " << to_string(e->ShiftDown) << "\n";
     sstream << "Function Down: " << to_string(e->FunctionDown) << "\n";
+    sstream << "Command Down: " << to_string(e->CommandDown) << "\n";
     sstream << "Mouse Button: " << toString(e->Button) << "\n";
     sstream << "X: " << to_string(e->X) << "\n";
     sstream << "Y: " << to_string(e->Y) << "\n";
@@ -40,6 +41,7 @@ string EventsView::_getStringParams(MouseScrollEventArgs* e, string senderName, 
     sstream << "Control Down: " << to_string(e->ControlDown) << "\n";
     sstream << "Shift Down: " << to_string(e->ShiftDown) << "\n";
     sstream << "Function Down: " << to_string(e->FunctionDown) << "\n";
+    sstream << "Command Down: " << to_string(e->CommandDown) << "\n";
     sstream << "Mouse Button: " << toString(e->Button) << "\n";
     sstream << "Wheel move: " << e->WheelMove << "\n";
     sstream << "Wheel type: " << toString(e->WheelType) << "\n";
@@ -62,6 +64,7 @@ string EventsView::_getStringParams(KeyboardEventArgs* e, string senderName, str
     sstream << "Control Down: " << to_string(e->ControlDown) << "\n";
     sstream << "Shift Down: " << to_string(e->ShiftDown) << "\n";
     sstream << "Function Down: " << to_string(e->FunctionDown) << "\n";
+    sstream << "Command Down: " << to_string(e->CommandDown) << "\n";
     sstream << "Virtual Key: " << static_cast<int>(e->VirtualKeyCode) << "\n";
     sstream << "String: " << e->String << "\n";
     sstream << "Primary sender: " << e->PrimarySender << "\n";
