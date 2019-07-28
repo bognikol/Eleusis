@@ -196,6 +196,7 @@ using namespace Eleusis;
 @implementation EleusisNSWindow
 {
     Window* _eleusisWindowOwner;
+    NSUInteger _currentModifierFlags;
 }
 
 + (void)populateSpecialKeyState:(Eleusis::SpecialKeysInputParams*)inputParams event:(NSEvent*)event
@@ -247,6 +248,58 @@ using namespace Eleusis;
     [EleusisNSWindow populateSpecialKeyState:&l_keyboardInputParams event:event];
     
     _eleusisWindowOwner->onKeyUp(l_keyboardInputParams);
+}
+
+- (void)flagsChanged:(NSEvent *)event
+{
+    if (!_eleusisWindowOwner->isEnabled()) return;
+    if (event.modifierFlags == _currentModifierFlags) return;
+    
+    KeyboardInputParams l_keyboardInputParams;
+    
+    l_keyboardInputParams.VirtualKeyCode = static_cast<VirtualKey>(event.keyCode);
+    l_keyboardInputParams.String = "";
+    
+    [EleusisNSWindow populateSpecialKeyState:&l_keyboardInputParams event:event];
+    
+    bool l_keyDownEvent = true;
+    
+    auto l_isKeyUpEvent = [event, self](NSEventModifierFlags flag) {
+        if (!(_currentModifierFlags & flag) &&
+             (event.modifierFlags   & flag))
+            return true;
+        
+        return false;
+    };
+    
+    switch (l_keyboardInputParams.VirtualKeyCode)
+    {
+        case VirtualKey::Command:
+            l_keyDownEvent = l_isKeyUpEvent(NSEventModifierFlagCommand);
+            break;
+        case VirtualKey::Control:
+            l_keyDownEvent = l_isKeyUpEvent(NSEventModifierFlagControl);
+            break;
+        case VirtualKey::Function:
+            l_keyDownEvent = l_isKeyUpEvent(NSEventModifierFlagFunction);
+            break;
+        case VirtualKey::Option:
+            l_keyDownEvent = l_isKeyUpEvent(NSEventModifierFlagOption);
+            break;
+        case VirtualKey::Shift:
+            l_keyDownEvent = l_isKeyUpEvent(NSEventModifierFlagShift);
+            break;
+        case VirtualKey::Capital:
+            l_keyDownEvent = true;
+            break;
+        default:
+            return;
+    }
+    
+    if (l_keyDownEvent)
+        _eleusisWindowOwner->onKeyDown(l_keyboardInputParams);
+    else
+        _eleusisWindowOwner->onKeyUp(l_keyboardInputParams);
 }
 @end
 
