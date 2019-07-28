@@ -14,10 +14,6 @@ using namespace std::chrono;
 Event<void*, EventArgs*>      Application::renderingCycleExecuted = Event<void*, EventArgs*>();
 Event<void*, MouseEventArgs*> Application::mouseUp                = Event<void*, MouseEventArgs*>();
 
-void Application::registerInstance()
-{
-}
-
 @interface	ApplicationController : NSResponder <NSApplicationDelegate>
     - (void)setStartupWindow:(Window*)window;
 @end
@@ -48,15 +44,19 @@ void Application::registerInstance()
 }
 @end
 
+void Application::registerInstance()
+{
+}
+
 int Application::run(Window* startupWindow)
 {
     @autoreleasepool
     {
-        ApplicationController* del1	= [[ApplicationController alloc] init];
-        [del1 setStartupWindow:startupWindow];
-        NSApplication*	app1 = [NSApplication sharedApplication];
-        [app1 setDelegate:del1];
-        [app1 run];
+        ApplicationController* l_controller	= [[ApplicationController alloc] init];
+        [l_controller setStartupWindow:startupWindow];
+        NSApplication*	l_application = [NSApplication sharedApplication];
+        [l_application setDelegate:l_controller];
+        [l_application run];
     }
     
     return 0;
@@ -89,7 +89,6 @@ void Application::nativeMsgBox(string message, string title)
  {
      NSLog(@"%@", [NSString stringWithCString:message.c_str() encoding:[NSString defaultCStringEncoding]]);
  }
-
 
 void Application::Clipboard::putUnicodeText(string text)
 {
