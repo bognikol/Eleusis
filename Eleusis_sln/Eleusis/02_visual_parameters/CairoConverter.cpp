@@ -1,4 +1,3 @@
-#include "CairoConverter.h"
 #include "VisualParameters.h"
 
 #include "cairo.h"
