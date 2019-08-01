@@ -4,6 +4,8 @@
 #include "Rect.h"
 #include "Region.h"
 
+#include "cairo.h"
+
 #include <cmath>
 
 using namespace Eleusis;
@@ -15,23 +17,21 @@ AffineTransformation::AffineTransformation()
 };
 
 AffineTransformation::AffineTransformation(cairo_matrix_t* affineMatrix)
+: xx(affineMatrix->xx), yx(affineMatrix->yx), xy(affineMatrix->xy),
+  yy(affineMatrix->yy), x0(affineMatrix->x0), y0(affineMatrix->y0)
 {
-    _affineMatrix = *affineMatrix;
 }
 
 cairo_matrix_t* AffineTransformation::getAffineMatrix()
 {
-    return &_affineMatrix;
+    return reinterpret_cast<cairo_matrix_t*>(this);
 };
 
 AffineTransformation AffineTransformation::setAffineMatrixToIdentity()
 {
-    _affineMatrix.xx = 1;
-    _affineMatrix.xy = 0;
-    _affineMatrix.x0 = 0;
-    _affineMatrix.yx = 0;
-    _affineMatrix.yy = 1;
-    _affineMatrix.y0 = 0;
+    xx = 1; yx = 0;
+    xy = 0; yy = 1;
+    x0 = 0; y0 = 0;
 
     return *this;
 };
@@ -40,86 +40,82 @@ AffineTransformation AffineTransformation::applyRotation(double degrees)
 {
     double l_angleInRadians = degrees * _const_2pi / 360.0;
 
-    double l_sine = std::sin(l_angleInRadians);
-    double l_cosine = std::cos(l_angleInRadians);
+    double l_sine = sin(l_angleInRadians);
+    double l_cosine = cos(l_angleInRadians);
 
-    double l_xx = _affineMatrix.xx;
-    double l_xy = _affineMatrix.xy;
-    double l_yx = _affineMatrix.yx;
-    double l_yy = _affineMatrix.yy;
+    double l_xx = xx;
+    double l_xy = xy;
+    double l_yx = yx;
+    double l_yy = yy;
 
-    _affineMatrix.xx = l_cosine * l_xx + l_sine * l_xy;
-    _affineMatrix.xy = -l_sine * l_xx + l_cosine * l_xy;
-    _affineMatrix.yx = l_cosine * l_yx + l_sine * l_yy;
-    _affineMatrix.yy = -l_sine * l_yx + l_cosine * l_yy;
+    xx = l_cosine * l_xx + l_sine * l_xy;
+    xy = -l_sine * l_xx + l_cosine * l_xy;
+    yx = l_cosine * l_yx + l_sine * l_yy;
+    yy = -l_sine * l_yx + l_cosine * l_yy;
 
     return *this;
 };
 
 AffineTransformation AffineTransformation::applyScale(Vector scaleVector)
 {
-    _affineMatrix.xx *= scaleVector.X;
-    _affineMatrix.xy *= scaleVector.Y;
-    _affineMatrix.yx *= scaleVector.X;
-    _affineMatrix.yy *= scaleVector.Y;
+    xx *= scaleVector.X;
+    xy *= scaleVector.Y;
+    yx *= scaleVector.X;
+    yy *= scaleVector.Y;
 
     return *this;
 };
 
 AffineTransformation AffineTransformation::applyTranslation(Vector translationVector)
 {
-    _affineMatrix.x0 = _affineMatrix.xx * translationVector.X + _affineMatrix.xy * translationVector.Y + _affineMatrix.x0;
-    _affineMatrix.y0 = _affineMatrix.yx * translationVector.X + _affineMatrix.yy * translationVector.Y + _affineMatrix.y0;
+    x0 = xx * translationVector.X + xy * translationVector.Y + x0;
+    y0 = yx * translationVector.X + yy * translationVector.Y + y0;
 
     return *this;
 };
 
 AffineTransformation AffineTransformation::applyShear(Vector shearVector)
 {
-    double l_xx = _affineMatrix.xx;
-    double l_xy = _affineMatrix.xy;
-    double l_yx = _affineMatrix.yx;
-    double l_yy = _affineMatrix.yy;
+    double l_xx = xx;
+    double l_xy = xy;
+    double l_yx = yx;
+    double l_yy = yy;
 
-    _affineMatrix.xx = l_xx + shearVector.Y * l_xy;
-    _affineMatrix.xy = shearVector.X * l_xx + l_xy;
-    _affineMatrix.yx = l_yx + shearVector.Y * l_yy;
-    _affineMatrix.yy = shearVector.X * l_yx + l_yy;
+    xx = l_xx + shearVector.Y * l_xy;
+    xy = shearVector.X * l_xx + l_xy;
+    yx = l_yx + shearVector.Y * l_yy;
+    yy = shearVector.X * l_yx + l_yy;
 
     return *this;
 }
 
 AffineTransformation AffineTransformation::multiplyAffineTransformation(AffineTransformation* affineTransformation, bool thisAffineTransformationIsFirstFactor)
 {
-    cairo_matrix_t l_m1 = *affineTransformation->getAffineMatrix();
-    cairo_matrix_t l_m2 = _affineMatrix;
+    cairo_matrix_t l_m1 = *(affineTransformation->getAffineMatrix());
+    cairo_matrix_t l_m2 = *getAffineMatrix();
 
-    if (thisAffineTransformationIsFirstFactor)
-    {
-        l_m1 = _affineMatrix;
-        l_m2 = *affineTransformation->getAffineMatrix();
-    }
+    if (thisAffineTransformationIsFirstFactor) swap(l_m1, l_m2);
 
-    _affineMatrix.xx = l_m1.xx * l_m2.xx + l_m1.xy * l_m2.yx;
-    _affineMatrix.xy = l_m1.xx * l_m2.xy + l_m1.xy * l_m2.yy;
-    _affineMatrix.x0 = l_m1.xx * l_m2.x0 + l_m1.xy * l_m2.y0 + l_m1.x0;
-    _affineMatrix.yx = l_m1.yx * l_m2.xx + l_m1.yy * l_m2.yx;
-    _affineMatrix.yy = l_m1.yx * l_m2.xy + l_m1.yy * l_m2.yy;
-    _affineMatrix.y0 = l_m1.yx * l_m2.x0 + l_m1.yy * l_m2.y0 + l_m1.y0;
+    xx = l_m1.xx * l_m2.xx + l_m1.xy * l_m2.yx;
+    xy = l_m1.xx * l_m2.xy + l_m1.xy * l_m2.yy;
+    x0 = l_m1.xx * l_m2.x0 + l_m1.xy * l_m2.y0 + l_m1.x0;
+    yx = l_m1.yx * l_m2.xx + l_m1.yy * l_m2.yx;
+    yy = l_m1.yx * l_m2.xy + l_m1.yy * l_m2.yy;
+    y0 = l_m1.yx * l_m2.x0 + l_m1.yy * l_m2.y0 + l_m1.y0;
 
     return *this;
 };
 
 AffineTransformation AffineTransformation::transformVector(double* x, double* y)
 {
-    cairo_matrix_transform_point(&_affineMatrix, x, y);
+    cairo_matrix_transform_point(getAffineMatrix(), x, y);
 
     return *this;
 }
 
 AffineTransformation AffineTransformation::transformVector(Vector* vector)
 {
-    cairo_matrix_transform_point(&_affineMatrix, &(vector->X), &(vector->Y));
+    cairo_matrix_transform_point(getAffineMatrix(), &(vector->X), &(vector->Y));
 
     return *this;
 }
@@ -142,14 +138,14 @@ AffineTransformation AffineTransformation::transformRegion(Region* region)
 
 AffineTransformation AffineTransformation::invert()
 {
-    cairo_matrix_invert(&_affineMatrix);
-
+    cairo_matrix_invert(getAffineMatrix());
+    
     return *this;
 }
 
 AffineTransformation AffineTransformation::getInverse()
 {
-    cairo_matrix_t l_matrix = _affineMatrix;
-    cairo_matrix_invert(&l_matrix);
-    return AffineTransformation(&l_matrix);
+    cairo_matrix_t l_affineMatrix = *getAffineMatrix();
+    cairo_matrix_invert(&l_affineMatrix);
+    return AffineTransformation(&l_affineMatrix);
 }

@@ -1,5 +1,7 @@
 #include "Brush.h"
 
+#include "cairo.h"
+
 using namespace std;
 using namespace Eleusis;
 
@@ -18,6 +20,10 @@ BitmapBrush::~BitmapBrush()
 
 void BitmapBrush::extension_set(BitmapBrushExtension extension)
 {
+    if (extension == _extend) return;
+    
+    _extend = extension;
+
     cairo_extend_t l_cairoExtend;
 
     switch (extension)
@@ -38,29 +44,14 @@ void BitmapBrush::extension_set(BitmapBrushExtension extension)
         l_cairoExtend = cairo_extend_t::CAIRO_EXTEND_NONE;
     }
 
-    if (l_cairoExtend == _extend) return;
-
-    _extend = l_cairoExtend;
-    cairo_pattern_set_extend(_pattern, _extend);
+    cairo_pattern_set_extend(_pattern, l_cairoExtend);
     raiseEvent brushUpdated(this, nullptr);
 }
 
 
 BitmapBrushExtension BitmapBrush::extension_get()
 {
-    switch (_extend)
-    {
-    case cairo_extend_t::CAIRO_EXTEND_NONE:
-        return BitmapBrushExtension::None;
-    case cairo_extend_t::CAIRO_EXTEND_PAD:
-        return BitmapBrushExtension::Pad;
-    case cairo_extend_t::CAIRO_EXTEND_REFLECT:
-        return BitmapBrushExtension::Reflect;
-    case cairo_extend_t::CAIRO_EXTEND_REPEAT:
-        return BitmapBrushExtension::Repeat;
-    default:
-        return BitmapBrushExtension::None;
-    }
+    return _extend;
 }
 
 void BitmapBrush::resetAffineTransformation()

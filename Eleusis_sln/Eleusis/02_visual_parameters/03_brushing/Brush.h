@@ -8,7 +8,8 @@
 #include <string>
 #include <vector>
 
-#include "cairo.h"
+typedef struct _cairo_pattern cairo_pattern_t;
+typedef struct _cairo_surface cairo_surface_t;
 
 namespace Eleusis
 {
@@ -19,7 +20,7 @@ namespace Eleusis
     protected:  cairo_pattern_t* _pattern = nullptr;
 
     public:              Brush() { };
-                virtual ~Brush() { if (_pattern) cairo_pattern_destroy(_pattern); _pattern = nullptr; };
+                virtual ~Brush();
                 virtual cairo_pattern_t* getCairoPattern() = 0;
                 Event<Brush*, EventArgs*> brushUpdated;
     };
@@ -168,7 +169,7 @@ namespace Eleusis
     {
         private:    cairo_surface_t* _sourceSurface = nullptr;
                     cairo_pattern_t* _pattern = nullptr;
-                    cairo_extend_t _extend = cairo_extend_t::CAIRO_EXTEND_NONE;
+                    BitmapBrushExtension _extend = BitmapBrushExtension::None;
                     AffineTransformation _affineTransformation;
                     bool _isAffineTransformationApplied = false;
 

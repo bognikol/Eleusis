@@ -1,4 +1,5 @@
-#include "cairo-ext.h" 
+#include "cairo-ext.h"
+#include "cairo.h"
 #include <cstdint>
 
 void cairo_ext_reset_surface(cairo_surface_t* surface)

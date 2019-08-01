@@ -1,5 +1,7 @@
 #include "Brush.h"
 
+#include "cairo.h"
+
 using namespace Eleusis;
 
 LinearGradientBrush::LinearGradientBrush() :

@@ -33,11 +33,6 @@ target_include_directories(ui_test PUBLIC "../Eleusis/08_utilities")
 target_include_directories(ui_test PUBLIC "../Eleusis/08_utilities/01_to_string")
 target_include_directories(ui_test PUBLIC "../Eleusis/08_utilities/02_pseudocontrols")
 
-target_include_directories(ui_test PUBLIC "${GTK_ROOT}/include/cairo")
-target_include_directories(ui_test PUBLIC "${GTK_ROOT}/include/pango-1.0")
-target_include_directories(ui_test PUBLIC "${GTK_ROOT}/include/glib-2.0")
-target_include_directories(ui_test PUBLIC "${GTK_ROOT}/lib/glib-2.0/include")
-
 if (WIN32)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP /GS /W3 /Gy /Zc:wchar_t /Zi /Gm- /fp:precise /errorReport:prompt /WX- /Zc:forScope /Gd /Oi /EHsc /nologo")
 	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /GL /Zc:inline")

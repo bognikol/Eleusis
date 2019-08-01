@@ -1,9 +1,11 @@
 #pragma once
 
 #include "VisualParameters.h"
-#include "pango/pangocairo.h"
 
 #include <memory>
+
+typedef struct _PangoLayout PangoLayout;
+typedef struct _PangoAttribute PangoAttribute;
 
 namespace Eleusis
 {
@@ -12,10 +14,7 @@ namespace Eleusis
     class PangoLayoutWrapper
     {
     public:
-        ~PangoLayoutWrapper()
-        {
-            g_object_unref(layout);
-        }; 
+        ~PangoLayoutWrapper();
 
         PangoLayout* layout = nullptr;
         Paragraph* paragraph = nullptr;
@@ -32,28 +31,11 @@ namespace Eleusis
 
         PangoAttribute* selectionAttribute = nullptr;
 
-        int numberOfShownCharacters()
-        {
-            return pango_layout_get_character_count(layout);
-        };
-
-        int numberOfShownLines()
-        {
-            return pango_layout_get_line_count(layout);
-        };
-
-        int numberOfShownUnknownCharacters()
-        {
-            return pango_layout_get_unknown_glyphs_count(layout);
-        };
-
-        Rect getExtent()
-        {
-            Rect l_rect;
-            l_rect >> offset;
-            l_rect << size;
-            return l_rect;
-        }
+        int numberOfShownCharacters();
+        int numberOfShownLines();
+        int numberOfShownUnknownCharacters();
+        
+        Rect getExtent();
     };
 }
 

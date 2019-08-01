@@ -1,5 +1,7 @@
 #pragma once
 
+typedef struct _cairo cairo_t;
+
 namespace Eleusis
 {
     class Shape;
