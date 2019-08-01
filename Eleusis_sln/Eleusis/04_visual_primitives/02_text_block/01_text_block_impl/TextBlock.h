@@ -7,6 +7,7 @@
 #include "TextBlockStylable.h"
 #include "PangoLayoutWrapper.h"
 
+typedef struct _PangoAttrList PangoAttrList;
 
 /*
 ==============================

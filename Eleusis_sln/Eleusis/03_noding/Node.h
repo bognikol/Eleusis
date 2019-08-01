@@ -3,7 +3,6 @@
 
 #include "dllexport.h"
 
-#include "cairo.h"
 #include "event.h"
 #include "UIContext.h"
 #include "VisualParameters.h"

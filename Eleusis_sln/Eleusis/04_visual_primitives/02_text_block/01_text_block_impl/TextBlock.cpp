@@ -1,5 +1,4 @@
 #include "TextBlock.h"
-#include "CairoConverter.h"
 #include "pango/pangocairo.h"
 #include "Window.h"
 #include "Application.h"
@@ -10,6 +9,13 @@
 
 using namespace Eleusis;
 using namespace std;
+
+namespace Eleusis
+{
+    PangoAlignment convertParagraphAligmentToPangoAligment(ParagraphAlignment alignment);
+    bool convertParagraphAlignmentToJustification(ParagraphAlignment alignment);
+    PangoEllipsizeMode convertEllipsizeTypeToPangoEllipsize(EllipsizeType ellipsizeType);
+}
 
 TextBlock::TextBlock()
 {
