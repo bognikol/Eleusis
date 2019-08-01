@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE catalog PUBLIC "-//OASIS//DTD XML Catalogs V1.0//EN"
+  "file:///Users/bogdannikolic/gtk/inst/share/xml/schema/xml-core/catalog.dtd">
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+<delegateSystem systemIdStartString="http://xml.ascc.net/xml/resource/qaml-xml" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/qaml/catalog.xml"/>
+<delegateSystem systemIdStartString="http://www.w3.org/Graphics/SVG/1.1/" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/svg/catalog.xml"/>
+<delegateSystem systemIdStartString="http://www.w3.org/TR/2001/REC-SVG-20010904/" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/svg/catalog.xml"/>
+<delegateSystem systemIdStartString="/Users/bogdannikolic/gtk/inst/share/sgml/dtd/qaml-xml.dtd" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/qaml/catalog.xml"/>
+<delegatePublic publicIdStartString="ISO 8879:1986//ENTITIES" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/entities/xml-iso-entities-8879.1986/catalog.xml"/>
+<delegatePublic publicIdStartString="-//W3C//DTD SVG" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/svg/catalog.xml"/>
+<delegateSystem systemIdStartString="/Users/bogdannikolic/gtk/inst/share/sgml/dtd/svg" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/svg/catalog.xml"/>
+<delegatePublic publicIdStartString="+//ISBN 82-7640-023//DTD Frequently Asked Questions//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/qaml/catalog.xml"/>
+<delegatePublic publicIdStartString="+//IDN faq.org//DTD Frequently Asked Questions" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/qaml/catalog.xml"/>
+</catalog>

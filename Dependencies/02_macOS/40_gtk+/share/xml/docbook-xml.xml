@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE catalog PUBLIC "-//OASIS//DTD XML Catalogs V1.0//EN"
+  "file:///Users/bogdannikolic/gtk/inst/share/xml/schema/xml-core/catalog.dtd">
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+<delegateSystem systemIdStartString="http://docbook.org/xml/4.2/" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.2/catalog.xml"/>
+<delegatePublic publicIdStartString="-//Norman Walsh//DTD DocBk XML V4.0//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.0/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//ENTITIES DocBook Notations V4.4//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.4/catalog.xml"/>
+<delegatePublic publicIdStartString="-//Norman Walsh//DTD DocBk XML V3" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/3.1.7/catalog.xml"/>
+<delegateSystem systemIdStartString="http://www.oasis-open.org/docbook/xml/4.3/" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.3/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//ELEMENTS DocBook Document Hierarchy V4.2//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.2/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//ELEMENTS DocBook Information Pool V4.4//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.4/catalog.xml"/>
+<delegatePublic publicIdStartString="-//Normal Walsh//Exchange Table Model 19960430 XML V3.1.7//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/3.1.7/catalog.xml"/>
+<delegatePublic publicIdStartString="-//Norman Walsh//DTD DocBook XML V4.0//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.0/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//ENTITIES DocBook Additional General Entities V4.4//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.4/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//ENTITIES DocBook Additional General Entities V4.3//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.3/catalog.xml"/>
+<delegatePublic publicIdStartString="-//Norman Walsh//ELEMENTS DocBk XML Information Pool V3.1.7//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/3.1.7/catalog.xml"/>
+<delegateSystem systemIdStartString="http://www.oasis-open.org/docbook/xml/4.1" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.1.2/catalog.xml"/>
+<delegatePublic publicIdStartString="-//Norman Walsh//ELEMENTS DocBk XML Document Hierarchy V3.1.7//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/3.1.7/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//ELEMENTS DocBook Document Hierarchy V4.4//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.4/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//DTD DocBook CALS Table Model V4.3//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.3/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//ENTITIES DocBook Notations V4.1.2//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.1.2/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//ELEMENTS DocBook Document Hierarchy V4.3//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.3/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//ELEMENTS DocBook Information Pool V4.3//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.3/catalog.xml"/>
+<delegatePublic publicIdStartString="-//Norman Walsh//ELEMENTS DocBk XML Information Pool V4.0//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.0/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//ENTITIES DocBook Character Entities V4.2//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.2/catalog.xml"/>
+<delegateSystem systemIdStartString="http://docbook.org/xml/4.3/" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.3/catalog.xml"/>
+<delegatePublic publicIdStartString="-//Norman Walsh//ENTITIES DocBk XML Notations V3.1.7//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/3.1.7/catalog.xml"/>
+<delegateSystem systemIdStartString="http://www.oasis-open.org/docbook/xml/4.4/" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.4/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//DTD DocBook XML V4.1//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.1.2/catalog.xml"/>
+<delegateSystem systemIdStartString="http://docbook.org/xml/4.4/" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.4/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//ENTITIES DocBook Notations V4.2//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.2/catalog.xml"/>
+<delegatePublic publicIdStartString="-//Norman Walsh//DTD CALS Table Model XML V4.0//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.0/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//DTD DocBook CALS Table Model V4.1.2//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.1.2/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//DTD DocBook XML V4.2//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.2/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//DTD DocBook CALS Table Model V4.4//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.4/catalog.xml"/>
+<delegatePublic publicIdStartString="-//Norman Walsh//ENTITIES DocBk XML Character Entities V4.0//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.0/catalog.xml"/>
+<delegatePublic publicIdStartString="-//Norman Walsh//DTD CALS Table Model XML V3.1.7//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/3.1.7/catalog.xml"/>
+<delegatePublic publicIdStartString="-//Norman Walsh//DTD DocBook XML V3" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/3.1.7/catalog.xml"/>
+<delegatePublic publicIdStartString="-//Norman Walsh//ENTITIES DocBk XML Additional General Entities V3.1.7//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/3.1.7/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//DTD XML Exchange Table Model 19990310//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/3.1.7/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//DTD DocBook XML V4.1.2//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.1.2/catalog.xml"/>
+<delegatePublic publicIdStartString="-//Norman Walsh//ENTITIES DocBk XML Notations V4.0//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.0/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//DTD DocBook XML V4.4//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.4/catalog.xml"/>
+<delegateSystem systemIdStartString="http://www.oasis-open.org/docbook/xml/4.2/" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.2/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//ENTITIES DocBook Notations V4.3//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.3/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//ENTITIES DocBook Character Entities V4.3//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.3/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//DTD DocBook CALS Table Model V4.2//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.2/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//DTD XML Exchange Table Model 19990315//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.4/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//ENTITIES DocBook Character Entities V4.4//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.4/catalog.xml"/>
+<delegatePublic publicIdStartString="-//Norman Walsh//ENTITIES DocBk XML Additional General Entities V4.0//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.0/catalog.xml"/>
+<delegatePublic publicIdStartString="-//Normal Walsh//Exchange Table Model 19960430 XML V4.0//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.0/catalog.xml"/>
+<delegateSystem systemIdStartString="http://www.oasis-open.org/docbook/xml/4.0/" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.0/catalog.xml"/>
+<delegatePublic publicIdStartString="-//Norman Walsh//ENTITIES DocBk XML Character Entities V3.1.7//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/3.1.7/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//DTD DocBook XML V4.3//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.3/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//ENTITIES DocBook Additional General Entities V4.1.2//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.1.2/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//ELEMENTS DocBook Information Pool V4.2//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.2/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//ENTITIES DocBook Additional General Entities V4.2//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.2/catalog.xml"/>
+<delegateSystem systemIdStartString="http://docbook.org/xml/4.1" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.1.2/catalog.xml"/>
+<delegatePublic publicIdStartString="-//Norman Walsh//ELEMENTS DocBk XML Document Hierarchy V4.0//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.0/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//ELEMENTS DocBook Document Hierarchy V4.1.2//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.1.2/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//ENTITIES DocBook Character Entities V4.1.2//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.1.2/catalog.xml"/>
+<delegatePublic publicIdStartString="-//OASIS//ELEMENTS DocBook Information Pool V4.1.2//EN" catalog="file:///Users/bogdannikolic/gtk/inst/share/xml/docbook/schema/dtd/4.1.2/catalog.xml"/>
+</catalog>

@@ -1,3 +1,5 @@
+#ifdef _WIN32
+
 #include "Mouse.h"
 #include "Windows.h"
 
@@ -25,3 +27,5 @@ void Mouse::setCursor(MouseCursor cursor)
     _currentWin32Cursor = LoadCursor(nullptr, _getCursorName(_cursor));
     SetCursor(_currentWin32Cursor);
 }
+
+#endif

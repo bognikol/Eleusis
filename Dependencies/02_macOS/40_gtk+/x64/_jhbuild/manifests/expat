@@ -1,0 +1,9 @@
+bin/xmlwf
+include/expat.h
+include/expat_config.h
+include/expat_external.h
+lib/libexpat.1.dylib
+lib/libexpat.a
+lib/libexpat.dylib
+lib/pkgconfig/expat.pc
+share/man/man1/xmlwf.1

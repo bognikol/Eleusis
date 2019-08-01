@@ -1,0 +1,15 @@
+prefix=/Users/bogdannikolic/gtk/inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+epoxy_has_glx=0
+epoxy_has_egl=0
+epoxy_has_wgl=0
+
+Name: epoxy
+Description: epoxy GL dispatch Library
+Version: 1.4.2
+Cflags: -I${includedir}
+Libs: -L${libdir} -lepoxy
+Libs.private: -ldl

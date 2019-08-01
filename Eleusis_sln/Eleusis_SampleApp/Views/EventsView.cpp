@@ -20,6 +20,7 @@ string EventsView::_getStringParams(MouseEventArgs* e, string senderName, string
     sstream << "Control Down: " << to_string(e->ControlDown) << "\n";
     sstream << "Shift Down: " << to_string(e->ShiftDown) << "\n";
     sstream << "Function Down: " << to_string(e->FunctionDown) << "\n";
+    sstream << "Command Down: " << to_string(e->CommandDown) << "\n";
     sstream << "Mouse Button: " << toString(e->Button) << "\n";
     sstream << "X: " << to_string(e->X) << "\n";
     sstream << "Y: " << to_string(e->Y) << "\n";
@@ -40,6 +41,7 @@ string EventsView::_getStringParams(MouseScrollEventArgs* e, string senderName, 
     sstream << "Control Down: " << to_string(e->ControlDown) << "\n";
     sstream << "Shift Down: " << to_string(e->ShiftDown) << "\n";
     sstream << "Function Down: " << to_string(e->FunctionDown) << "\n";
+    sstream << "Command Down: " << to_string(e->CommandDown) << "\n";
     sstream << "Mouse Button: " << toString(e->Button) << "\n";
     sstream << "Wheel move: " << e->WheelMove << "\n";
     sstream << "Wheel type: " << toString(e->WheelType) << "\n";
@@ -62,6 +64,7 @@ string EventsView::_getStringParams(KeyboardEventArgs* e, string senderName, str
     sstream << "Control Down: " << to_string(e->ControlDown) << "\n";
     sstream << "Shift Down: " << to_string(e->ShiftDown) << "\n";
     sstream << "Function Down: " << to_string(e->FunctionDown) << "\n";
+    sstream << "Command Down: " << to_string(e->CommandDown) << "\n";
     sstream << "Virtual Key: " << static_cast<int>(e->VirtualKeyCode) << "\n";
     sstream << "String: " << e->String << "\n";
     sstream << "Primary sender: " << e->PrimarySender << "\n";
@@ -88,21 +91,21 @@ EventsView::EventsView(Length width, Length height) :
 
     _eventData = new TextualShape();
     _eventData->LayoutGuest.Classic.topLeft(70, 20);
-	_eventData->fontFamily_set("Consolas");
+	_eventData->fontFamily_set("Courier");
     _eventData->text_set("EVENT DATA");
 	_eventData->fillColor_set(Colors::Black);
     insertChild(_eventData);
 
 	_focusEventData = new TextualShape();
 	_focusEventData->LayoutGuest.Classic.topLeft(300, 20);
-	_focusEventData->fontFamily_set("Consolas");
+	_focusEventData->fontFamily_set("Courier");
 	_focusEventData->text_set("FUCUS EVENT DATA");
 	_focusEventData->fillColor_set(Colors::Black);
 	insertChild(_focusEventData);
 
 	_focusHolderData = new TextualShape();
 	_focusHolderData->LayoutGuest.Classic.topLeft(350, 20);
-	_focusHolderData->fontFamily_set("Consolas");
+	_focusHolderData->fontFamily_set("Courier");
 	_focusHolderData->text_set("FUCUS HOLDER EVENT DATA");
 	_focusHolderData->fillColor_set(Colors::Black);
 	insertChild(_focusHolderData);

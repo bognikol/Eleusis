@@ -1,0 +1,12 @@
+prefix=/Users/bogdannikolic/gtk/inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+
+Name: libxslt
+Version: 1.1.29
+Description: XSLT library version 2.
+Requires: libxml-2.0
+Libs: -L${libdir} -lxslt  -L/Users/bogdannikolic/gtk/inst/lib -lxml2 -lz -L/Users/bogdannikolic/gtk/inst/lib -llzma -lpthread -liconv -lm  
+Cflags: -I${includedir}

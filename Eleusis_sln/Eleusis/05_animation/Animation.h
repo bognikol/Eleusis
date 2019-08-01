@@ -9,7 +9,7 @@
 #include "Colors.h"
 #include "Easing.h"
 #include "AnimationComponent.h"
-#include "01_Vectoring/Length.h"
+#include "01_vectoring/Length.h"
 #include "IAnimation.h"
 
 namespace Eleusis

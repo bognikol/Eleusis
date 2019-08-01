@@ -1,0 +1,2 @@
+#! /bin/sh
+exec '/Users/bogdannikolic/gtk/inst/bin/bison' -y "$@"

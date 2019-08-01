@@ -1,0 +1,3 @@
+share/aclocal/xorg-macros.m4
+share/pkgconfig/xorg-macros.pc
+share/util-macros/INSTALL

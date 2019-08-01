@@ -1,3 +1,5 @@
+#ifdef _WIN32
+
 #include "Timer.h"
 
 #include <Windows.h>
@@ -5,11 +7,11 @@
 using namespace Eleusis;
 using namespace std;
 
-static std::map<UINT_PTR, Timer*> _activeTimers;
+static std::map<void*, Timer*> _activeTimers;
 
 void CALLBACK _timerProc(_In_ HWND hwnd, _In_ UINT uMsg, _In_ UINT_PTR idEvent, _In_ DWORD dwTime)
 {
-    auto l_timerIter = _activeTimers.find(idEvent);
+    auto l_timerIter = _activeTimers.find(reinterpret_cast<void*>(idEvent));
     if (l_timerIter == _activeTimers.end()) 
         return;
 
@@ -35,12 +37,12 @@ void Timer::start()
 {
     if (_timerID == 0)
     {
-        _timerID = SetTimer(nullptr, 0, _duration, _timerProc);
+        _timerID = reinterpret_cast<void*>(SetTimer(nullptr, 0, _duration, _timerProc));
         _activeTimers[_timerID] = this;
     }
     else
     {
-        SetTimer(nullptr, _timerID, _duration, _timerProc);
+        SetTimer(nullptr, reinterpret_cast<UINT_PTR>(_timerID), _duration, _timerProc);
     }
 
     raiseEvent started(this, nullptr);
@@ -49,7 +51,7 @@ void Timer::start()
 void Timer::stop()
 {
     if (_timerID == 0) return;
-    KillTimer(nullptr, _timerID);
+    KillTimer(nullptr, reinterpret_cast<UINT_PTR>(_timerID));
     _activeTimers.erase(_timerID);
     _timerID = 0;
 }
@@ -59,7 +61,7 @@ void Timer::duration_set(unsigned int duration)
     _duration = duration;
 
     if (_timerID != 0)
-        SetTimer(nullptr, _timerID, _duration, _timerProc);
+        SetTimer(nullptr, reinterpret_cast<UINT_PTR>(_timerID), _duration, _timerProc);
 }
 
 unsigned int Timer::duration_get()
@@ -86,3 +88,5 @@ bool Timer::enabled_get()
 {
     return _enabled;
 }
+
+#endif

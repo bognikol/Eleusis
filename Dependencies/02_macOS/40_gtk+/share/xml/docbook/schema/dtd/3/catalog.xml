@@ -1,0 +1,76 @@
+<?xml version='1.0'?>
+<!DOCTYPE catalog PUBLIC "-//OASIS//DTD Entity Resolution XML Catalog V1.0//EN" 
+    "http://www.oasis-open.org/committees/entity/release/1.0/catalog.dtd">
+
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+
+<!-- ...................................................................... -->
+<!-- XML Catalog data for DocBook XML V3.1.7............................... -->
+<!-- File catalog.xml ..................................................... -->
+
+<!-- Please direct all questions, bug reports, or suggestions for
+     changes to the docbook@lists.oasis-open.org mailing list. For more
+     information, see http://www.oasis-open.org/.
+  -->
+
+<!-- This is the catalog data file for DocBook V3.1.7. It is provided as
+     a convenience in building your own catalog files. You need not use
+     the filenames listed here, and need not use the filename method of
+     identifying storage objects at all.  See the documentation for
+     detailed information on the files associated with the DocBook DTD.
+     See XML Catalogs at http://www.oasis-open.org/committees/entity/ for
+     detailed information on supplying and using catalog data.
+  -->
+
+<!-- ...................................................................... -->
+<!-- DocBook driver file .................................................. -->
+
+<public publicId="-//Norman Walsh//DTD DocBk XML V3.1.7//EN"
+        uri="docbookx.dtd"/>
+
+<!-- Other ways to refer to DocBook XML v3.1.7............................... -->
+<public publicId="-//Norman Walsh//DTD DocBook XML V3.1.7//EN"
+        uri="docbookx.dtd"/>
+<public publicId="-//Norman Walsh//DTD DocBk XML V3.1//EN"
+        uri="docbookx.dtd"/>
+<public publicId="-//Norman Walsh//DTD DocBook XML V3.1//EN"
+        uri="docbookx.dtd"/>
+<public publicId="-//Norman Walsh//DTD DocBk XML V3//EN"
+        uri="docbookx.dtd"/>
+<public publicId="-//Norman Walsh//DTD DocBook XML V3//EN"
+        uri="docbookx.dtd"/>
+
+<!-- ...................................................................... -->
+<!-- DocBook modules ...................................................... -->
+
+<public publicId="-//Norman Walsh//ENTITIES DocBk XML Notations V3.1.7//EN"
+        uri="dbnotnx.mod"/>
+
+<public publicId="-//Norman Walsh//ENTITIES DocBk XML Character Entities V3.1.7//EN"
+        uri="dbcentx.mod"/>
+
+<public publicId="-//Norman Walsh//ELEMENTS DocBk XML Information Pool V3.1.7//EN"
+        uri="dbpoolx.mod"/>
+
+<public publicId="-//Norman Walsh//ELEMENTS DocBk XML Document Hierarchy V3.1.7//EN"
+        uri="dbhierx.mod"/>
+
+<public publicId="-//Norman Walsh//ENTITIES DocBk XML Additional General Entities V3.1.7//EN"
+        uri="dbgenent.mod"/>
+
+<public publicId="-//Norman Walsh//DTD CALS Table Model XML V3.1.7//EN"
+        uri="calstblx.dtd"/>
+
+<!-- UNOFFICIAL conversion of the exchange table model to XML, based on the OASIS Exchange -->
+<!--    Table Model PUBLIC "-//SGML Open//DTD Exchange Table Model 19960430//EN"           -->
+<public publicId="-//Normal Walsh//Exchange Table Model 19960430 XML V3.1.7//EN"
+        uri="soextblx.dtd"/>
+
+<!-- the following FPI is declared for the DTD inside the DTD, so I include it             -->
+<public publicId="-//OASIS//DTD XML Exchange Table Model 19990310//EN"
+        uri="soextblx.dtd"/>
+
+<!-- End of catalog data for DocBook XML V3.1.7 ............................. -->
+<!-- ...................................................................... -->
+
+</catalog>

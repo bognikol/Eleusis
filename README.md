@@ -16,7 +16,7 @@ Download compiled sample app for Windows [here](https://github.com/bognikol/Eleu
 * Getting Started
     * Build Instructions
     * My First Application
-        * Prerequestives
+        * Prerequisites
         * Simplest Eleusis App
         * Adding Content
         * Adding Interactivity
@@ -32,7 +32,7 @@ Eleusis started as a personal experiment how to create simple GUI library for C+
 
 Eleusis is build upon [Cairo](https://cairographics.org/) and [Pango](http://www.pango.org/), rendering libraries from GTK family.
 
-Eleusis is designed to be multiplatform; however, currently only Win32 implementation exists. 
+Eleusis is designed to be multiplatform; however, currently only Win32 and macOS implementations exist. 
 
 ## Design Goals
 
@@ -64,14 +64,14 @@ Eleusis is designed to be multiplatform; however, currently only Win32 implement
 * Powerful animation engine
 * Flexible and powerful layouting mechanism (wrap, stack, relative sizes, center child)
 * Opacity and drop shadow (blur to be implemented - Cairo does not support it yet)
+* Existing implementation for Win32 and macOS
 
 ### Roadmap
 
 * Hardening, hardening, hardening
-* Switch to platform-independent build tool (CMake preferably)
-* Make implementation on macOS Cocoa as well as at least one Linux windowing system (X11, Wayland)
+* Make implementation for at least one Linux windowing system (X11, Wayland)
 * Implement basic palette of controls/widgets: TextBox, Slider, ScrollBar, Button etc.
-* Implement rendering caching and rendering paralelization on multi-CPU systems
+* Implement rendering caching and rendering parallelization on multi-CPU systems
 * Implement weak styling (CSS-like styling where entity has certain string identifier which acts as a key to object which holds information about requested properties of the entity)
 * Writing large number of UI tests (now we have just basics)
 * Large number of small and larger features, improvements and bug fixes
@@ -80,18 +80,36 @@ Eleusis is designed to be multiplatform; however, currently only Win32 implement
 
 ### Build Instructions
 
-1. Download and install Visual Studio 2015 with C++ tools.
-2. Open Eleusis_sln/Eleusis.sln in Visual Studio.
-3. Right click on SampleApp project and click on 'Set as Start Up Project'
-4. Press run. Eleusis library will be build too as it is dependency of SampleApp.
-5. Build should succeed, but run should fail (missing dll error). Go to /Dependencies/40_gtk+/binaries/{your selected platform} and copy all dlls to output folder /Output/{your selected config}/{your selected platform}/Eleusis_SamppleApp. Eleusis actually depends only on some of dlls copied, but for convenience copy all. Full list of dependencies view [here](https://github.com/bognikol/Eleusis-Bootstrap/tree/master/libs/Eleusis/Win32/dll).
-6. Press run again.
+Eleusis use CMake as a platform-independent metabuild system. CMake supports easy generation of build files for wide range of operating systems and build systems.
+
+Build instructions for both Win32 and macOS implementations are essentially the same; however, some prebuild and postbuild actions are platform specific. Instructions bellow are given for make/nmake build system.
+
+**Build instructions for Win32:**
+
+1. Download and install Visual Studio 2015 with C++ tools. 
+2. Open VS2015 Native Command Prompt for architecture you want to build for and navigate to Eleusis_sln directory.
+3. Create build directory (for example `mkdir build`) and navigate to it.
+4. Run `cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=<build_configuration> ..` where `<build_configuration>` is either `Release` or `Debug`. This command generates nmake build files.
+5. Build Eleusis by running `nmake`.
+6. If you want to run Eleusis_SampleApp for example you have to copy all needed dlls first. 
+    * Copy `eleusis.dll` from `build/Eleusis` to `build/Eleusis_SampleApp`.
+    * Go to `/Dependencies/01_win32/40_gtk+/<your selected platform>/bin` and copy all dlls to `build/Eleusis_SampleApp`. Eleusis actually depends only on some of dlls copied, but for convenience copy all. Full list of dependencies view [here](https://github.com/bognikol/Eleusis-Bootstrap/tree/master/libs/Eleusis/Win32/dll).
+7. Run `build/Eleusis_SampleApp/sample_app`.
+
+**Build instructions for macOS:**
+
+1. Download and install XCode with command-line tools. 
+2. Open default terminal and navigate to Eleusis_sln. 
+3. Create build directory (for example `mkdir build`) and navigate to it.
+4. Run `cmake -DCMAKE_BUILD_TYPE=<build_configuration> ..` where `<build_configuration>` is either `Release` or `Debug`. This command generates make build files.
+5. Build Eleusis by running `make`.
+7. If you want to run Eleusis_SampleApp for example, run `build/Eleusis_SampleApp/sample_app.app`.
 
 ### My First Application
 
-Very basic walk-through for creating simple UI app on Windows using Eleusis follows.
+Very basic walk-through for creating simple UI app on Windows using Eleusis follows. Walk-through for macOS is similar; major difference is an entry point. View Eleusis_SampleApp as an example.
 
-#### Prerequestives
+#### Prerequisites
 
 In order to use Eleusis, you need:
 

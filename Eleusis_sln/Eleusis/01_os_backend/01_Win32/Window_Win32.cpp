@@ -1,3 +1,5 @@
+#ifdef _WIN32
+
 #include "Window.h"
 #include "Application.h"
 
@@ -55,7 +57,7 @@ void Window::show()
     _updateGeometryAndApplyAbsoluteOffset();
     _render();
 
-    _prepeareForFollowingRenderingIteration();
+    _cleanUpForFollowingRenderingIteration();
 }
 
 void Window::showModal()
@@ -205,5 +207,4 @@ void* Window::getNativeHandle()
     return (void*)_windowOSBundle->_hwnd;
 }
 
-
-
+#endif

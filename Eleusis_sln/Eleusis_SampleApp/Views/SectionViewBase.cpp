@@ -6,14 +6,14 @@ using namespace Eleusis::SampleApp;
 SectionViewBase::SectionViewBase()
 {
     TextualShape* l_textShape = new TextualShape();
-    l_textShape->LayoutGuest.Classic.topLeft(4, 10);
+    l_textShape->LayoutGuest.Classic.topLeft(3, 10);
     l_textShape->text_set("BACK");
     l_textShape->fillColor_set(Colors::Black);
-    l_textShape->fontFamily_set("Segoe UI");
+    l_textShape->fontFamily_set("Arial Black");
     l_textShape->fontWeight_set(FontWeight::w900_Ultraheavy);
     l_textShape->letterSpacing_set(1);
 
-	Rectangle* l_backButton = new Rectangle(56, 25);
+	Rectangle* l_backButton = new Rectangle(66, 25);
 	l_backButton->fillColor_set(Colors::LightGray);
 	l_backButton->LayoutGuest.Classic.topLeft(10, 10);
     l_backButton->insertChild(l_textShape);

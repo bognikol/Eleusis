@@ -1,0 +1,4 @@
+bin/ragel
+share/doc/ragel/ChangeLog
+share/doc/ragel/CREDITS
+share/man/man1/ragel.1

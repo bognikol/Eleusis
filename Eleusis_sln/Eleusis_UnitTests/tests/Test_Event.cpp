@@ -112,7 +112,7 @@ TEST_F(EventTest, PredefinedLambdaAsAHandlerAssignedTwice)
 
 TEST_F(EventTest, HandlerObjectAsAHandler)
 {
-    Handler<EventSender*, EventArgs*> l_handler = 
+    Handler<EventSender*, EventArgs*> l_handler;l_handler = 
         [this](EventSender* sender, EventArgs* e)
     {
         EXPECT_EQ(&eventSender, sender);
@@ -129,7 +129,7 @@ TEST_F(EventTest, HandlerObjectAsAHandler)
 
 TEST_F(EventTest, HandlerObjectAsAHandlerAssignedTwice)
 {
-    Handler<EventSender*, EventArgs*> l_handler =
+    Handler<EventSender*, EventArgs*> l_handler; l_handler =
         [this](EventSender* sender, EventArgs* e)
     {
         EXPECT_EQ(&eventSender, sender);
@@ -147,7 +147,7 @@ TEST_F(EventTest, HandlerObjectAsAHandlerAssignedTwice)
 
 TEST_F(EventTest, HandlerObjectAsAHandlerAssignedAndThenDeassigned)
 {
-    Handler<EventSender*, EventArgs*> l_handler =
+    Handler<EventSender*, EventArgs*> l_handler;l_handler =
         [this](EventSender* sender, EventArgs* e)
     {
         EXPECT_EQ(&eventSender, sender);
@@ -172,7 +172,7 @@ TEST_F(EventTest, HandlerObjectAsAHandlerAssignedAndThenDeassigned)
 
 TEST_F(EventTest, HandlerObjectContainsValidFunctionObject)
 {
-    Handler<EventSender*, EventArgs*> l_handler =
+    Handler<EventSender*, EventArgs*> l_handler;l_handler =
         [this](EventSender* sender, EventArgs* e)
     {
         EXPECT_EQ(&eventSender, sender);
@@ -187,7 +187,7 @@ TEST_F(EventTest, HandlerObjectContainsValidFunctionObject)
 
 TEST_F(EventTest, HandlerObjectReturnsValidTarget)
 {
-    Handler<EventSender*, EventArgs*> l_handler =
+    Handler<EventSender*, EventArgs*> l_handler;l_handler =
         [this](EventSender* sender, EventArgs* e)
     {
         EXPECT_EQ(&eventSender, sender);
@@ -225,7 +225,7 @@ TEST_F(EventTest, HandlerObjectsCreatedFromSameFunctionObjectsHaveSameTargetsBut
 
 TEST_F(EventTest, HandlerObjectsCanBeAssignedAndDeassignedToMultipleEvents)
 {
-    Handler<EventSender*, EventArgs*> l_handler1 =
+    Handler<EventSender*, EventArgs*> l_handler1;l_handler1 =
         [this](EventSender* sender, EventArgs* e)
     {
         EXPECT_EQ(&eventSender, sender);
@@ -233,7 +233,7 @@ TEST_F(EventTest, HandlerObjectsCanBeAssignedAndDeassignedToMultipleEvents)
         numRaised++;
     };
 
-    Handler<EventSender*, EventArgs*> l_handler2 =
+    Handler<EventSender*, EventArgs*> l_handler2;l_handler2 =
         [this](EventSender* sender, EventArgs* e)
     {
         EXPECT_EQ(&eventSender, sender);
@@ -241,7 +241,7 @@ TEST_F(EventTest, HandlerObjectsCanBeAssignedAndDeassignedToMultipleEvents)
         numRaised++;
     };
 
-    Handler<EventSender*, EventArgs*> l_handler3 =
+    Handler<EventSender*, EventArgs*> l_handler3;l_handler3 =
         [this](EventSender* sender, EventArgs* e)
     {
         EXPECT_EQ(&eventSender, sender);

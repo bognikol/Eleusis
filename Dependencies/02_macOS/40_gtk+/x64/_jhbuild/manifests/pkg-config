@@ -1,0 +1,5 @@
+bin/pkg-config
+bin/x86_64-apple-darwin16.7.0-pkg-config
+share/aclocal/pkg.m4
+share/doc/pkg-config/pkg-config-guide.html
+share/man/man1/pkg-config.1

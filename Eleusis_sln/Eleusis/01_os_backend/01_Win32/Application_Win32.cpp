@@ -1,3 +1,5 @@
+#ifdef _WIN32
+
 #include "Application.h"
 #include "Window.h"
 
@@ -113,6 +115,11 @@ int Application::run(Window* startupWindow)
 long long Application::timestamp()
 {
     return duration_cast<milliseconds>(steady_clock::now().time_since_epoch()).count();
+}
+
+System Application::currentSystem()
+{
+    return System::Win32;
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -612,4 +619,12 @@ void Application::nativeMsgBox(string message, string title)
     MessageBox(nullptr, converter.from_bytes(message).c_str(), converter.from_bytes(title).c_str(), MB_TASKMODAL);
 }
 
+void Application::nativeLog(string message)
+{
+
+}
+
+
 #pragma endregion
+
+#endif

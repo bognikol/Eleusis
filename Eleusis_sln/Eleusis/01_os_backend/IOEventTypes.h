@@ -16,14 +16,20 @@ namespace Eleusis
         Vector Size;
     };
 
-    struct ELEUSIS_API KeyboardInputParams
+    struct ELEUSIS_API SpecialKeysInputParams
     {
-        VirtualKey   VirtualKeyCode = VirtualKey::None;
-        std::string  String;
         bool         ShiftDown    = false;
         bool         ControlDown  = false;
         bool         AltDown      = false;
         bool         FunctionDown = false;
+        bool         CommandDown  = false;
+    };
+    
+    struct ELEUSIS_API KeyboardInputParams :
+        public SpecialKeysInputParams
+    {
+        VirtualKey   VirtualKeyCode = VirtualKey::None;
+        std::string  String;
     };
 
     enum class ELEUSIS_API MouseButton
@@ -36,15 +42,12 @@ namespace Eleusis
         X2
     };
 
-    struct ELEUSIS_API MouseInputParams
+    struct ELEUSIS_API MouseInputParams :
+        public SpecialKeysInputParams
     {
         int         X = 0;
         int         Y = 0;
         MouseButton Button = MouseButton::None;
-        bool        ShiftDown    = false;
-        bool        ControlDown  = false;
-        bool        AltDown      = false;
-        bool        FunctionDown = false;
     };
 
     enum class ELEUSIS_API MouseScrollType

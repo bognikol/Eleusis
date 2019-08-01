@@ -106,10 +106,10 @@ EleusisWindowTestWindow::EleusisWindowTestWindow()
     btn8->mouseClick +=
         [this](Node* sender, EventArgs* e)
     {
-        Application::nativeMsgBox("Position and Size", "Size X: " + std::to_string(win->getPosition().X) +
-            "\nSize Y: " + std::to_string(win->getPosition().Y) +
-            "\nPosition Y: " + std::to_string(win->getSize().X) +
-            "\nPosition Y: " + std::to_string(win->getSize().Y));
+        Application::nativeMsgBox("Position and Size", "Size X: " + std::to_string(win->getSize().X) +
+            "\nSize Y: " + std::to_string(win->getSize().Y) +
+            "\nPosition X: " + std::to_string(win->getPosition().X) +
+            "\nPosition Y: " + std::to_string(win->getPosition().Y));
     };
     insertChild(btn8);
 
@@ -180,19 +180,19 @@ EleusisWindowTestWindow::EleusisWindowTestWindow()
     rect55->LayoutGuest.Classic.left(20);
     rect55->fillColor_set(Colors::PaleVioletRed);
 
-    circ55 = new Circle(150);
-    circ55->fillColor_set(Colors::Yellow);
+    //circ55 = new Circle(150);
+    //circ55->fillColor_set(Colors::Yellow);
     //insertChild(rect55);
-    insertChild(circ55);
+    //insertChild(circ55);
 
-    mouseMove +=
+    /*mouseMove +=
         [this](Window* sender, MouseEventArgs* e)
     {
         circ55->LayoutGuest.Classic.bottom(e->Y);
         circ55->LayoutGuest.Classic.right(e->X);
         //circ55->radius_set(e->Y / 4);
         //rect55->width_set(e->X / 4);
-    };
+    };*/
 }
 
 EleusisWindowTestWindow::~EleusisWindowTestWindow()

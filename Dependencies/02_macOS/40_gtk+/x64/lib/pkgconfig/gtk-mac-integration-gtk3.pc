@@ -1,0 +1,11 @@
+prefix=/Users/bogdannikolic/gtk/inst
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: gtk-mac-integration-gtk3
+Description: Mac menu bar and dock integration for GTK+
+Requires: gtk+-3.0
+Version: 2.0.8
+Libs: -L${libdir} -lgtkmacintegration-gtk3
+Cflags: -I${includedir}/gtkmacintegration -DMAC_INTEGRATION

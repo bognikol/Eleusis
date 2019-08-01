@@ -1,3 +1,5 @@
+#ifdef _WIN32
+
 #pragma once
 
 #include <Windows.h>
@@ -13,3 +15,5 @@ namespace Eleusis
         HANDLE      _hOld;
     };
 }
+
+#endif

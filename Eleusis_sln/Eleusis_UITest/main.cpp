@@ -1,5 +1,3 @@
-#include "Windows.h"
-
 #include "Application.h"
 
 #include "test_windows/SampleWindow.h"
@@ -23,17 +21,17 @@
 
 using namespace Eleusis;
 
-int APIENTRY wWinMain
-(
-    _In_     HINSTANCE hInstance,
-    _In_opt_ HINSTANCE hPrevInstance,
-    _In_     LPWSTR    lpCmdLine,
-    _In_     int       nCmdShow
-)
+#ifdef _WIN32
+#include "Windows.h"
+int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
+    _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
+#else
+int main(int argc, const char * argv[])
+#endif
 {
     Application::registerInstance();
 
     return
-        Application::run(new SampleWindow());
+        Application::run(new Test::WrapLayoutTestWindow());
 
 }
