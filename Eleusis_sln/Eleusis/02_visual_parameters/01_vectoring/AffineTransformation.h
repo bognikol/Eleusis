@@ -2,7 +2,7 @@
 
 #include "dllexport.h"
 
-#include "cairo.h"
+typedef struct _cairo_matrix cairo_matrix_t;
 
 namespace Eleusis
 {
@@ -14,7 +14,9 @@ namespace Eleusis
     {
     private:    static constexpr double _const_2pi = 6.28318530717958647692;
 
-    private:    cairo_matrix_t _affineMatrix;
+    private:    double xx; double yx;
+                double xy; double yy;
+                double x0; double y0;
 
     public:     AffineTransformation();
                 AffineTransformation(cairo_matrix_t* affineMatrix);

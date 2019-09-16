@@ -1,6 +1,14 @@
 #include "Brush.h"
 
+#include "cairo.h"
+
 using namespace Eleusis;
+
+Brush::~Brush()
+{
+    if (_pattern) cairo_pattern_destroy(_pattern);
+    _pattern = nullptr;
+}
 
 SolidColorBrush::SolidColorBrush() :
     Color()

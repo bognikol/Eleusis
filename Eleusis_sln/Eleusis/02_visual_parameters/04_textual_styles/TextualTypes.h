@@ -2,8 +2,6 @@
 
 #include "dllexport.h"
 
-#include "pango/pangocairo.h"
-
 namespace Eleusis
 {
     enum class ELEUSIS_API FontStyle
@@ -82,10 +80,6 @@ namespace Eleusis
         JustifiedCenter,
         JustifiedRight
     };
-    
-    // TODO: move these global functions
-    PangoAlignment convertParagraphAligmentToPangoAligment(ParagraphAlignment alignment);
-    bool convertParagraphAlignmentToJustification(ParagraphAlignment alignment);
 
     enum class ELEUSIS_API EllipsizeType
     {
@@ -94,8 +88,5 @@ namespace Eleusis
         Middle,
         End
     };
-
-    PangoEllipsizeMode convertEllipsizeTypeToPangoEllipsize(EllipsizeType ellipsizeType);
-
 }
 

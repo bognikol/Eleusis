@@ -4,7 +4,8 @@
 
 #include "01_vectoring/Region.h"
 #include "01_vectoring/IAffineTransformable.h"
-#include "cairo.h"
+
+typedef struct cairo_path cairo_path_t;
 
 namespace Eleusis
 {
@@ -18,16 +19,16 @@ namespace Eleusis
                 static constexpr double _const_semicircleBezier = 0.5522847498307934;
                 static constexpr double _const_ellipseBezier    = 0.75;
 
-				static constexpr int    _const_numberOfBytesPerRect = 9 * sizeof(cairo_path_data_t);
+                static const int        _const_numberOfBytesPerRect;
 
     public:     static constexpr double const_pi     = 3.14159265358979323846;
                 static constexpr double const_2pi    = 2 * const_pi;
                 static constexpr double const_piHalf = const_pi / 2;
 
 
-    private:    cairo_path_t _originalPath;
+    private:    cairo_path_t* _originalPath = nullptr;
 
-                cairo_path_t _affineTransformedPath;
+                cairo_path_t* _affineTransformedPath = nullptr;
                 AffineTransformation _affineTransformation;
 
 				bool _extentsAreStale = true;
@@ -36,7 +37,7 @@ namespace Eleusis
        
                 void _realocateBuffer();
                 void _appendPoint (double x, double y);
-                void _appendHeader(cairo_path_data_type_t type);
+                void _appendHeader(int type);
                 void _reapplyAffineTransformation();
                 void _disposeAffineTransformation();
                 
@@ -76,5 +77,4 @@ namespace Eleusis
                 virtual void multiplyAffineTransformation(AffineTransformation* affineTransformation);
                 virtual AffineTransformation getAffineTransformation() { return _affineTransformation; };
     };
-
 }

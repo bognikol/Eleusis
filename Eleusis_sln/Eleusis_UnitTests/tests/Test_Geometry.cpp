@@ -4,6 +4,8 @@
 #include <iostream>
 #include <limits>
 
+#include "cairo.h"
+
 using namespace std;
 using namespace Eleusis;
 using namespace ::testing;

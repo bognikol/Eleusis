@@ -115,7 +115,7 @@ In order to use Eleusis, you need:
 
 (1) Eleusis.dll and Eleusis.lib which match the platform and configuration of your build
 
-(2) Bundle of appropriate headers (which involves Eleusis as well as Pango and Cairo headers; this unfortunate feature should be updated in the future).
+(2) Bundle of Eleusis headers
 
 (3) Dependency dlls - these are Pango and Cairo dlls, as well as dlls of Pango and Cairo dependencies (although Eleusis does not have direct dependencies except STL and Cairo and Pango, Cairo and Pango do have).
 

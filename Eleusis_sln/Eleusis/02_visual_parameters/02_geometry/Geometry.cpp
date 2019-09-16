@@ -3,21 +3,28 @@
 #include <utility>
 #include <cmath>
 
+#include "cairo.h"
+
 using namespace Eleusis;
 using namespace std;
 
 namespace Eleusis { extern cairo_t* _cairoUtilityContext; }
 
+const int Geometry::_const_numberOfBytesPerRect = 9 * sizeof(cairo_path_data_t);
+
 Geometry::Geometry() :
     _allocatedBufferSize(_const_initialPathBufferSize)
 {
-    _originalPath.data = new cairo_path_data_t[_const_initialPathBufferSize];
-    _originalPath.num_data = 0;
-    _originalPath.status = cairo_status_t::CAIRO_STATUS_SUCCESS;
+    _originalPath = new cairo_path_t;
+    _affineTransformedPath = new cairo_path_t;
 
-    _affineTransformedPath.data = nullptr;
-    _affineTransformedPath.num_data = 0;
-    _affineTransformedPath.status = cairo_status_t::CAIRO_STATUS_SUCCESS;
+    _originalPath->data = new cairo_path_data_t[_const_initialPathBufferSize];
+    _originalPath->num_data = 0;
+    _originalPath->status = cairo_status_t::CAIRO_STATUS_SUCCESS;
+    
+    _affineTransformedPath->data = nullptr;
+    _affineTransformedPath->num_data = 0;
+    _affineTransformedPath->status = cairo_status_t::CAIRO_STATUS_SUCCESS;
 
 	_extentsAreStale = true;
 }
@@ -25,13 +32,16 @@ Geometry::Geometry() :
 Geometry::Geometry(size_t dataSize) :
     _allocatedBufferSize(dataSize)
 {
-    _originalPath.data = new cairo_path_data_t[dataSize];
-    _originalPath.num_data = 0;
-    _originalPath.status = cairo_status_t::CAIRO_STATUS_SUCCESS;
+    _originalPath = new cairo_path_t;
+    _affineTransformedPath = new cairo_path_t;
+    
+    _originalPath->data = new cairo_path_data_t[dataSize];
+    _originalPath->num_data = 0;
+    _originalPath->status = cairo_status_t::CAIRO_STATUS_SUCCESS;
 
-    _affineTransformedPath.data = nullptr;
-    _affineTransformedPath.num_data = 0;
-    _affineTransformedPath.status = cairo_status_t::CAIRO_STATUS_SUCCESS;
+    _affineTransformedPath->data = nullptr;
+    _affineTransformedPath->num_data = 0;
+    _affineTransformedPath->status = cairo_status_t::CAIRO_STATUS_SUCCESS;
 
 	_extentsAreStale = true;
 }
@@ -39,13 +49,16 @@ Geometry::Geometry(size_t dataSize) :
 Geometry::Geometry(Region* region) :
     _allocatedBufferSize(region->getRects().size() * _const_numberOfBytesPerRect)
 {
-    _originalPath.data = new cairo_path_data_t[_allocatedBufferSize];
-    _originalPath.num_data = 0;
-    _originalPath.status = cairo_status_t::CAIRO_STATUS_SUCCESS;
+    _originalPath = new cairo_path_t;
+    _affineTransformedPath = new cairo_path_t;
+    
+    _originalPath->data = new cairo_path_data_t[_allocatedBufferSize];
+    _originalPath->num_data = 0;
+    _originalPath->status = cairo_status_t::CAIRO_STATUS_SUCCESS;
 
-    _affineTransformedPath.data = nullptr;
-    _affineTransformedPath.num_data = 0;
-    _affineTransformedPath.status = cairo_status_t::CAIRO_STATUS_SUCCESS;
+    _affineTransformedPath->data = nullptr;
+    _affineTransformedPath->num_data = 0;
+    _affineTransformedPath->status = cairo_status_t::CAIRO_STATUS_SUCCESS;
 
 	for (auto rect : region->getRects())
 	{
@@ -68,24 +81,33 @@ Geometry::Geometry(Region* region) :
 
 Geometry::Geometry(cairo_path_t* cairoPath)
 {
+    _originalPath = new cairo_path_t;
+    _affineTransformedPath = new cairo_path_t;
+    
     _allocatedBufferSize = cairoPath->num_data;
-    _originalPath.num_data = cairoPath->num_data;
-    _originalPath.data = new cairo_path_data_t[_allocatedBufferSize];
-    _originalPath.status = cairoPath->status;
+    _originalPath->num_data = cairoPath->num_data;
+    _originalPath->data = new cairo_path_data_t[_allocatedBufferSize];
+    _originalPath->status = cairoPath->status;
 
-	memcpy(_originalPath.data, cairoPath->data, cairoPath->num_data * sizeof(cairo_path_data_t));
+	memcpy(_originalPath->data, cairoPath->data, cairoPath->num_data * sizeof(cairo_path_data_t));
 
-    _affineTransformedPath.data = nullptr;
-    _affineTransformedPath.num_data = 0;
-    _affineTransformedPath.status = cairo_status_t::CAIRO_STATUS_SUCCESS;
+    _affineTransformedPath->data = nullptr;
+    _affineTransformedPath->num_data = 0;
+    _affineTransformedPath->status = cairo_status_t::CAIRO_STATUS_SUCCESS;
 
 	_extentsAreStale = true;
 }
 
 Geometry::~Geometry()
 {
-    if (_affineTransformedPath.data) delete[] _affineTransformedPath.data;
-    delete[] _originalPath.data;
+    if (_affineTransformedPath->data)
+        delete[] _affineTransformedPath->data;
+    
+    delete[] _originalPath->data;
+    
+    delete _originalPath;
+    delete _affineTransformedPath;
+
 }
 
 void Geometry::_realocateBuffer()
@@ -94,81 +116,83 @@ void Geometry::_realocateBuffer()
 
     cairo_path_data_t* oldData;
 
-    oldData = _originalPath.data;
-    _originalPath.data = new cairo_path_data_t[_allocatedBufferSize];
-	memcpy(_originalPath.data, oldData, _originalPath.num_data * sizeof(cairo_path_data_t));
+    oldData = _originalPath->data;
+    _originalPath->data = new cairo_path_data_t[_allocatedBufferSize];
+	memcpy(_originalPath->data, oldData, _originalPath->num_data * sizeof(cairo_path_data_t));
 
     delete[] oldData;
 
     if (!isAffineTransformationApplied()) return;
  
-    oldData = _affineTransformedPath.data;
-    _affineTransformedPath.data = new cairo_path_data_t[_allocatedBufferSize];
-	memcpy(_affineTransformedPath.data, oldData, _originalPath.num_data * sizeof(cairo_path_data_t));
+    oldData = _affineTransformedPath->data;
+    _affineTransformedPath->data = new cairo_path_data_t[_allocatedBufferSize];
+	memcpy(_affineTransformedPath->data, oldData, _originalPath->num_data * sizeof(cairo_path_data_t));
     delete[] oldData;  
 }
 
 void Geometry::_appendPoint(double x, double y)
 {
-    _originalPath.data[_originalPath.num_data].point.x = x;
-    _originalPath.data[_originalPath.num_data].point.y = y;
-    _originalPath.num_data++;
+    _originalPath->data[_originalPath->num_data].point.x = x;
+    _originalPath->data[_originalPath->num_data].point.y = y;
+    _originalPath->num_data++;
 
     if (!isAffineTransformationApplied()) return;
 
-    _affineTransformedPath.data[_originalPath.num_data].point.x = x;
-    _affineTransformedPath.data[_originalPath.num_data].point.x = y;
-    _affineTransformation.transformVector(&(_affineTransformedPath.data[_originalPath.num_data].point.x), 
-		                                &(_affineTransformedPath.data[_originalPath.num_data].point.y));
-    _affineTransformedPath.num_data++;
+    _affineTransformedPath->data[_originalPath->num_data].point.x = x;
+    _affineTransformedPath->data[_originalPath->num_data].point.x = y;
+    _affineTransformation.transformVector(&(_affineTransformedPath->data[_originalPath->num_data].point.x),
+		                                  &(_affineTransformedPath->data[_originalPath->num_data].point.y));
+    _affineTransformedPath->num_data++;
 }
 
-void Geometry::_appendHeader(cairo_path_data_type_t type)
+void Geometry::_appendHeader(int type)
 {
+    cairo_path_data_type_t l_actualType = static_cast<cairo_path_data_type_t>(type);
+    
     auto setHeaderHelperFunction = 
-        [](cairo_path_t & path, cairo_path_data_type_t type)
+        [](cairo_path_t* path, cairo_path_data_type_t l_actualType)
         {
-            path.data[path.num_data].header.type = type;
-            switch (type)
+            path->data[path->num_data].header.type = l_actualType;
+            switch (l_actualType)
             {
                 case cairo_path_data_type_t::CAIRO_PATH_MOVE_TO: 
-                    path.data[path.num_data].header.length = 2;
+                    path->data[path->num_data].header.length = 2;
                     break;
                 case cairo_path_data_type_t::CAIRO_PATH_LINE_TO:
-                    path.data[path.num_data].header.length = 2;
+                    path->data[path->num_data].header.length = 2;
                     break;
                 case cairo_path_data_type_t::CAIRO_PATH_CURVE_TO:
-                    path.data[path.num_data].header.length = 4;
+                    path->data[path->num_data].header.length = 4;
                     break;
                 case cairo_path_data_type_t::CAIRO_PATH_CLOSE_PATH:
-                    path.data[path.num_data].header.length = 1;
+                    path->data[path->num_data].header.length = 1;
                     break;
                 default:
                     return;
             }
-            path.num_data++;
+            path->num_data++;
         };
 
-    setHeaderHelperFunction(_originalPath, type);
+    setHeaderHelperFunction(_originalPath, l_actualType);
 
     if (!isAffineTransformationApplied()) return;
     
-    setHeaderHelperFunction(_affineTransformedPath, type);
+    setHeaderHelperFunction(_affineTransformedPath, l_actualType);
 }
 
 void Geometry::_reapplyAffineTransformation()
 {
-    if (!_affineTransformedPath.data)
-         _affineTransformedPath.data = new cairo_path_data_t[_allocatedBufferSize];
+    if (!_affineTransformedPath->data)
+         _affineTransformedPath->data = new cairo_path_data_t[_allocatedBufferSize];
 
-    for (int i = 0; i <= _originalPath.num_data - 1; i++)
-        _affineTransformedPath.data[i] = _originalPath.data[i];
+    for (int i = 0; i <= _originalPath->num_data - 1; i++)
+        _affineTransformedPath->data[i] = _originalPath->data[i];
 
-    _affineTransformedPath.num_data = _originalPath.num_data;
+    _affineTransformedPath->num_data = _originalPath->num_data;
 
-    for (int i = 0; i <= _affineTransformedPath.num_data - 1; i += _affineTransformedPath.data[i].header.length)
+    for (int i = 0; i <= _affineTransformedPath->num_data - 1; i += _affineTransformedPath->data[i].header.length)
     {
-        cairo_path_data_t* l_pathData = &(_affineTransformedPath.data[i]);
+        cairo_path_data_t* l_pathData = &(_affineTransformedPath->data[i]);
         switch (l_pathData->header.type)
         {
             case CAIRO_PATH_MOVE_TO:
@@ -193,13 +217,12 @@ void Geometry::_reapplyAffineTransformation()
 
 void Geometry::_disposeAffineTransformation()
 {
-    if (_affineTransformedPath.data)
-    { 
-        _affineTransformation.setAffineMatrixToIdentity();
-        delete[] _affineTransformedPath.data;
-        _affineTransformedPath.data = nullptr;
-        _affineTransformedPath.num_data = 0;
-    }
+    if (!_affineTransformedPath->data) return;
+    
+    _affineTransformation.setAffineMatrixToIdentity();
+    delete[] _affineTransformedPath->data;
+    _affineTransformedPath->data = nullptr;
+    _affineTransformedPath->num_data = 0;
 }
 
 void Geometry::_calculateExtents()
@@ -228,13 +251,13 @@ void Geometry::_calculateExtents()
 
 cairo_path_t* Geometry::getCairoPath()
 {
-    if (isAffineTransformationApplied()) return &_affineTransformedPath;
-    return &_originalPath;
+    if (isAffineTransformationApplied()) return _affineTransformedPath;
+    return _originalPath;
 }
 
 cairo_path_t* Geometry::getOriginalCairoPath()
 {
-    return &_originalPath;
+    return _originalPath;
 }
 
 Rect Geometry::getExtent()
@@ -256,10 +279,10 @@ Rect Geometry::getOriginalExtent()
 
 int Geometry::addPoint_moveTo(double x, double y)
 {
-    if (_originalPath.num_data + 2 > _allocatedBufferSize - 1)
+    if (_originalPath->num_data + 2 > _allocatedBufferSize - 1)
         _realocateBuffer();
 
-    int index = _originalPath.num_data;
+    int index = _originalPath->num_data;
 
     _appendHeader(CAIRO_PATH_MOVE_TO);
     _appendPoint (x, y);
@@ -270,10 +293,10 @@ int Geometry::addPoint_moveTo(double x, double y)
 
 int Geometry::addPoint_lineTo(double x, double y)
 {
-    if (_originalPath.num_data + 2 > _allocatedBufferSize - 1)
+    if (_originalPath->num_data + 2 > _allocatedBufferSize - 1)
         _realocateBuffer();
 
-    int index = _originalPath.num_data;
+    int index = _originalPath->num_data;
 
     _appendHeader(CAIRO_PATH_LINE_TO);
     _appendPoint (x, y);
@@ -284,10 +307,10 @@ int Geometry::addPoint_lineTo(double x, double y)
 
 int Geometry::addPoint_curveTo(double x1, double y1, double x2, double y2, double x, double y)
 {
-    if (_originalPath.num_data + 4 > _allocatedBufferSize - 1)
+    if (_originalPath->num_data + 4 > _allocatedBufferSize - 1)
         _realocateBuffer();
 
-    int index = _originalPath.num_data;
+    int index = _originalPath->num_data;
 
     _appendHeader(CAIRO_PATH_CURVE_TO);
     _appendPoint (x1, y1);
@@ -300,10 +323,10 @@ int Geometry::addPoint_curveTo(double x1, double y1, double x2, double y2, doubl
 
 int Geometry::addPoint_closePath()
 {
-    if (_originalPath.num_data + 1 > _allocatedBufferSize - 1)
+    if (_originalPath->num_data + 1 > _allocatedBufferSize - 1)
         _realocateBuffer();
 
-    int index = _originalPath.num_data;
+    int index = _originalPath->num_data;
 
     _appendHeader(CAIRO_PATH_CLOSE_PATH);
 	_extentsAreStale = true;
@@ -313,15 +336,15 @@ int Geometry::addPoint_closePath()
 
 void Geometry::updatePoint(int index, double x, double y)
 {
-    _originalPath.data[index].point.x = x;
-    _originalPath.data[index].point.y = y;
+    _originalPath->data[index].point.x = x;
+    _originalPath->data[index].point.y = y;
 
     if (isAffineTransformationApplied())
     {
-        _affineTransformedPath.data[index].point.x = x;
-        _affineTransformedPath.data[index].point.x = y;
-        _affineTransformation.transformVector(&(_affineTransformedPath.data[index].point.x), 
-                                              &(_affineTransformedPath.data[index].point.y));
+        _affineTransformedPath->data[index].point.x = x;
+        _affineTransformedPath->data[index].point.x = y;
+        _affineTransformation.transformVector(&(_affineTransformedPath->data[index].point.x),
+                                              &(_affineTransformedPath->data[index].point.y));
     }
 
 	_extentsAreStale = true;
@@ -410,7 +433,7 @@ void Geometry::addPolygon(double x, double y, double r, int numberOfVerticies, b
 
 bool Geometry::isAffineTransformationApplied()
 {
-    if (_affineTransformedPath.data) return true;
+    if (_affineTransformedPath->data) return true;
     return false;
 }
 
