@@ -1,5 +1,3 @@
-﻿#pragma execution_character_set("utf-8")
-
 /* GIO - GLib Input, Output and Streaming Library
  *
  * Copyright (C) 2006-2007 Red Hat, Inc.
@@ -7,7 +5,7 @@
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option) any later version.
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -36,8 +34,10 @@ G_BEGIN_DECLS
  * G_VOLUME_IDENTIFIER_KIND_HAL_UDI:
  *
  * The string used to obtain a Hal UDI with g_volume_get_identifier().
+ *
+ * Deprecated: 2.58: Do not use, HAL is deprecated.
  */
-#define G_VOLUME_IDENTIFIER_KIND_HAL_UDI "hal-udi"
+#define G_VOLUME_IDENTIFIER_KIND_HAL_UDI "hal-udi" GLIB_DEPRECATED_MACRO_IN_2_58
 
 /**
  * G_VOLUME_IDENTIFIER_KIND_UNIX_DEVICE:
@@ -72,8 +72,8 @@ G_BEGIN_DECLS
  *
  * The string used to obtain the volume class with g_volume_get_identifier().
  *
- * Known volume classes include `device` and `network`. Other classes may
- * be added in the future.
+ * Known volume classes include `device`, `network`, and `loop`. Other
+ * classes may be added in the future.
  *
  * This is intended to be used by applications to classify #GVolume
  * instances into different sections - for example a file manager or

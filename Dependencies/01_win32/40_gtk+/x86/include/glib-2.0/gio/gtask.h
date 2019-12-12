@@ -1,5 +1,3 @@
-﻿#pragma execution_character_set("utf-8")
-
 /* GIO - GLib Input, Output and Streaming Library
  *
  * Copyright 2011 Red Hat, Inc.
@@ -7,7 +5,7 @@
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option) any later version.
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -76,6 +74,9 @@ void          g_task_set_check_cancellable (GTask               *task,
 GLIB_AVAILABLE_IN_2_36
 void          g_task_set_source_tag        (GTask               *task,
                                             gpointer             source_tag);
+GLIB_AVAILABLE_IN_2_60
+void          g_task_set_name              (GTask               *task,
+                                            const gchar         *name);
 
 GLIB_AVAILABLE_IN_2_36
 gpointer      g_task_get_source_object     (GTask               *task);
@@ -91,6 +92,8 @@ GLIB_AVAILABLE_IN_2_36
 gboolean      g_task_get_check_cancellable (GTask               *task);
 GLIB_AVAILABLE_IN_2_36
 gpointer      g_task_get_source_tag        (GTask               *task);
+GLIB_AVAILABLE_IN_2_60
+const gchar  *g_task_get_name              (GTask               *task);
 
 GLIB_AVAILABLE_IN_2_36
 gboolean      g_task_is_valid              (gpointer             result,

@@ -1,12 +1,10 @@
-﻿#pragma execution_character_set("utf-8")
-
 /* GLIB - Library of useful routines for C programming
  * Copyright (C) 1995-1997  Peter Mattis, Spencer Kimball and Josh MacDonald
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option) any later version.
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -34,6 +32,7 @@
 #include <stdarg.h>
 #include <glib/gtypes.h>
 #include <glib/gmacros.h>
+#include <glib/gvariant.h>
 
 G_BEGIN_DECLS
 
@@ -115,6 +114,150 @@ GLogLevelFlags  g_log_set_fatal_mask    (const gchar    *log_domain,
 GLIB_AVAILABLE_IN_ALL
 GLogLevelFlags  g_log_set_always_fatal  (GLogLevelFlags  fatal_mask);
 
+/* Structured logging mechanism. */
+
+/**
+ * GLogWriterOutput:
+ * @G_LOG_WRITER_HANDLED: Log writer has handled the log entry.
+ * @G_LOG_WRITER_UNHANDLED: Log writer could not handle the log entry.
+ *
+ * Return values from #GLogWriterFuncs to indicate whether the given log entry
+ * was successfully handled by the writer, or whether there was an error in
+ * handling it (and hence a fallback writer should be used).
+ *
+ * If a #GLogWriterFunc ignores a log entry, it should return
+ * %G_LOG_WRITER_HANDLED.
+ *
+ * Since: 2.50
+ */
+typedef enum
+{
+  G_LOG_WRITER_HANDLED = 1,
+  G_LOG_WRITER_UNHANDLED = 0,
+} GLogWriterOutput;
+
+/**
+ * GLogField:
+ * @key: field name (UTF-8 string)
+ * @value: field value (arbitrary bytes)
+ * @length: length of @value, in bytes, or -1 if it is nul-terminated
+ *
+ * Structure representing a single field in a structured log entry. See
+ * g_log_structured() for details.
+ *
+ * Log fields may contain arbitrary values, including binary with embedded nul
+ * bytes. If the field contains a string, the string must be UTF-8 encoded and
+ * have a trailing nul byte. Otherwise, @length must be set to a non-negative
+ * value.
+ *
+ * Since: 2.50
+ */
+typedef struct _GLogField GLogField;
+struct _GLogField
+{
+  const gchar *key;
+  gconstpointer value;
+  gssize length;
+};
+
+/**
+ * GLogWriterFunc:
+ * @log_level: log level of the message
+ * @fields: (array length=n_fields): fields forming the message
+ * @n_fields: number of @fields
+ * @user_data: user data passed to g_log_set_writer_func()
+ *
+ * Writer function for log entries. A log entry is a collection of one or more
+ * #GLogFields, using the standard [field names from journal
+ * specification](https://www.freedesktop.org/software/systemd/man/systemd.journal-fields.html).
+ * See g_log_structured() for more information.
+ *
+ * Writer functions must ignore fields which they do not recognise, unless they
+ * can write arbitrary binary output, as field values may be arbitrary binary.
+ *
+ * @log_level is guaranteed to be included in @fields as the `PRIORITY` field,
+ * but is provided separately for convenience of deciding whether or where to
+ * output the log entry.
+ *
+ * Writer functions should return %G_LOG_WRITER_HANDLED if they handled the log
+ * message successfully or if they deliberately ignored it. If there was an
+ * error handling the message (for example, if the writer function is meant to
+ * send messages to a remote logging server and there is a network error), it
+ * should return %G_LOG_WRITER_UNHANDLED. This allows writer functions to be
+ * chained and fall back to simpler handlers in case of failure.
+ *
+ * Returns: %G_LOG_WRITER_HANDLED if the log entry was handled successfully;
+ *    %G_LOG_WRITER_UNHANDLED otherwise
+ * Since: 2.50
+ */
+typedef GLogWriterOutput (*GLogWriterFunc)     (GLogLevelFlags   log_level,
+                                                const GLogField *fields,
+                                                gsize            n_fields,
+                                                gpointer         user_data);
+
+GLIB_AVAILABLE_IN_2_50
+void             g_log_structured              (const gchar     *log_domain,
+                                                GLogLevelFlags   log_level,
+                                                ...);
+GLIB_AVAILABLE_IN_2_50
+void             g_log_structured_array        (GLogLevelFlags   log_level,
+                                                const GLogField *fields,
+                                                gsize            n_fields);
+
+GLIB_AVAILABLE_IN_2_50
+void             g_log_variant                 (const gchar     *log_domain,
+                                                GLogLevelFlags   log_level,
+                                                GVariant        *fields);
+
+GLIB_AVAILABLE_IN_2_50
+void             g_log_set_writer_func         (GLogWriterFunc   func,
+                                                gpointer         user_data,
+                                                GDestroyNotify   user_data_free);
+
+GLIB_AVAILABLE_IN_2_50
+gboolean         g_log_writer_supports_color   (gint             output_fd);
+GLIB_AVAILABLE_IN_2_50
+gboolean         g_log_writer_is_journald      (gint             output_fd);
+
+GLIB_AVAILABLE_IN_2_50
+gchar           *g_log_writer_format_fields    (GLogLevelFlags   log_level,
+                                                const GLogField *fields,
+                                                gsize            n_fields,
+                                                gboolean         use_color);
+
+GLIB_AVAILABLE_IN_2_50
+GLogWriterOutput g_log_writer_journald         (GLogLevelFlags   log_level,
+                                                const GLogField *fields,
+                                                gsize            n_fields,
+                                                gpointer         user_data);
+GLIB_AVAILABLE_IN_2_50
+GLogWriterOutput g_log_writer_standard_streams (GLogLevelFlags   log_level,
+                                                const GLogField *fields,
+                                                gsize            n_fields,
+                                                gpointer         user_data);
+GLIB_AVAILABLE_IN_2_50
+GLogWriterOutput g_log_writer_default          (GLogLevelFlags   log_level,
+                                                const GLogField *fields,
+                                                gsize            n_fields,
+                                                gpointer         user_data);
+
+/**
+ * G_DEBUG_HERE:
+ *
+ * A convenience form of g_log_structured(), recommended to be added to
+ * functions when debugging. It prints the current monotonic time and the code
+ * location using %G_STRLOC.
+ *
+ * Since: 2.50
+ */
+#define G_DEBUG_HERE()                                          \
+  g_log_structured (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG,            \
+                    "CODE_FILE", __FILE__,                      \
+                    "CODE_LINE", G_STRINGIFY (__LINE__),        \
+                    "CODE_FUNC", G_STRFUNC,                      \
+                    "MESSAGE", "%" G_GINT64_FORMAT ": %s",      \
+                    g_get_monotonic_time (), G_STRLOC)
+
 /* internal */
 void	_g_log_fallback_handler	(const gchar   *log_domain,
 						 GLogLevelFlags log_level,
@@ -139,12 +282,43 @@ void g_assert_warning         (const char *log_domain,
 		               const char *pretty_function,
 		               const char *expression) G_GNUC_NORETURN;
 
+GLIB_AVAILABLE_IN_2_56
+void g_log_structured_standard (const gchar    *log_domain,
+                                GLogLevelFlags  log_level,
+                                const gchar    *file,
+                                const gchar    *line,
+                                const gchar    *func,
+                                const gchar    *message_format,
+                                ...) G_GNUC_PRINTF (6, 7);
 
 #ifndef G_LOG_DOMAIN
 #define G_LOG_DOMAIN    ((gchar*) 0)
 #endif  /* G_LOG_DOMAIN */
 
 #if defined(G_HAVE_ISO_VARARGS) && !G_ANALYZER_ANALYZING
+#if defined(G_LOG_USE_STRUCTURED) && GLIB_VERSION_MAX_ALLOWED >= GLIB_VERSION_2_56
+#define g_error(...)  G_STMT_START {                                            \
+                        g_log_structured_standard (G_LOG_DOMAIN, G_LOG_LEVEL_ERROR, \
+                                                   __FILE__, G_STRINGIFY (__LINE__), \
+                                                   G_STRFUNC, __VA_ARGS__); \
+                        for (;;) ;                                              \
+                      } G_STMT_END
+#define g_message(...)  g_log_structured_standard (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, \
+                                                   __FILE__, G_STRINGIFY (__LINE__), \
+                                                   G_STRFUNC, __VA_ARGS__)
+#define g_critical(...) g_log_structured_standard (G_LOG_DOMAIN, G_LOG_LEVEL_CRITICAL, \
+                                                   __FILE__, G_STRINGIFY (__LINE__), \
+                                                   G_STRFUNC, __VA_ARGS__)
+#define g_warning(...)  g_log_structured_standard (G_LOG_DOMAIN, G_LOG_LEVEL_WARNING, \
+                                                   __FILE__, G_STRINGIFY (__LINE__), \
+                                                   G_STRFUNC, __VA_ARGS__)
+#define g_info(...)     g_log_structured_standard (G_LOG_DOMAIN, G_LOG_LEVEL_INFO, \
+                                                   __FILE__, G_STRINGIFY (__LINE__), \
+                                                   G_STRFUNC, __VA_ARGS__)
+#define g_debug(...)    g_log_structured_standard (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, \
+                                                   __FILE__, G_STRINGIFY (__LINE__), \
+                                                   G_STRFUNC, __VA_ARGS__)
+#else
 /* for(;;) ; so that GCC knows that control doesn't go past g_error().
  * Put space before ending semicolon to avoid C++ build warnings.
  */
@@ -154,7 +328,6 @@ void g_assert_warning         (const char *log_domain,
                                __VA_ARGS__);         \
                         for (;;) ;                   \
                       } G_STMT_END
-                        
 #define g_message(...)  g_log (G_LOG_DOMAIN,         \
                                G_LOG_LEVEL_MESSAGE,  \
                                __VA_ARGS__)
@@ -170,14 +343,38 @@ void g_assert_warning         (const char *log_domain,
 #define g_debug(...)    g_log (G_LOG_DOMAIN,         \
                                G_LOG_LEVEL_DEBUG,    \
                                __VA_ARGS__)
+#endif
 #elif defined(G_HAVE_GNUC_VARARGS)  && !G_ANALYZER_ANALYZING
+#if defined(G_LOG_USE_STRUCTURED) && GLIB_VERSION_MAX_ALLOWED >= GLIB_VERSION_2_56
+#define g_error(format...)   G_STMT_START {                                          \
+                               g_log_structured_standard (G_LOG_DOMAIN, G_LOG_LEVEL_ERROR, \
+                                                          __FILE__, G_STRINGIFY (__LINE__), \
+                                                          G_STRFUNC, format); \
+                               for (;;) ;                                            \
+                             } G_STMT_END
+#define g_message(format...)  g_log_structured_standard (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, \
+                                                         __FILE__, G_STRINGIFY (__LINE__), \
+                                                         G_STRFUNC, format)
+#define g_critical(format...) g_log_structured_standard (G_LOG_DOMAIN, G_LOG_LEVEL_CRITICAL, \
+                                                         __FILE__, G_STRINGIFY (__LINE__), \
+                                                         G_STRFUNC, format)
+#define g_warning(format...)  g_log_structured_standard (G_LOG_DOMAIN, G_LOG_LEVEL_WARNING, \
+                                                         __FILE__, G_STRINGIFY (__LINE__), \
+                                                         G_STRFUNC, format)
+#define g_info(format...)     g_log_structured_standard (G_LOG_DOMAIN, G_LOG_LEVEL_INFO, \
+                                                         __FILE__, G_STRINGIFY (__LINE__), \
+                                                         G_STRFUNC, format)
+#define g_debug(format...)    g_log_structured_standard (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, \
+                                                         __FILE__, G_STRINGIFY (__LINE__), \
+                                                         G_STRFUNC, format)
+#else
 #define g_error(format...)    G_STMT_START {                 \
                                 g_log (G_LOG_DOMAIN,         \
                                        G_LOG_LEVEL_ERROR,    \
                                        format);              \
                                 for (;;) ;                   \
                               } G_STMT_END
-                              
+
 #define g_message(format...)    g_log (G_LOG_DOMAIN,         \
                                        G_LOG_LEVEL_MESSAGE,  \
                                        format)
@@ -193,11 +390,12 @@ void g_assert_warning         (const char *log_domain,
 #define g_debug(format...)      g_log (G_LOG_DOMAIN,         \
                                        G_LOG_LEVEL_DEBUG,    \
                                        format)
+#endif
 #else   /* no varargs macros */
 static void g_error (const gchar *format, ...) G_GNUC_NORETURN G_ANALYZER_NORETURN;
 static void g_critical (const gchar *format, ...) G_ANALYZER_NORETURN;
 
-static void
+static inline void
 g_error (const gchar *format,
          ...)
 {
@@ -208,7 +406,7 @@ g_error (const gchar *format,
 
   for(;;) ;
 }
-static void
+static inline void
 g_message (const gchar *format,
            ...)
 {
@@ -217,7 +415,7 @@ g_message (const gchar *format,
   g_logv (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, format, args);
   va_end (args);
 }
-static void
+static inline void
 g_critical (const gchar *format,
             ...)
 {
@@ -226,7 +424,7 @@ g_critical (const gchar *format,
   g_logv (G_LOG_DOMAIN, G_LOG_LEVEL_CRITICAL, format, args);
   va_end (args);
 }
-static void
+static inline void
 g_warning (const gchar *format,
            ...)
 {
@@ -235,7 +433,7 @@ g_warning (const gchar *format,
   g_logv (G_LOG_DOMAIN, G_LOG_LEVEL_WARNING, format, args);
   va_end (args);
 }
-static void
+static inline void
 g_info (const gchar *format,
         ...)
 {
@@ -244,7 +442,7 @@ g_info (const gchar *format,
   g_logv (G_LOG_DOMAIN, G_LOG_LEVEL_INFO, format, args);
   va_end (args);
 }
-static void
+static inline void
 g_debug (const gchar *format,
          ...)
 {
@@ -319,8 +517,19 @@ GPrintFunc      g_set_printerr_handler  (GPrintFunc      func);
  * the result is usually that a critical message is logged and the current
  * function returns.
  *
- * If G_DISABLE_CHECKS is defined then the check is not performed.  You
+ * If `G_DISABLE_CHECKS` is defined then the check is not performed.  You
  * should therefore not depend on any side effects of @expr.
+ *
+ * To debug failure of a g_return_if_fail() check, run the code under a debugger
+ * with `G_DEBUG=fatal-criticals` or `G_DEBUG=fatal-warnings` defined in the
+ * environment (see [Running GLib Applications](glib-running.html)):
+ *
+ * |[
+ *   G_DEBUG=fatal-warnings gdb ./my-program
+ * ]|
+ *
+ * Any unrelated failures can be skipped over in
+ * [gdb](https://www.gnu.org/software/gdb/) using the `continue` command.
  */
 #define g_return_if_fail(expr) G_STMT_START{ (void)0; }G_STMT_END
 
@@ -343,8 +552,10 @@ GPrintFunc      g_set_printerr_handler  (GPrintFunc      func);
  * the result is usually that a critical message is logged and @val is
  * returned from the current function.
  *
- * If G_DISABLE_CHECKS is defined then the check is not performed.  You
+ * If `G_DISABLE_CHECKS` is defined then the check is not performed.  You
  * should therefore not depend on any side effects of @expr.
+ *
+ * See g_return_if_fail() for guidance on how to debug failure of this check.
  */
 #define g_return_val_if_fail(expr,val) G_STMT_START{ (void)0; }G_STMT_END
 
@@ -353,6 +564,8 @@ GPrintFunc      g_set_printerr_handler  (GPrintFunc      func);
  *
  * Logs a critical message and returns from the current function.
  * This can only be used in functions which do not return a value.
+ *
+ * See g_return_if_fail() for guidance on how to debug failure of this check.
  */
 #define g_return_if_reached() G_STMT_START{ return; }G_STMT_END
 
@@ -361,46 +574,60 @@ GPrintFunc      g_set_printerr_handler  (GPrintFunc      func);
  * @val: the value to return from the current function
  *
  * Logs a critical message and returns @val.
+ *
+ * See g_return_if_fail() for guidance on how to debug failure of this check.
  */
 #define g_return_val_if_reached(val) G_STMT_START{ return (val); }G_STMT_END
 
 #else /* !G_DISABLE_CHECKS */
 
-#define g_return_if_fail(expr)		G_STMT_START{			\
-     if G_LIKELY(expr) { } else       					\
-       {								\
-	 g_return_if_fail_warning (G_LOG_DOMAIN,			\
-		                   G_STRFUNC,				\
-		                   #expr);				\
-	 return;							\
-       };				}G_STMT_END
+#define g_return_if_fail(expr) \
+  G_STMT_START { \
+    if (G_LIKELY (expr)) \
+      { } \
+    else \
+      { \
+        g_return_if_fail_warning (G_LOG_DOMAIN, \
+                                  G_STRFUNC, \
+                                  #expr); \
+        return; \
+      } \
+  } G_STMT_END
 
-#define g_return_val_if_fail(expr,val)	G_STMT_START{			\
-     if G_LIKELY(expr) { } else						\
-       {								\
-	 g_return_if_fail_warning (G_LOG_DOMAIN,			\
-		                   G_STRFUNC,				\
-		                   #expr);				\
-	 return (val);							\
-       };				}G_STMT_END
+#define g_return_val_if_fail(expr, val) \
+  G_STMT_START { \
+    if (G_LIKELY (expr)) \
+      { } \
+    else \
+      { \
+        g_return_if_fail_warning (G_LOG_DOMAIN, \
+                                  G_STRFUNC, \
+                                  #expr); \
+        return (val); \
+      } \
+  } G_STMT_END
 
-#define g_return_if_reached()		G_STMT_START{			\
-     g_log (G_LOG_DOMAIN,						\
-	    G_LOG_LEVEL_CRITICAL,					\
-	    "file %s: line %d (%s): should not be reached",		\
-	    __FILE__,							\
-	    __LINE__,							\
-	    G_STRFUNC);							\
-     return;				}G_STMT_END
+#define g_return_if_reached() \
+  G_STMT_START { \
+    g_log (G_LOG_DOMAIN, \
+           G_LOG_LEVEL_CRITICAL, \
+           "file %s: line %d (%s): should not be reached", \
+           __FILE__, \
+           __LINE__, \
+           G_STRFUNC); \
+    return; \
+  } G_STMT_END
 
-#define g_return_val_if_reached(val)	G_STMT_START{			\
-     g_log (G_LOG_DOMAIN,						\
-	    G_LOG_LEVEL_CRITICAL,					\
-	    "file %s: line %d (%s): should not be reached",		\
-	    __FILE__,							\
-	    __LINE__,							\
-	    G_STRFUNC);							\
-     return (val);			}G_STMT_END
+#define g_return_val_if_reached(val) \
+  G_STMT_START { \
+    g_log (G_LOG_DOMAIN, \
+           G_LOG_LEVEL_CRITICAL, \
+           "file %s: line %d (%s): should not be reached", \
+           __FILE__, \
+           __LINE__, \
+           G_STRFUNC); \
+    return (val); \
+  } G_STMT_END
 
 #endif /* !G_DISABLE_CHECKS */
 

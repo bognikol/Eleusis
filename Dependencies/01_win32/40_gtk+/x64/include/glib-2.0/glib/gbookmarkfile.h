@@ -1,22 +1,19 @@
-﻿#pragma execution_character_set("utf-8")
-
 /* gbookmarkfile.h: parsing and building desktop bookmarks
  *
  * Copyright (C) 2005-2006 Emmanuele Bassi
  *
  * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
+ * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option) any later version.
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef __G_BOOKMARK_FILE_H__
@@ -149,7 +146,7 @@ GLIB_AVAILABLE_IN_ALL
 gchar **       g_bookmark_file_get_groups          (GBookmarkFile  *bookmark,
 						    const gchar    *uri,
 						    gsize          *length,
-						    GError        **error) G_GNUC_MALLOC;
+						    GError        **error);
 GLIB_AVAILABLE_IN_ALL
 void           g_bookmark_file_add_application     (GBookmarkFile  *bookmark,
 						    const gchar    *uri,
@@ -164,7 +161,7 @@ GLIB_AVAILABLE_IN_ALL
 gchar **       g_bookmark_file_get_applications    (GBookmarkFile  *bookmark,
 						    const gchar    *uri,
 						    gsize          *length,
-						    GError        **error) G_GNUC_MALLOC;
+						    GError        **error);
 GLIB_AVAILABLE_IN_ALL
 gboolean       g_bookmark_file_set_app_info        (GBookmarkFile  *bookmark,
 						    const gchar    *uri,
@@ -231,7 +228,7 @@ GLIB_AVAILABLE_IN_ALL
 gint           g_bookmark_file_get_size            (GBookmarkFile  *bookmark);
 GLIB_AVAILABLE_IN_ALL
 gchar **       g_bookmark_file_get_uris            (GBookmarkFile  *bookmark,
-						    gsize          *length) G_GNUC_MALLOC;
+						    gsize          *length);
 GLIB_AVAILABLE_IN_ALL
 gboolean       g_bookmark_file_remove_group        (GBookmarkFile  *bookmark,
 						    const gchar    *uri,

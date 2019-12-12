@@ -1,14 +1,13 @@
-prefix=C:/gtk-build/build/Win32/glib-rel
-exec_prefix=${prefix}
+prefix=C:/gtk-build/gtk/Win32/release
 libdir=${prefix}/lib
 includedir=${prefix}/include
 
-gmodule_supported=yes
+gmodule_supported=true
 
 Name: GModule
 Description: Dynamic module loader for GLib
+Version: 2.62.2
 Requires: glib-2.0
-Version: 2.48.2
-Libs: -L${libdir} -lgmodule-2.0 
-Libs.private: 
-Cflags: 
+Libs: -L${libdir} -lgmodule-2.0
+Libs.private: -lintl
+Cflags: -I${includedir}

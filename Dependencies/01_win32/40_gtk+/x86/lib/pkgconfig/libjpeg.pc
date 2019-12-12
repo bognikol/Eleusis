@@ -1,0 +1,10 @@
+prefix=C:/gtk-build/build/Win32/release/libjpeg-turbo-rel
+exec_prefix=C:/gtk-build/build/Win32/release/libjpeg-turbo-rel
+libdir=C:/gtk-build/build/Win32/release/libjpeg-turbo-rel/lib
+includedir=C:/gtk-build/build/Win32/release/libjpeg-turbo-rel/include
+
+Name: libjpeg
+Description: A SIMD-accelerated JPEG codec that provides the libjpeg API
+Version: 2.0.3
+Libs: -L${libdir} -ljpeg
+Cflags: -I${includedir}

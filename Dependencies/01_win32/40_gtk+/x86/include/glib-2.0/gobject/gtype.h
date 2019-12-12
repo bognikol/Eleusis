@@ -1,12 +1,10 @@
-﻿#pragma execution_character_set("utf-8")
-
 /* GObject - GLib Type, Object, Parameter and Signal Library
  * Copyright (C) 1998-1999, 2000-2001 Tim Janik and Red Hat, Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option) any later version.
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -200,7 +198,9 @@ G_BEGIN_DECLS
 
 /* Reserved fundamental type numbers to create new fundamental
  * type IDs with G_TYPE_MAKE_FUNDAMENTAL().
- * Send email to gtk-devel-list@gnome.org for reservations.
+ *
+ * Open an issue on https://gitlab.gnome.org/GNOME/glib/issues/new for
+ * reservations.
  */
 /**
  * G_TYPE_FUNDAMENTAL_SHIFT:
@@ -459,7 +459,8 @@ struct _GTypeQuery
  * @instance: Location of a #GTypeInstance structure
  * 
  * Checks if @instance is a valid #GTypeInstance structure,
- * otherwise issues a warning and returns %FALSE.
+ * otherwise issues a warning and returns %FALSE. %NULL is not a valid
+ * #GTypeInstance.
  * 
  * This macro should only be used in type implementations.
  *
@@ -468,23 +469,26 @@ struct _GTypeQuery
 #define G_TYPE_CHECK_INSTANCE(instance)				(_G_TYPE_CHI ((GTypeInstance*) (instance)))
 /**
  * G_TYPE_CHECK_INSTANCE_CAST:
- * @instance: Location of a #GTypeInstance structure
+ * @instance: (nullable): Location of a #GTypeInstance structure
  * @g_type: The type to be returned
  * @c_type: The corresponding C type of @g_type
  * 
  * Checks that @instance is an instance of the type identified by @g_type
  * and issues a warning if this is not the case. Returns @instance casted 
  * to a pointer to @c_type.
+ *
+ * No warning will be issued if @instance is %NULL, and %NULL will be returned.
  * 
  * This macro should only be used in type implementations.
  */
 #define G_TYPE_CHECK_INSTANCE_CAST(instance, g_type, c_type)    (_G_TYPE_CIC ((instance), (g_type), c_type))
 /**
  * G_TYPE_CHECK_INSTANCE_TYPE:
- * @instance: Location of a #GTypeInstance structure.
+ * @instance: (nullable): Location of a #GTypeInstance structure.
  * @g_type: The type to be checked
  * 
- * Checks if @instance is an instance of the type identified by @g_type.
+ * Checks if @instance is an instance of the type identified by @g_type. If
+ * @instance is %NULL, %FALSE will be returned.
  * 
  * This macro should only be used in type implementations.
  *
@@ -493,10 +497,11 @@ struct _GTypeQuery
 #define G_TYPE_CHECK_INSTANCE_TYPE(instance, g_type)            (_G_TYPE_CIT ((instance), (g_type)))
 /**
  * G_TYPE_CHECK_INSTANCE_FUNDAMENTAL_TYPE:
- * @instance: Location of a #GTypeInstance structure.
+ * @instance: (nullable): Location of a #GTypeInstance structure.
  * @g_type: The fundamental type to be checked
  *
  * Checks if @instance is an instance of the fundamental type identified by @g_type.
+ * If @instance is %NULL, %FALSE will be returned.
  *
  * This macro should only be used in type implementations.
  *
@@ -541,18 +546,18 @@ struct _GTypeQuery
  * 
  * Checks that @g_class is a class structure of the type identified by @g_type
  * and issues a warning if this is not the case. Returns @g_class casted 
- * to a pointer to @c_type.
+ * to a pointer to @c_type. %NULL is not a valid class structure.
  * 
  * This macro should only be used in type implementations.
  */
 #define G_TYPE_CHECK_CLASS_CAST(g_class, g_type, c_type)        (_G_TYPE_CCC ((g_class), (g_type), c_type))
 /**
  * G_TYPE_CHECK_CLASS_TYPE:
- * @g_class: Location of a #GTypeClass structure
+ * @g_class: (nullable): Location of a #GTypeClass structure
  * @g_type: The type to be checked
  * 
  * Checks if @g_class is a class structure of the type identified by 
- * @g_type.
+ * @g_type. If @g_class is %NULL, %FALSE will be returned.
  * 
  * This macro should only be used in type implementations.
  *
@@ -631,9 +636,11 @@ struct _GTypeQuery
  * This macro should only be used in type implementations.
  * 
  * Since: 2.4
+ * Deprecated: 2.58: Use %G_ADD_PRIVATE and the generated
+ *   `your_type_get_instance_private()` function instead
  * Returns: (not nullable): a pointer to the private data structure
  */
-#define G_TYPE_INSTANCE_GET_PRIVATE(instance, g_type, c_type)   ((c_type*) g_type_instance_get_private ((GTypeInstance*) (instance), (g_type)))
+#define G_TYPE_INSTANCE_GET_PRIVATE(instance, g_type, c_type)   ((c_type*) g_type_instance_get_private ((GTypeInstance*) (instance), (g_type))) GLIB_DEPRECATED_MACRO_IN_2_58_FOR(G_ADD_PRIVATE)
 
 /**
  * G_TYPE_CLASS_GET_PRIVATE:
@@ -675,14 +682,17 @@ typedef enum	/*< skip >*/
   G_TYPE_DEBUG_SIGNALS	= 1 << 1,
   G_TYPE_DEBUG_INSTANCE_COUNT = 1 << 2,
   G_TYPE_DEBUG_MASK	= 0x07
-} GTypeDebugFlags;
+} GTypeDebugFlags GLIB_DEPRECATED_TYPE_IN_2_36;
 
 
 /* --- prototypes --- */
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
 GLIB_DEPRECATED_IN_2_36
 void                  g_type_init                    (void);
 GLIB_DEPRECATED_IN_2_36
 void                  g_type_init_with_debug_flags   (GTypeDebugFlags  debug_flags);
+G_GNUC_END_IGNORE_DEPRECATIONS
+
 GLIB_AVAILABLE_IN_ALL
 const gchar *         g_type_name                    (GType            type);
 GLIB_AVAILABLE_IN_ALL
@@ -1294,7 +1304,7 @@ void  g_type_interface_add_prerequisite (GType			     interface_type,
 GLIB_AVAILABLE_IN_ALL
 GType*g_type_interface_prerequisites    (GType                       interface_type,
 					 guint                      *n_prerequisites);
-GLIB_AVAILABLE_IN_ALL
+GLIB_DEPRECATED_IN_2_58
 void     g_type_class_add_private       (gpointer                    g_class,
                                          gsize                       private_size);
 GLIB_AVAILABLE_IN_2_38
@@ -1412,8 +1422,8 @@ guint     g_type_get_type_registration_serial (void);
  * @OBJ_NAME: The bare name of the type, in all caps (like 'WIDGET')
  * @ParentName: the name of the parent type, in camel case (like GtkWidget)
  *
- * A convenience macro for emitting the usual declarations in the header file for a type which will is intended
- * to be subclassed.
+ * A convenience macro for emitting the usual declarations in the
+ * header file for a type which is intended to be subclassed.
  *
  * You might use it in a header as follows:
  *
@@ -1622,6 +1632,11 @@ guint     g_type_get_type_registration_serial (void);
  * Note that private structs added with this macros must have a struct
  * name of the form @TN Private.
  *
+ * The private instance data can be retrieved using the automatically generated
+ * getter function `t_n_get_instance_private()`.
+ *
+ * See also: G_ADD_PRIVATE()
+ *
  * Since: 2.38
  */
 #define G_DEFINE_TYPE_WITH_PRIVATE(TN, t_n, T_P)            G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, 0, G_ADD_PRIVATE (TN))
@@ -1686,6 +1701,7 @@ guint     g_type_get_type_registration_serial (void);
  *                         gtk_gadget,
  *                         GTK_TYPE_WIDGET,
  *                         0,
+ *                         G_ADD_PRIVATE (GtkGadget)
  *                         G_IMPLEMENT_INTERFACE (TYPE_GIZMO,
  *                                                gtk_gadget_gizmo_init));
  * ]|
@@ -1694,10 +1710,17 @@ guint     g_type_get_type_registration_serial (void);
  * static void     gtk_gadget_init       (GtkGadget      *self);
  * static void     gtk_gadget_class_init (GtkGadgetClass *klass);
  * static gpointer gtk_gadget_parent_class = NULL;
+ * static gint     GtkGadget_private_offset;
  * static void     gtk_gadget_class_intern_init (gpointer klass)
  * {
  *   gtk_gadget_parent_class = g_type_class_peek_parent (klass);
+ *   if (GtkGadget_private_offset != 0)
+ *     g_type_class_adjust_private_offset (klass, &GtkGadget_private_offset);
  *   gtk_gadget_class_init ((GtkGadgetClass*) klass);
+ * }
+ * static inline gpointer gtk_gadget_get_instance_private (GtkGadget *self)
+ * {
+ *   return (G_STRUCT_MEMBER_P (self, GtkGadget_private_offset));
  * }
  *
  * GType
@@ -1714,6 +1737,10 @@ guint     g_type_get_type_registration_serial (void);
  *                                        sizeof (GtkGadget),
  *                                        (GInstanceInitFunc) gtk_gadget_init,
  *                                        0);
+ *       {
+ *         GtkGadget_private_offset =
+ *           g_type_add_instance_private (g_define_type_id, sizeof (GtkGadgetPrivate));
+ *       }
  *       {
  *         const GInterfaceInfo g_implement_interface_info = {
  *           (GInterfaceInitFunc) gtk_gadget_gizmo_init
@@ -1748,6 +1775,12 @@ guint     g_type_get_type_registration_serial (void);
  * name `t_n ## _default_init`, and the interface structure to have the
  * name `TN ## Interface`.
  *
+ * The initialization function has signature
+ * `static void t_n ## _default_init (TypeName##Interface *klass);`, rather than
+ * the full #GInterfaceInitFunc signature, for brevity and convenience. If you
+ * need to use an initialization function with an `iface_data` argument, you
+ * must write the #GTypeInterface definitions manually.
+ *
  * Since: 2.24
  */
 #define G_DEFINE_INTERFACE(TN, t_n, T_P)		    G_DEFINE_INTERFACE_WITH_CODE(TN, t_n, T_P, ;)
@@ -1774,7 +1807,7 @@ guint     g_type_get_type_registration_serial (void);
 /**
  * G_IMPLEMENT_INTERFACE:
  * @TYPE_IFACE: The #GType of the interface to add
- * @iface_init: The interface init function
+ * @iface_init: (type GInterfaceInitFunc): The interface init function, of type #GInterfaceInitFunc
  *
  * A convenience macro to ease interface addition in the `_C_` section
  * of G_DEFINE_TYPE_WITH_CODE() or G_DEFINE_ABSTRACT_TYPE_WITH_CODE().
@@ -1787,7 +1820,7 @@ guint     g_type_get_type_registration_serial (void);
  */
 #define G_IMPLEMENT_INTERFACE(TYPE_IFACE, iface_init)       { \
   const GInterfaceInfo g_implement_interface_info = { \
-    (GInterfaceInitFunc) iface_init, NULL, NULL \
+    (GInterfaceInitFunc)(void (*)(void)) iface_init, NULL, NULL \
   }; \
   g_type_add_interface_static (g_define_type_id, TYPE_IFACE, &g_implement_interface_info); \
 }
@@ -1852,9 +1885,9 @@ guint     g_type_get_type_registration_serial (void);
  * Also note that private structs added with these macros must have a struct
  * name of the form `TypeNamePrivate`.
  *
- * It is safe to call _get_instance_private on %NULL or invalid object since
- * it's only adding an offset to the instance pointer. In that case the returned
- * pointer must not be dereferenced.
+ * It is safe to call the `_get_instance_private` function on %NULL or invalid
+ * objects since it's only adding an offset to the instance pointer. In that
+ * case the returned pointer must not be dereferenced.
  *
  * Since: 2.38
  */
@@ -1940,10 +1973,12 @@ static void     type_name##_class_intern_init (gpointer klass) \
 }
 #endif /* GLIB_VERSION_MAX_ALLOWED >= GLIB_VERSION_2_38 */
 
-#define _G_DEFINE_TYPE_EXTENDED_BEGIN(TypeName, type_name, TYPE_PARENT, flags) \
+/* Added for _G_DEFINE_TYPE_EXTENDED_WITH_PRELUDE */
+#define _G_DEFINE_TYPE_EXTENDED_BEGIN_PRE(TypeName, type_name, TYPE_PARENT) \
 \
 static void     type_name##_init              (TypeName        *self); \
 static void     type_name##_class_init        (TypeName##Class *klass); \
+static GType    type_name##_get_type_once     (void); \
 static gpointer type_name##_parent_class = NULL; \
 static gint     TypeName##_private_offset; \
 \
@@ -1959,25 +1994,44 @@ type_name##_get_instance_private (TypeName *self) \
 GType \
 type_name##_get_type (void) \
 { \
-  static volatile gsize g_define_type_id__volatile = 0; \
+  static volatile gsize g_define_type_id__volatile = 0;
+  /* Prelude goes here */
+
+/* Added for _G_DEFINE_TYPE_EXTENDED_WITH_PRELUDE */
+#define _G_DEFINE_TYPE_EXTENDED_BEGIN_REGISTER(TypeName, type_name, TYPE_PARENT, flags) \
   if (g_once_init_enter (&g_define_type_id__volatile))  \
     { \
-      GType g_define_type_id = \
-        g_type_register_static_simple (TYPE_PARENT, \
-                                       g_intern_static_string (#TypeName), \
-                                       sizeof (TypeName##Class), \
-                                       (GClassInitFunc) type_name##_class_intern_init, \
-                                       sizeof (TypeName), \
-                                       (GInstanceInitFunc) type_name##_init, \
-                                       (GTypeFlags) flags); \
-      { /* custom code follows */
-#define _G_DEFINE_TYPE_EXTENDED_END()	\
-        /* following custom code */	\
-      }					\
+      GType g_define_type_id = type_name##_get_type_once (); \
       g_once_init_leave (&g_define_type_id__volatile, g_define_type_id); \
     }					\
   return g_define_type_id__volatile;	\
-} /* closes type_name##_get_type() */
+} /* closes type_name##_get_type() */ \
+\
+G_GNUC_NO_INLINE \
+static GType \
+type_name##_get_type_once (void) \
+{ \
+  GType g_define_type_id = \
+        g_type_register_static_simple (TYPE_PARENT, \
+                                       g_intern_static_string (#TypeName), \
+                                       sizeof (TypeName##Class), \
+                                       (GClassInitFunc)(void (*)(void)) type_name##_class_intern_init, \
+                                       sizeof (TypeName), \
+                                       (GInstanceInitFunc)(void (*)(void)) type_name##_init, \
+                                       (GTypeFlags) flags); \
+    { /* custom code follows */
+#define _G_DEFINE_TYPE_EXTENDED_END()	\
+      /* following custom code */	\
+    }					\
+  return g_define_type_id; \
+} /* closes type_name##_get_type_once() */
+
+/* This was defined before we had G_DEFINE_TYPE_WITH_CODE_AND_PRELUDE, it's simplest
+ * to keep it.
+ */
+#define _G_DEFINE_TYPE_EXTENDED_BEGIN(TypeName, type_name, TYPE_PARENT, flags) \
+  _G_DEFINE_TYPE_EXTENDED_BEGIN_PRE(TypeName, type_name, TYPE_PARENT) \
+  _G_DEFINE_TYPE_EXTENDED_BEGIN_REGISTER(TypeName, type_name, TYPE_PARENT, flags) \
 
 #define _G_DEFINE_INTERFACE_EXTENDED_BEGIN(TypeName, type_name, TYPE_PREREQ) \
 \
@@ -1993,11 +2047,11 @@ type_name##_get_type (void) \
         g_type_register_static_simple (G_TYPE_INTERFACE, \
                                        g_intern_static_string (#TypeName), \
                                        sizeof (TypeName##Interface), \
-                                       (GClassInitFunc)type_name##_default_init, \
+                                       (GClassInitFunc)(void (*)(void)) type_name##_default_init, \
                                        0, \
                                        (GInstanceInitFunc)NULL, \
                                        (GTypeFlags) 0); \
-      if (TYPE_PREREQ) \
+      if (TYPE_PREREQ != G_TYPE_INVALID) \
         g_type_interface_add_prerequisite (g_define_type_id, TYPE_PREREQ); \
       { /* custom code follows */
 #define _G_DEFINE_INTERFACE_EXTENDED_END()	\
@@ -2055,42 +2109,66 @@ type_name##_get_type (void) \
  */
 #if !defined (__cplusplus) && (__GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 7)) && !(defined (__APPLE__) && defined (__ppc64__))
 #define _G_DEFINE_BOXED_TYPE_BEGIN(TypeName, type_name, copy_func, free_func) \
+static GType type_name##_get_type_once (void); \
+\
 GType \
 type_name##_get_type (void) \
 { \
   static volatile gsize g_define_type_id__volatile = 0; \
   if (g_once_init_enter (&g_define_type_id__volatile))  \
     { \
-      GType (* _g_register_boxed) \
-        (const gchar *, \
-         union \
-           { \
-             TypeName * (*do_copy_type) (TypeName *); \
-             TypeName * (*do_const_copy_type) (const TypeName *); \
-             GBoxedCopyFunc do_copy_boxed; \
-           } __attribute__((__transparent_union__)), \
-         union \
-           { \
-             void (* do_free_type) (TypeName *); \
-             GBoxedFreeFunc do_free_boxed; \
-           } __attribute__((__transparent_union__)) \
-        ) = g_boxed_type_register_static; \
-      GType g_define_type_id = \
-        _g_register_boxed (g_intern_static_string (#TypeName), copy_func, free_func); \
-      { /* custom code follows */
+      GType g_define_type_id = type_name##_get_type_once (); \
+      g_once_init_leave (&g_define_type_id__volatile, g_define_type_id); \
+    } \
+  return g_define_type_id__volatile; \
+} \
+\
+G_GNUC_NO_INLINE \
+static GType \
+type_name##_get_type_once (void) \
+{ \
+  GType (* _g_register_boxed) \
+    (const gchar *, \
+     union \
+       { \
+         TypeName * (*do_copy_type) (TypeName *); \
+         TypeName * (*do_const_copy_type) (const TypeName *); \
+         GBoxedCopyFunc do_copy_boxed; \
+       } __attribute__((__transparent_union__)), \
+     union \
+       { \
+         void (* do_free_type) (TypeName *); \
+         GBoxedFreeFunc do_free_boxed; \
+       } __attribute__((__transparent_union__)) \
+    ) = g_boxed_type_register_static; \
+  GType g_define_type_id = \
+    _g_register_boxed (g_intern_static_string (#TypeName), copy_func, free_func); \
+  { /* custom code follows */
 #else
 #define _G_DEFINE_BOXED_TYPE_BEGIN(TypeName, type_name, copy_func, free_func) \
+static GType type_name##_get_type_once (void); \
+\
 GType \
 type_name##_get_type (void) \
 { \
   static volatile gsize g_define_type_id__volatile = 0; \
   if (g_once_init_enter (&g_define_type_id__volatile))  \
     { \
-      GType g_define_type_id = \
-        g_boxed_type_register_static (g_intern_static_string (#TypeName), \
-                                      (GBoxedCopyFunc) copy_func, \
-                                      (GBoxedFreeFunc) free_func); \
-      { /* custom code follows */
+      GType g_define_type_id = type_name##_get_type_once (); \
+      g_once_init_leave (&g_define_type_id__volatile, g_define_type_id); \
+    } \
+  return g_define_type_id__volatile; \
+} \
+\
+G_GNUC_NO_INLINE \
+static GType \
+type_name##_get_type_once (void) \
+{ \
+  GType g_define_type_id = \
+    g_boxed_type_register_static (g_intern_static_string (#TypeName), \
+                                  (GBoxedCopyFunc) copy_func, \
+                                  (GBoxedFreeFunc) free_func); \
+  { /* custom code follows */
 #endif /* __GNUC__ */
 
 /**
@@ -2121,15 +2199,27 @@ type_name##_get_type (void) \
 #define G_DEFINE_POINTER_TYPE_WITH_CODE(TypeName, type_name, _C_) _G_DEFINE_POINTER_TYPE_BEGIN (TypeName, type_name) {_C_;} _G_DEFINE_TYPE_EXTENDED_END()
 
 #define _G_DEFINE_POINTER_TYPE_BEGIN(TypeName, type_name) \
+static GType type_name##_get_type_once (void); \
+\
 GType \
 type_name##_get_type (void) \
 { \
   static volatile gsize g_define_type_id__volatile = 0; \
   if (g_once_init_enter (&g_define_type_id__volatile))  \
     { \
-      GType g_define_type_id = \
-        g_pointer_type_register_static (g_intern_static_string (#TypeName)); \
-      { /* custom code follows */
+      GType g_define_type_id = type_name##_get_type_once (); \
+      g_once_init_leave (&g_define_type_id__volatile, g_define_type_id); \
+    } \
+  return g_define_type_id__volatile; \
+} \
+\
+G_GNUC_NO_INLINE \
+static GType \
+type_name##_get_type_once (void) \
+{ \
+  GType g_define_type_id = \
+    g_pointer_type_register_static (g_intern_static_string (#TypeName)); \
+  { /* custom code follows */
 
 /* --- protected (for fundamental type implementations) --- */
 GLIB_AVAILABLE_IN_ALL
@@ -2187,9 +2277,9 @@ gboolean         g_type_check_class_is_a        (GTypeClass         *g_class,
 GLIB_AVAILABLE_IN_ALL
 gboolean	 g_type_check_is_value_type     (GType		     type) G_GNUC_CONST;
 GLIB_AVAILABLE_IN_ALL
-gboolean	 g_type_check_value             (GValue		    *value) G_GNUC_PURE;
+gboolean	 g_type_check_value             (const GValue       *value) G_GNUC_PURE;
 GLIB_AVAILABLE_IN_ALL
-gboolean	 g_type_check_value_holds	(GValue		    *value,
+gboolean	 g_type_check_value_holds	(const GValue	    *value,
 						 GType		     type) G_GNUC_PURE;
 GLIB_AVAILABLE_IN_ALL
 gboolean         g_type_test_flags              (GType               type,
@@ -2240,7 +2330,7 @@ const gchar *    g_type_name_from_class         (GTypeClass	*g_class);
   __r; \
 }))
 #  define _G_TYPE_CVH(vl, gt)             (G_GNUC_EXTENSION ({ \
-  GValue *__val = (GValue*) vl; GType __t = gt; gboolean __r; \
+  const GValue *__val = (const GValue*) vl; GType __t = gt; gboolean __r; \
   if (!__val) \
     __r = FALSE; \
   else if (__val->g_type == __t)		\
@@ -2252,7 +2342,7 @@ const gchar *    g_type_name_from_class         (GTypeClass	*g_class);
 #else  /* !__GNUC__ */
 #  define _G_TYPE_CIT(ip, gt)             (g_type_check_instance_is_a ((GTypeInstance*) ip, gt))
 #  define _G_TYPE_CCT(cp, gt)             (g_type_check_class_is_a ((GTypeClass*) cp, gt))
-#  define _G_TYPE_CVH(vl, gt)             (g_type_check_value_holds ((GValue*) vl, gt))
+#  define _G_TYPE_CVH(vl, gt)             (g_type_check_value_holds ((const GValue*) vl, gt))
 #endif /* !__GNUC__ */
 /**
  * G_TYPE_FLAG_RESERVED_ID_BIT:

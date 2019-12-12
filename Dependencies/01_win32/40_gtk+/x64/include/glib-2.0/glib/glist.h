@@ -1,12 +1,10 @@
-﻿#pragma execution_character_set("utf-8")
-
 /* GLIB - Library of useful routines for C programming
  * Copyright (C) 1995-1997  Peter Mattis, Spencer Kimball and Josh MacDonald
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option) any later version.
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -80,6 +78,10 @@ GLIB_AVAILABLE_IN_ALL
 GList*   g_list_insert_before           (GList            *list,
 					 GList            *sibling,
 					 gpointer          data) G_GNUC_WARN_UNUSED_RESULT;
+GLIB_AVAILABLE_IN_2_62
+GList*   g_list_insert_before_link      (GList            *list,
+					 GList            *sibling,
+					 GList            *link_) G_GNUC_WARN_UNUSED_RESULT;
 GLIB_AVAILABLE_IN_ALL
 GList*   g_list_concat                  (GList            *list1,
 					 GList            *list2) G_GNUC_WARN_UNUSED_RESULT;

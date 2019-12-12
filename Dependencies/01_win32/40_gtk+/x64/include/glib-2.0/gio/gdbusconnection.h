@@ -1,5 +1,3 @@
-﻿#pragma execution_character_set("utf-8")
-
 /* GDBus - GLib D-Bus Library
  *
  * Copyright (C) 2008-2010 Red Hat, Inc.
@@ -7,7 +5,7 @@
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option) any later version.
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -116,6 +114,8 @@ void             g_dbus_connection_set_exit_on_close          (GDBusConnection  
                                                                gboolean            exit_on_close);
 GLIB_AVAILABLE_IN_ALL
 GDBusCapabilityFlags  g_dbus_connection_get_capabilities      (GDBusConnection    *connection);
+GLIB_AVAILABLE_IN_2_60
+GDBusConnectionFlags  g_dbus_connection_get_flags             (GDBusConnection    *connection);
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -606,7 +606,7 @@ void             g_dbus_connection_signal_unsubscribe         (GDBusConnection  
  *                 gboolean         incoming,
  *                 gpointer         user_data)
  * {
- *   /<!-- -->* inspect @message *<!-- -->/
+ *   // inspect @message
  *   return message;
  * }
  * ]|
@@ -639,10 +639,10 @@ void             g_dbus_connection_signal_unsubscribe         (GDBusConnection  
  *
  *   error = NULL;
  *   copy = g_dbus_message_copy (message, &error);
- *   /<!-- -->* handle @error being is set *<!-- -->/
+ *   // handle @error being set
  *   g_object_unref (message);
  *
- *   /<!-- -->* modify @copy *<!-- -->/
+ *   // modify @copy
  *
  *   return copy;
  * }
@@ -650,11 +650,11 @@ void             g_dbus_connection_signal_unsubscribe         (GDBusConnection  
  * If the returned #GDBusMessage is different from @message and cannot
  * be sent on @connection (it could use features, such as file
  * descriptors, not compatible with @connection), then a warning is
- * logged to <emphasis>standard error</emphasis>. Applications can
+ * logged to standard error. Applications can
  * check this ahead of time using g_dbus_message_to_blob() passing a
  * #GDBusCapabilityFlags value obtained from @connection.
  *
- * Returns: (transfer full) (allow-none): A #GDBusMessage that will be freed with
+ * Returns: (transfer full) (nullable): A #GDBusMessage that will be freed with
  * g_object_unref() or %NULL to drop the message. Passive filter
  * functions can simply return the passed @message object.
  *

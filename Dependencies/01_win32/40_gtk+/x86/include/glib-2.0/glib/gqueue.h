@@ -1,12 +1,10 @@
-﻿#pragma execution_character_set("utf-8")
-
 /* GLIB - Library of useful routines for C programming
  * Copyright (C) 1995-1997  Peter Mattis, Spencer Kimball and Josh MacDonald
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option) any later version.
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -84,6 +82,9 @@ GLIB_AVAILABLE_IN_ALL
 void     g_queue_clear          (GQueue           *queue);
 GLIB_AVAILABLE_IN_ALL
 gboolean g_queue_is_empty       (GQueue           *queue);
+GLIB_AVAILABLE_IN_2_60
+void     g_queue_clear_full     (GQueue           *queue,
+                                 GDestroyNotify   free_func);
 GLIB_AVAILABLE_IN_ALL
 guint    g_queue_get_length     (GQueue           *queue);
 GLIB_AVAILABLE_IN_ALL
@@ -143,10 +144,20 @@ GLIB_AVAILABLE_IN_ALL
 void     g_queue_insert_before  (GQueue           *queue,
                                  GList            *sibling,
                                  gpointer          data);
+GLIB_AVAILABLE_IN_2_62
+void     g_queue_insert_before_link
+                                (GQueue           *queue,
+                                 GList            *sibling,
+                                 GList            *link_);
 GLIB_AVAILABLE_IN_ALL
 void     g_queue_insert_after   (GQueue           *queue,
                                  GList            *sibling,
                                  gpointer          data);
+GLIB_AVAILABLE_IN_2_62
+void     g_queue_insert_after_link
+                                (GQueue           *queue,
+                                 GList            *sibling,
+                                 GList            *link_);
 GLIB_AVAILABLE_IN_ALL
 void     g_queue_insert_sorted  (GQueue           *queue,
                                  gpointer          data,

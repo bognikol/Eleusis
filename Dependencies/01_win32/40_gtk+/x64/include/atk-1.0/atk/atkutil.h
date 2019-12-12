@@ -17,12 +17,12 @@
  * Boston, MA 02111-1307, USA.
  */
 
+#ifndef __ATK_UTIL_H__
+#define __ATK_UTIL_H__
+
 #if defined(ATK_DISABLE_SINGLE_INCLUDES) && !defined (__ATK_H_INSIDE__) && !defined (ATK_COMPILATION)
 #error "Only <atk/atk.h> can be included directly."
 #endif
-
-#ifndef __ATK_UTIL_H__
-#define __ATK_UTIL_H__
 
 #include <atk/atkobject.h>
 
@@ -176,15 +176,18 @@ GType atk_util_get_type (void);
 /**
  *AtkCoordType:
  *@ATK_XY_SCREEN: specifies xy coordinates relative to the screen
- *@ATK_XY_WINDOW: specifies xy coordinates relative to the widget's 
+ *@ATK_XY_WINDOW: specifies xy coordinates relative to the widget's
  * top-level window
+ *@ATK_XY_PARENT: specifies xy coordinates relative to the widget's
+ * immediate parent. Since: 2.30
  *
  *Specifies how xy coordinates are to be interpreted. Used by functions such
  *as atk_component_get_position() and atk_text_get_character_extents() 
  **/
 typedef enum {
   ATK_XY_SCREEN,
-  ATK_XY_WINDOW
+  ATK_XY_WINDOW,
+  ATK_XY_PARENT
 }AtkCoordType;
 
 ATK_DEPRECATED_IN_2_10

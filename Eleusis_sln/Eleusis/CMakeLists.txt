@@ -20,6 +20,7 @@ target_include_directories(eleusis PUBLIC "./08_utilities")
 target_include_directories(eleusis PUBLIC "${GTK_ROOT}/include/cairo")
 target_include_directories(eleusis PUBLIC "${GTK_ROOT}/include/pango-1.0")
 target_include_directories(eleusis PUBLIC "${GTK_ROOT}/include/glib-2.0")
+target_include_directories(eleusis PUBLIC "${GTK_ROOT}/include/harfbuzz")
 target_include_directories(eleusis PUBLIC "${GTK_ROOT}/lib/glib-2.0/include")
 
 target_link_libraries(eleusis PUBLIC "${GTK_ROOT}/lib/${LIB_PREFIX}cairo.${LIB_EXTENSION}")

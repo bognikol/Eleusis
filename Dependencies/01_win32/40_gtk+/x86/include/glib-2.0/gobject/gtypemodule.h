@@ -1,12 +1,10 @@
-﻿#pragma execution_character_set("utf-8")
-
 /* GObject - GLib Type, Object, Parameter and Signal Library
  * Copyright (C) 2000 Red Hat, Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option) any later version.
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -37,6 +35,8 @@ typedef struct _GTypeModuleClass GTypeModuleClass;
 #define G_IS_TYPE_MODULE(module)        (G_TYPE_CHECK_INSTANCE_TYPE ((module), G_TYPE_TYPE_MODULE))
 #define G_IS_TYPE_MODULE_CLASS(class)   (G_TYPE_CHECK_CLASS_TYPE ((class), G_TYPE_TYPE_MODULE))
 #define G_TYPE_MODULE_GET_CLASS(module) (G_TYPE_INSTANCE_GET_CLASS ((module), G_TYPE_TYPE_MODULE, GTypeModuleClass))
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC(GTypeModule, g_object_unref)
 
 /**
  * GTypeModule:
@@ -93,7 +93,7 @@ struct _GTypeModuleClass
  * A convenience macro for dynamic type implementations, which declares a
  * class initialization function, an instance initialization function (see 
  * #GTypeInfo for information about these) and a static variable named 
- * @t_n<!-- -->_parent_class pointing to the parent class. Furthermore, 
+ * `t_n`_parent_class pointing to the parent class. Furthermore,
  * it defines a `*_get_type()` and a static `*_register_type()` functions
  * for use in your `module_init()`.
  *
@@ -204,12 +204,12 @@ type_name##_register_type (GTypeModule *type_module) \
     sizeof (TypeName##Class), \
     (GBaseInitFunc) NULL, \
     (GBaseFinalizeFunc) NULL, \
-    (GClassInitFunc) type_name##_class_intern_init, \
-    (GClassFinalizeFunc) type_name##_class_finalize, \
+    (GClassInitFunc)(void (*)(void)) type_name##_class_intern_init, \
+    (GClassFinalizeFunc)(void (*)(void)) type_name##_class_finalize, \
     NULL,   /* class_data */ \
     sizeof (TypeName), \
     0,      /* n_preallocs */ \
-    (GInstanceInitFunc) type_name##_init, \
+    (GInstanceInitFunc)(void (*)(void)) type_name##_init, \
     NULL    /* value_table */ \
   }; \
   type_name##_type_id = g_type_module_register_type (type_module, \
@@ -238,7 +238,7 @@ type_name##_register_type (GTypeModule *type_module) \
  */
 #define G_IMPLEMENT_INTERFACE_DYNAMIC(TYPE_IFACE, iface_init)       { \
   const GInterfaceInfo g_implement_interface_info = { \
-    (GInterfaceInitFunc) iface_init, NULL, NULL      \
+    (GInterfaceInitFunc)(void (*)(void)) iface_init, NULL, NULL      \
   }; \
   g_type_module_add_interface (type_module, g_define_type_id, TYPE_IFACE, &g_implement_interface_info); \
 }

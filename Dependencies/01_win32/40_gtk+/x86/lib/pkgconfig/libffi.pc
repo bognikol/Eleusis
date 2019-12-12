@@ -1,0 +1,11 @@
+prefix=C:\gtk-build\gtk\Win32\release
+exec_prefix=C:\gtk-build\gtk\Win32\release
+libdir=C:\gtk-build\gtk\Win32\release/lib
+toolexeclibdir=
+includedir=C:\gtk-build\gtk\Win32\release/include
+
+Name: libffi
+Description: Library supporting Foreign Function Interfaces
+Version: 3.2.1
+Libs: -L${libdir} -lffi
+Cflags: -I${includedir}

@@ -1,12 +1,10 @@
-﻿#pragma execution_character_set("utf-8")
-
 /* GObject - GLib Type, Object, Parameter and Signal Library
  * Copyright (C) 1997-1999, 2000-2001 Tim Janik and Red Hat, Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option) any later version.
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -454,7 +452,7 @@ G_BEGIN_DECLS
  *
  * Deprecated: 2.32: Use #GArray instead of #GValueArray
  */
-#define	G_TYPE_PARAM_VALUE_ARRAY	   (g_param_spec_types[18])
+#define	G_TYPE_PARAM_VALUE_ARRAY	   (g_param_spec_types[18]) GLIB_DEPRECATED_MACRO_IN_2_32
 /**
  * G_IS_PARAM_SPEC_VALUE_ARRAY:
  * @pspec: a valid #GParamSpec instance
@@ -465,7 +463,7 @@ G_BEGIN_DECLS
  *
  * Deprecated: 2.32: Use #GArray instead of #GValueArray
  */
-#define G_IS_PARAM_SPEC_VALUE_ARRAY(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_VALUE_ARRAY))
+#define G_IS_PARAM_SPEC_VALUE_ARRAY(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), G_TYPE_PARAM_VALUE_ARRAY)) GLIB_DEPRECATED_MACRO_IN_2_32
 /**
  * G_PARAM_SPEC_VALUE_ARRAY:
  * @pspec: a valid #GParamSpec instance
@@ -474,7 +472,7 @@ G_BEGIN_DECLS
  *
  * Deprecated: 2.32: Use #GArray instead of #GValueArray
  */
-#define G_PARAM_SPEC_VALUE_ARRAY(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), G_TYPE_PARAM_VALUE_ARRAY, GParamSpecValueArray))
+#define G_PARAM_SPEC_VALUE_ARRAY(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), G_TYPE_PARAM_VALUE_ARRAY, GParamSpecValueArray)) GLIB_DEPRECATED_MACRO_IN_2_32
 
 /**
  * G_TYPE_PARAM_OBJECT:
@@ -963,6 +961,12 @@ struct _GParamSpecGType
  * @default_value: a #GVariant, or %NULL
  *
  * A #GParamSpec derived structure that contains the meta data for #GVariant properties.
+ *
+ * When comparing values with g_param_values_cmp(), scalar values with the same
+ * type will be compared with g_variant_compare(). Other non-%NULL variants will
+ * be checked for equality with g_variant_equal(), and their sort order is
+ * otherwise undefined. %NULL is ordered before non-%NULL variants. Two %NULL
+ * values compare equal.
  *
  * Since: 2.26
  */

@@ -3,7 +3,7 @@
  * Copyright (C) 2012 Igalia, S.L.
  * Copyright (C) 2014 Chun-wei Fan
  *
- * Author: Alejandro Piñeiro Iglesias <apinheiro@igalia.com>
+ * Author: Alejandro PiÃ±eiro Iglesias <apinheiro@igalia.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -50,7 +50,7 @@
  *
  * Since: 2.7.4
  */
-#define ATK_MINOR_VERSION (20)
+#define ATK_MINOR_VERSION (34)
 
 /**
  * ATK_MICRO_VERSION:
@@ -61,7 +61,7 @@
  *
  * Since: 2.7.4
  */
-#define ATK_MICRO_VERSION (0)
+#define ATK_MICRO_VERSION (1)
 
 /**
  * ATK_BINARY_AGE:
@@ -72,7 +72,7 @@
  *
  * Since: 2.7.4
  */
-#define ATK_BINARY_AGE    (22010)
+#define ATK_BINARY_AGE    (23411)
 
 /**
  * ATK_INTERFACE_AGE:
@@ -176,6 +176,16 @@
  */
 #define ATK_VERSION_2_14       (G_ENCODE_VERSION (2, 14))
 
+/**
+ * ATK_VERSION_2_30:
+ *
+ * A macro that evaluates to the 2.30 version of ATK, in a format
+ * that can be used by the C pre-processor.
+ *
+ * Since: 2.30
+ */
+#define ATK_VERSION_2_30       (G_ENCODE_VERSION (2, 30))
+
 /* evaluates to the current stable version; for development cycles,
  * this means the next stable target
  */
@@ -267,9 +277,11 @@
 #ifdef ATK_DISABLE_DEPRECATION_WARNINGS
 #define ATK_DEPRECATED _ATK_EXTERN
 #define ATK_DEPRECATED_FOR(f) _ATK_EXTERN
+#define ATK_UNAVAILABLE(maj,min) _ATK_EXTERN
 #else
 #define ATK_DEPRECATED G_DEPRECATED _ATK_EXTERN
 #define ATK_DEPRECATED_FOR(f) G_DEPRECATED_FOR(f) _ATK_EXTERN
+#define ATK_UNAVAILABLE(maj,min) G_UNAVAILABLE(maj,min) _ATK_EXTERN
 #endif
 
 #define ATK_AVAILABLE_IN_ALL _ATK_EXTERN
@@ -372,6 +384,20 @@
 # define ATK_AVAILABLE_IN_2_14                 ATK_UNAVAILABLE(2, 14)
 #else
 # define ATK_AVAILABLE_IN_2_14                 _ATK_EXTERN
+#endif
+
+#if ATK_VERSION_MIN_REQUIRED >= ATK_VERSION_2_30
+# define ATK_DEPRECATED_IN_2_30                ATK_DEPRECATED
+# define ATK_DEPRECATED_IN_2_30_FOR(f)         ATK_DEPRECATED_FOR(f)
+#else
+# define ATK_DEPRECATED_IN_2_30                _ATK_EXTERN
+# define ATK_DEPRECATED_IN_2_30_FOR(f)         _ATK_EXTERN
+#endif
+
+#if ATK_VERSION_MAX_ALLOWED < ATK_VERSION_2_30
+# define ATK_AVAILABLE_IN_2_30                 ATK_UNAVAILABLE(2, 30)
+#else
+# define ATK_AVAILABLE_IN_2_30                 _ATK_EXTERN
 #endif
 
 ATK_AVAILABLE_IN_2_8

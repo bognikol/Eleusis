@@ -1,5 +1,3 @@
-﻿#pragma execution_character_set("utf-8")
-
 /* GIO - GLib Input, Output and Streaming Library
  *
  * Copyright (C) 2010 Red Hat, Inc.
@@ -7,7 +5,7 @@
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option) any later version.
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -111,11 +109,20 @@ void                  g_tls_connection_set_require_close_notify    (GTlsConnecti
 GLIB_AVAILABLE_IN_ALL
 gboolean              g_tls_connection_get_require_close_notify    (GTlsConnection       *conn);
 
-GLIB_AVAILABLE_IN_ALL
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+GLIB_DEPRECATED_IN_2_60
 void                  g_tls_connection_set_rehandshake_mode        (GTlsConnection       *conn,
 								    GTlsRehandshakeMode   mode);
-GLIB_AVAILABLE_IN_ALL
+GLIB_DEPRECATED_IN_2_60
 GTlsRehandshakeMode   g_tls_connection_get_rehandshake_mode        (GTlsConnection       *conn);
+G_GNUC_END_IGNORE_DEPRECATIONS
+
+GLIB_AVAILABLE_IN_2_60
+void                  g_tls_connection_set_advertised_protocols    (GTlsConnection       *conn,
+                                                                    const gchar * const  *protocols);
+
+GLIB_AVAILABLE_IN_2_60
+const gchar *         g_tls_connection_get_negotiated_protocol     (GTlsConnection       *conn);
 
 GLIB_AVAILABLE_IN_ALL
 gboolean              g_tls_connection_handshake                   (GTlsConnection       *conn,
