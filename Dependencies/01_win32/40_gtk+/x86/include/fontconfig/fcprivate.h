@@ -7,9 +7,9 @@
  * documentation for any purpose is hereby granted without fee, provided that
  * the above copyright notice appear in all copies and that both that
  * copyright notice and this permission notice appear in supporting
- * documentation, and that the name of Keith Packard not be used in
+ * documentation, and that the name of the author(s) not be used in
  * advertising or publicity pertaining to distribution of the software without
- * specific, written prior permission.  Keith Packard makes no
+ * specific, written prior permission.  The authors make no
  * representations about the suitability of this software for any purpose.  It
  * is provided "as is" without express or implied warranty.
  *
@@ -48,8 +48,9 @@
 	__o__ = va_arg (va, const char *);			    \
 	if (!__o__)		    				    \
 	    break;		    				    \
-	__v__.type = va_arg (va, FcType);			    \
+	__v__.type = va_arg (va, int);				    \
 	switch (__v__.type) {	    				    \
+	case FcTypeUnknown:					    \
 	case FcTypeVoid:					    \
 	    goto _FcPatternVapBuild_bail1;       		    \
 	case FcTypeInteger:	    				    \
@@ -75,6 +76,9 @@
 	    break;						    \
 	case FcTypeLangSet:					    \
 	    __v__.u.l = va_arg (va, const FcLangSet *);		    \
+	    break;						    \
+	case FcTypeRange:					    \
+	    __v__.u.r = va_arg (va, const FcRange *);		    \
 	    break;						    \
 	}							    \
 	if (!FcPatternAdd (__p__, __o__, __v__, FcTrue))	    \
@@ -119,5 +123,12 @@ _FcObjectSetVapBuild_bail0:						\
     ;									\
 }
 
-#endif /* _FCPRIVATE_H_ */
+#ifndef FC_ATTRIBUTE_VISIBILITY_HIDDEN
+#define FC_ATTRIBUTE_VISIBILITY_HIDDEN __attribute((visibility("hidden")))
+#endif
 
+#ifndef FC_ATTRIBUTE_VISIBILITY_EXPORT
+#define FC_ATTRIBUTE_VISIBILITY_EXPORT __attribute((visibility("default")))
+#endif
+
+#endif /* _FCPRIVATE_H_ */

@@ -1,12 +1,10 @@
-﻿#pragma execution_character_set("utf-8")
-
 /* GLIB - Library of useful routines for C programming
  * Copyright (C) 1995-1997  Peter Mattis, Spencer Kimball and Josh MacDonald
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option) any later version.
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -32,6 +30,9 @@
 #endif
 
 #include <glib/gtypes.h>
+#ifdef __sun__
+#include <sys/select.h>
+#endif
 #include <signal.h>
 
 G_BEGIN_DECLS
@@ -46,8 +47,11 @@ void g_on_error_stack_trace (const gchar *prg_name);
  *
  * Inserts a breakpoint instruction into the code.
  *
- * On x86 and alpha systems this is implemented as a soft interrupt
+ * On architectures which support it, this is implemented as a soft interrupt
  * and on other architectures it raises a `SIGTRAP` signal.
+ *
+ * `SIGTRAP` is used rather than abort() to allow breakpoints to be skipped past
+ * in a debugger if they are not the desired target of debugging.
  */
 #if (defined (__i386__) || defined (__x86_64__)) && defined (__GNUC__) && __GNUC__ >= 2
 #  define G_BREAKPOINT()        G_STMT_START{ __asm__ __volatile__ ("int $03"); }G_STMT_END

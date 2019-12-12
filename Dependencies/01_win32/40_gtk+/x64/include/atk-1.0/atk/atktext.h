@@ -17,16 +17,17 @@
  * Boston, MA 02111-1307, USA.
  */
 
+#ifndef __ATK_TEXT_H__
+#define __ATK_TEXT_H__
+
 #if defined(ATK_DISABLE_SINGLE_INCLUDES) && !defined (__ATK_H_INSIDE__) && !defined (ATK_COMPILATION)
 #error "Only <atk/atk.h> can be included directly."
 #endif
 
-#ifndef __ATK_TEXT_H__
-#define __ATK_TEXT_H__
-
 #include <glib-object.h>
 #include <atk/atkobject.h>
 #include <atk/atkutil.h>
+#include <atk/atkcomponent.h>
 
 G_BEGIN_DECLS
 
@@ -131,7 +132,7 @@ typedef struct _AtkTextIface AtkTextIface;
  * character.
  *
  * Text boundary types used for specifying boundaries for regions of text.
- * This enumerationis deprecated since 2.9.4 and should not be used. Use
+ * This enumeration is deprecated since 2.9.4 and should not be used. Use
  * AtkTextGranularity with #atk_text_get_string_at_offset instead.
  **/
 typedef enum {
@@ -333,6 +334,27 @@ struct _AtkTextIface
                                                    AtkTextGranularity granularity,
                                                    gint               *start_offset,
                                                    gint               *end_offset);
+  /*
+   * Scrolls this text range so it becomes visible on the screen.
+   *
+   * scroll_substring_to lets the implementation compute an appropriate target
+   * position on the screen, with type used as a positioning hint.
+   *
+   * scroll_substring_to_point lets the client specify a precise target position
+   * on the screen.
+   *
+   * Since ATK 2.32
+   */
+  gboolean       (* scroll_substring_to)          (AtkText          *text,
+                                                   gint             start_offset,
+                                                   gint             end_offset,
+                                                   AtkScrollType    type);
+  gboolean       (* scroll_substring_to_point)    (AtkText          *text,
+                                                   gint             start_offset,
+                                                   gint             end_offset,
+                                                   AtkCoordType     coords,
+                                                   gint             x,
+                                                   gint             y);
 };
 
 ATK_AVAILABLE_IN_ALL
@@ -447,6 +469,20 @@ AtkTextAttribute       atk_text_attribute_for_name        (const gchar      *nam
 ATK_AVAILABLE_IN_ALL
 const gchar*  atk_text_attribute_get_value                (AtkTextAttribute attr,
                                                            gint             index_);
+
+ATK_AVAILABLE_IN_ALL
+gboolean      atk_text_scroll_substring_to                (AtkText          *text,
+                                                           gint             start_offset,
+                                                           gint             end_offset,
+                                                           AtkScrollType    type);
+
+ATK_AVAILABLE_IN_ALL
+gboolean      atk_text_scroll_substring_to_point          (AtkText          *text,
+                                                           gint             start_offset,
+                                                           gint             end_offset,
+                                                           AtkCoordType     coords,
+                                                           gint             x,
+                                                           gint             y);
 
 G_END_DECLS
 

@@ -1,5 +1,3 @@
-﻿#pragma execution_character_set("utf-8")
-
 /* GIO - GLib Input, Output and Streaming Library
  *
  * Copyright (C) 2006-2007 Red Hat, Inc.
@@ -7,7 +5,7 @@
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option) any later version.
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -121,11 +119,28 @@ struct _GOutputStreamClass
                                  GAsyncResult             *result,
                                  GError                  **error);
 
+  gboolean    (* writev_fn)     (GOutputStream            *stream,
+                                 const GOutputVector      *vectors,
+                                 gsize                     n_vectors,
+                                 gsize                    *bytes_written,
+                                 GCancellable             *cancellable,
+                                 GError                  **error);
+
+  void        (* writev_async)  (GOutputStream            *stream,
+                                 const GOutputVector      *vectors,
+                                 gsize                     n_vectors,
+                                 int                       io_priority,
+                                 GCancellable             *cancellable,
+                                 GAsyncReadyCallback       callback,
+                                 gpointer                  user_data);
+
+  gboolean    (* writev_finish) (GOutputStream            *stream,
+                                 GAsyncResult             *result,
+                                 gsize                    *bytes_written,
+                                 GError                  **error);
+
   /*< private >*/
   /* Padding for future expansion */
-  void (*_g_reserved1) (void);
-  void (*_g_reserved2) (void);
-  void (*_g_reserved3) (void);
   void (*_g_reserved4) (void);
   void (*_g_reserved5) (void);
   void (*_g_reserved6) (void);
@@ -149,6 +164,22 @@ gboolean g_output_stream_write_all     (GOutputStream             *stream,
 					gsize                     *bytes_written,
 					GCancellable              *cancellable,
 					GError                   **error);
+
+GLIB_AVAILABLE_IN_2_60
+gboolean g_output_stream_writev        (GOutputStream             *stream,
+					const GOutputVector       *vectors,
+					gsize                      n_vectors,
+					gsize                     *bytes_written,
+					GCancellable              *cancellable,
+					GError                   **error);
+GLIB_AVAILABLE_IN_2_60
+gboolean g_output_stream_writev_all    (GOutputStream             *stream,
+					GOutputVector             *vectors,
+					gsize                      n_vectors,
+					gsize                     *bytes_written,
+					GCancellable              *cancellable,
+					GError                   **error);
+
 GLIB_AVAILABLE_IN_2_40
 gboolean g_output_stream_printf        (GOutputStream             *stream,
                                         gsize                     *bytes_written,
@@ -209,6 +240,35 @@ gboolean g_output_stream_write_all_finish (GOutputStream          *stream,
                                            GAsyncResult           *result,
                                            gsize                  *bytes_written,
                                            GError                **error);
+
+GLIB_AVAILABLE_IN_2_60
+void     g_output_stream_writev_async  (GOutputStream             *stream,
+					const GOutputVector       *vectors,
+					gsize                      n_vectors,
+					int                        io_priority,
+					GCancellable              *cancellable,
+					GAsyncReadyCallback        callback,
+					gpointer                   user_data);
+GLIB_AVAILABLE_IN_2_60
+gboolean g_output_stream_writev_finish (GOutputStream             *stream,
+					GAsyncResult              *result,
+					gsize                     *bytes_written,
+					GError                   **error);
+
+GLIB_AVAILABLE_IN_2_60
+void     g_output_stream_writev_all_async (GOutputStream           *stream,
+                                           GOutputVector           *vectors,
+                                           gsize                    n_vectors,
+                                           int                      io_priority,
+                                           GCancellable            *cancellable,
+                                           GAsyncReadyCallback      callback,
+                                           gpointer                 user_data);
+
+GLIB_AVAILABLE_IN_2_60
+gboolean g_output_stream_writev_all_finish (GOutputStream          *stream,
+                                            GAsyncResult           *result,
+                                            gsize                  *bytes_written,
+                                            GError                **error);
 
 GLIB_AVAILABLE_IN_2_34
 void     g_output_stream_write_bytes_async  (GOutputStream             *stream,

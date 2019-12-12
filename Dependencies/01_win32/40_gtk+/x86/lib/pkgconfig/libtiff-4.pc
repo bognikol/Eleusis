@@ -1,0 +1,11 @@
+prefix=C:/gtk-build/build/Win32/release/libtiff-4-rel
+exec_prefix=C:/gtk-build/build/Win32/release/libtiff-4-rel
+libdir=C:/gtk-build/build/Win32/release/libtiff-4-rel/lib
+includedir=C:/gtk-build/build/Win32/release/libtiff-4-rel/include
+
+Name: libtiff
+Description:  Tag Image File Format (TIFF) library.
+Version: 4.0.10
+Libs: -LC:/gtk-build/build/Win32/release/libtiff-4-rel/lib -ltiff
+Libs.private: 
+Cflags: -IC:/gtk-build/build/Win32/release/libtiff-4-rel/include

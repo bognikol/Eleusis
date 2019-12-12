@@ -1,5 +1,3 @@
-﻿#pragma execution_character_set("utf-8")
-
 /* GIO - GLib Input, Output and Streaming Library
  *
  * Copyright (C) 2006-2007 Red Hat, Inc.
@@ -7,7 +5,7 @@
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option) any later version.
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -66,6 +64,15 @@ struct _GMountOperationClass
 			 const char            *default_domain,
 			 GAskPasswordFlags      flags);
 
+  /**
+   * GMountOperationClass::ask_question:
+   * @op: a #GMountOperation
+   * @message: string containing a message to display to the user
+   * @choices: (array zero-terminated=1) (element-type utf8): an array of
+   *    strings for each possible choice
+   *
+   * Virtual implementation of #GMountOperation::ask-question.
+   */
   void (* ask_question) (GMountOperation       *op,
 			 const char            *message,
 			 const char            *choices[]);
@@ -75,6 +82,19 @@ struct _GMountOperationClass
 
   void (* aborted)      (GMountOperation       *op);
 
+  /**
+   * GMountOperationClass::show_processes:
+   * @op: a #GMountOperation
+   * @message: string containing a message to display to the user
+   * @processes: (element-type GPid): an array of #GPid for processes blocking
+   *    the operation
+   * @choices: (array zero-terminated=1) (element-type utf8): an array of
+   *    strings for each possible choice
+   *
+   * Virtual implementation of #GMountOperation::show-processes.
+   *
+   * Since: 2.22
+   */
   void (* show_processes) (GMountOperation      *op,
                            const gchar          *message,
                            GArray               *processes,
@@ -136,6 +156,21 @@ void          g_mount_operation_set_choice        (GMountOperation *op,
 GLIB_AVAILABLE_IN_ALL
 void          g_mount_operation_reply             (GMountOperation *op,
 						   GMountOperationResult result);
+GLIB_AVAILABLE_IN_2_58
+gboolean      g_mount_operation_get_is_tcrypt_hidden_volume (GMountOperation *op);
+GLIB_AVAILABLE_IN_2_58
+void          g_mount_operation_set_is_tcrypt_hidden_volume (GMountOperation *op,
+                                                             gboolean hidden_volume);
+GLIB_AVAILABLE_IN_2_58
+gboolean      g_mount_operation_get_is_tcrypt_system_volume (GMountOperation *op);
+GLIB_AVAILABLE_IN_2_58
+void          g_mount_operation_set_is_tcrypt_system_volume (GMountOperation *op,
+                                                             gboolean system_volume);
+GLIB_AVAILABLE_IN_2_58
+guint  g_mount_operation_get_pim           (GMountOperation *op);
+GLIB_AVAILABLE_IN_2_58
+void          g_mount_operation_set_pim           (GMountOperation *op,
+                                                   guint pim);
 
 G_END_DECLS
 

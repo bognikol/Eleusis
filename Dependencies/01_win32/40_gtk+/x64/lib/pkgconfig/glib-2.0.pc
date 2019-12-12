@@ -1,16 +1,15 @@
-prefix=C:/gtk-build/build/x64/glib-rel
-exec_prefix=${prefix}
+prefix=C:/gtk-build/gtk/x64/release
 libdir=${prefix}/lib
 includedir=${prefix}/include
 
-glib_genmarshal=${exec_prefix}/bin/glib-genmarshal
-gobject_query=${exec_prefix}/bin/gobject-query
-glib_mkenums=perl ${exec_prefix}/bin/glib-mkenums
+bindir=${prefix}/bin
+glib_genmarshal=${bindir}/glib-genmarshal
+gobject_query=${bindir}/gobject-query
+glib_mkenums=${bindir}/glib-mkenums
 
 Name: GLib
 Description: C Utility Library
-Version: 2.48.2
-Requires.private: 
-Libs: -L${libdir} -lglib-2.0 -llibintl
-Libs.private:    -llibintl -liconv  
-Cflags: -I${includedir}/glib-2.0 -I${libdir}/glib-2.0/include 
+Version: 2.62.2
+Libs: -L${libdir} -lglib-2.0 -lintl
+Libs.private: -lws2_32 -lwinmm
+Cflags: -I${includedir}/glib-2.0 -I${libdir}/glib-2.0/include

@@ -17,12 +17,12 @@
  * Boston, MA 02111-1307, USA.
  */
 
+#ifndef __ATK_TABLE_CELL_H__
+#define __ATK_TABLE_CELL_H__
+
 #if defined(ATK_DISABLE_SINGLE_INCLUDES) && !defined (__ATK_H_INSIDE__) && !defined (ATK_COMPILATION)
 #error "Only <atk/atk.h> can be included directly."
 #endif
-
-#ifndef __ATK_TABLE_CELL_H__
-#define __ATK_TABLE_CELL_H__
 
 #include <atk/atkobject.h>
 
@@ -42,24 +42,30 @@ typedef struct _AtkTableCellIface AtkTableCellIface;
 /**
  * AtkTableCellIface:
  * @get_column_span: virtual function that returns the number of
- * columns occupied by this cell accessible. @Since: 2.12
+ *   columns occupied by this cell accessible
  * @get_column_header_cells: virtual function that returns the column
- * headers as an array of cell accessibles. @Since: 2.12
+ *   headers as an array of cell accessibles
  * @get_position: virtual function that retrieves the tabular position
- * of this cell. @Since: 2.12
+ *   of this cell
  * @get_row_span: virtual function that returns the number of rows
- * occupied by this cell. @Since: 2.12
+ *   occupied by this cell
  * @get_row_header_cells: virtual function that returns the row
- * headers as an array of cell accessibles. @Since: 2.12
+ *   headers as an array of cell accessibles
  * @get_row_column_span: virtual function that get the row an column
- * indexes and span of this cell. @Since: 2.12
+ *   indexes and span of this cell
  * @get_table: virtual function that returns a reference to the
- * accessible of the containing table. @Since: 2.12
+ *   accessible of the containing table
+ *
+ * AtkTableCell is an interface for cells inside an #AtkTable.
+ *
+ * Since: 2.12
  */
 struct _AtkTableCellIface
 {
+  /*< private >*/
   GTypeInterface parent;
 
+  /*< public >*/
   gint          (*get_column_span)         (AtkTableCell *cell);
   GPtrArray *   (*get_column_header_cells) (AtkTableCell *cell);
   gboolean      (*get_position)            (AtkTableCell *cell,

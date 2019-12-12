@@ -1,12 +1,12 @@
-prefix=C:/gtk-build/build/x64/glib-rel
-exec_prefix=${prefix}
+prefix=C:/gtk-build/gtk/x64/release
 libdir=${prefix}/lib
 includedir=${prefix}/include
 
 Name: GObject
 Description: GLib Type, Object, Parameter and Signal Library
+Version: 2.62.2
 Requires: glib-2.0
-Version: 2.48.2
+Requires.private: libffi >=  3.0.0
 Libs: -L${libdir} -lgobject-2.0
-Libs.private: 
-Cflags:
+Libs.private: -lintl
+Cflags: -I${includedir}

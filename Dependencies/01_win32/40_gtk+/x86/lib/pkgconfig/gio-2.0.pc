@@ -1,18 +1,25 @@
-prefix=C:/gtk-build/build/Win32/glib-rel
-exec_prefix=${prefix}
+prefix=C:/gtk-build/gtk/Win32/release
 libdir=${prefix}/lib
 includedir=${prefix}/include
 
-giomoduledir=${exec_prefix}/bin/gio/modules
-glib_compile_schemas=${exec_prefix}/bin/glib-compile-schemas
-glib_compile_resources=${exec_prefix}/bin/glib-compile-resources
-gdbus_codegen=python ${exec_prefix}/bin/gdbus-codegen
+datadir=${prefix}/share
+schemasdir=${datadir}/glib-2.0/schemas
+bindir=${prefix}/bin
+giomoduledir=${libdir}/gio/modules
+gio=${bindir}/gio
+gio_querymodules=${bindir}/gio-querymodules
+glib_compile_schemas=${bindir}/glib-compile-schemas
+glib_compile_resources=${bindir}/glib-compile-resources
+gdbus=${bindir}/gdbus
+gdbus_codegen=${bindir}/gdbus-codegen
+gresource=${bindir}/gresource
+gsettings=${bindir}/gsettings
 
 Name: GIO
 Description: glib I/O library
-Version: 2.48.2
-Requires: glib-2.0 gobject-2.0
-Requires.private: gmodule-no-export-2.0
+Version: 2.62.2
+Requires: glib-2.0, gobject-2.0
+Requires.private: gmodule-no-export-2.0, zlib
 Libs: -L${libdir} -lgio-2.0
-Libs.private: -lzlib1 -lws2_32   
-Cflags:
+Libs.private: -lintl -lshlwapi -ldnsapi -liphlpapi -lws2_32
+Cflags: -I${includedir}

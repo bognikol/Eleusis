@@ -1,12 +1,10 @@
-﻿#pragma execution_character_set("utf-8")
-
 /* GObject - GLib Type, Object, Parameter and Signal Library
  * Copyright (C) 2000-2001 Red Hat, Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * version 2.1 of the License, or (at your option) any later version.
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -438,6 +436,22 @@ guint	 g_signal_handlers_disconnect_matched (gpointer		  instance,
 					       gpointer		  func,
 					       gpointer		  data);
 
+GLIB_AVAILABLE_IN_2_62
+void	 g_clear_signal_handler		      (gulong            *handler_id_ptr,
+					       gpointer           instance);
+
+#define  g_clear_signal_handler(handler_id_ptr, instance)           \
+  G_STMT_START {                                                    \
+    G_STATIC_ASSERT (sizeof *(handler_id_ptr) == sizeof (gulong));  \
+    gulong _handler_id = *(handler_id_ptr);                         \
+                                                                    \
+    if (_handler_id > 0)                                            \
+      {                                                             \
+        g_signal_handler_disconnect ((instance), _handler_id);      \
+        *(handler_id_ptr) = 0;                                      \
+      }                                                             \
+  } G_STMT_END                                                      \
+  GLIB_AVAILABLE_MACRO_IN_2_62
 
 /* --- overriding and chaining --- */
 GLIB_AVAILABLE_IN_ALL
@@ -471,7 +485,7 @@ void   g_signal_chain_from_overridden_handler (gpointer           instance,
  * See [memory management of signal handlers][signal-memory-management] for
  * details on how to handle the return value and memory management of @data.
  * 
- * Returns: the handler id (always greater than 0 for successful connections)
+ * Returns: the handler ID, of type #gulong (always greater than 0 for successful connections)
  */
 #define g_signal_connect(instance, detailed_signal, c_handler, data) \
     g_signal_connect_data ((instance), (detailed_signal), (c_handler), (data), NULL, (GConnectFlags) 0)
@@ -486,7 +500,7 @@ void   g_signal_chain_from_overridden_handler (gpointer           instance,
  * 
  * The handler will be called after the default handler of the signal.
  * 
- * Returns: the handler id (always greater than 0 for successful connections)
+ * Returns: the handler ID, of type #gulong (always greater than 0 for successful connections)
  */
 #define g_signal_connect_after(instance, detailed_signal, c_handler, data) \
     g_signal_connect_data ((instance), (detailed_signal), (c_handler), (data), NULL, G_CONNECT_AFTER)
@@ -524,7 +538,7 @@ void   g_signal_chain_from_overridden_handler (gpointer           instance,
  *                   (GCallback) button_clicked_cb, other_widget);
  * ]|
  * 
- * Returns: the handler ID (always greater than 0 for successful connections)
+ * Returns: the handler ID, of type #gulong (always greater than 0 for successful connections)
  */
 #define g_signal_connect_swapped(instance, detailed_signal, c_handler, data) \
     g_signal_connect_data ((instance), (detailed_signal), (c_handler), (data), NULL, G_CONNECT_SWAPPED)

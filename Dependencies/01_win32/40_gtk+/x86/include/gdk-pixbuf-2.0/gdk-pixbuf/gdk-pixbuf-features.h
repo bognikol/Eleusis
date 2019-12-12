@@ -9,8 +9,7 @@
 
 /**
  * SECTION:initialization_versions
- * @Short_description: 
-Library version numbers.
+ * @Short_description: Library version numbers.
  * @Title: Initialization and Versions
  * 
  * These macros and variables let you check the version of gdk-pixbuf
@@ -44,9 +43,13 @@ Library version numbers.
  */
 
 #define GDK_PIXBUF_MAJOR (2)
-#define GDK_PIXBUF_MINOR (34)
+#define GDK_PIXBUF_MINOR (40)
 #define GDK_PIXBUF_MICRO (0)
-#define GDK_PIXBUF_VERSION "2.34.0"
+#define GDK_PIXBUF_VERSION "2.40.0"
+
+#ifndef _GDK_PIXBUF_EXTERN
+#define _GDK_PIXBUF_EXTERN extern
+#endif
 
 /* We prefix variable declarations so they can
  * properly get exported/imported from Windows DLLs.
@@ -57,7 +60,7 @@ Library version numbers.
 #  else /* !GDK_PIXBUF_STATIC_COMPILATION */
 #    ifdef GDK_PIXBUF_C_COMPILATION
 #      ifdef DLL_EXPORT
-#        define GDK_PIXBUF_VAR __declspec(dllexport)
+#        define GDK_PIXBUF_VAR _GDK_PIXBUF_EXTERN
 #      else /* !DLL_EXPORT */
 #        define GDK_PIXBUF_VAR extern
 #      endif /* !DLL_EXPORT */
@@ -66,7 +69,7 @@ Library version numbers.
 #    endif /* !GDK_PIXBUF_C_COMPILATION */
 #  endif /* !GDK_PIXBUF_STATIC_COMPILATION */
 #else /* !G_PLATFORM_WIN32 */
-#  define GDK_PIXBUF_VAR extern
+#  define GDK_PIXBUF_VAR _GDK_PIXBUF_EXTERN
 #endif /* !G_PLATFORM_WIN32 */
 
 /**

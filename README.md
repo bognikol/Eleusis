@@ -86,8 +86,8 @@ Build instructions for both Win32 and macOS implementations are essentially the 
 
 **Build instructions for Win32:**
 
-1. Download and install Visual Studio 2015 with C++ tools. 
-2. Open VS2015 Native Command Prompt for architecture you want to build for and navigate to Eleusis_sln directory.
+1. Download and install Visual Studio 2019 with C++ tools. 
+2. Open VS2019 Native Command Prompt for architecture you want to build for and navigate to Eleusis_sln directory.
 3. Create build directory (for example `mkdir build`) and navigate to it.
 4. Run `cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=<build_configuration> ..` where `<build_configuration>` is either `Release` or `Debug`. This command generates nmake build files.
 5. Build Eleusis by running `nmake`.
